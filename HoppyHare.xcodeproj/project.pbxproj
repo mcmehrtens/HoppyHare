@@ -7,26 +7,44 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		C91E19ED1DF7238D00D7ABCD /* AppAnimations.sks in Resources */ = {isa = PBXBuildFile; fileRef = C91E19EC1DF7238D00D7ABCD /* AppAnimations.sks */; };
+		C91E19F81DF7246500D7ABCD /* Obstacle.sks in Resources */ = {isa = PBXBuildFile; fileRef = C91E19F71DF7246500D7ABCD /* Obstacle.sks */; };
+		C91E19FA1DF7246F00D7ABCD /* Hero.sks in Resources */ = {isa = PBXBuildFile; fileRef = C91E19F91DF7246F00D7ABCD /* Hero.sks */; };
+		C91E19FC1DF725FE00D7ABCD /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = C91E19FB1DF725FE00D7ABCD /* Main.storyboard */; };
+		C9C2CF9F1DFEFE51001DB1B6 /* InfScoreboardAnimations.sks in Resources */ = {isa = PBXBuildFile; fileRef = C9C2CF9E1DFEFE51001DB1B6 /* InfScoreboardAnimations.sks */; };
+		C9C2CFA31DFEFECC001DB1B6 /* flap.caf in Resources */ = {isa = PBXBuildFile; fileRef = C9C2CFA01DFEFECC001DB1B6 /* flap.caf */; };
+		C9C2CFA41DFEFECC001DB1B6 /* goal.caf in Resources */ = {isa = PBXBuildFile; fileRef = C9C2CFA11DFEFECC001DB1B6 /* goal.caf */; };
+		C9C2CFB01DFF0003001DB1B6 /* CGFloat+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9C2CFAC1DFF0003001DB1B6 /* CGFloat+Extensions.swift */; };
+		C9C2CFB11DFF0003001DB1B6 /* MSButtonNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9C2CFAD1DFF0003001DB1B6 /* MSButtonNode.swift */; };
+		C9C2CFB21DFF0003001DB1B6 /* pixelFont.ttf in Resources */ = {isa = PBXBuildFile; fileRef = C9C2CFAE1DFF0003001DB1B6 /* pixelFont.ttf */; };
+		C9C2CFB31DFF0003001DB1B6 /* Sounds.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9C2CFAF1DFF0003001DB1B6 /* Sounds.swift */; };
+		C9C97FE91DFB61F600627547 /* InfiniteScoreboard.sks in Resources */ = {isa = PBXBuildFile; fileRef = C9C97FE81DFB61F600627547 /* InfiniteScoreboard.sks */; };
 		C9FC13901DF716EE00744006 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9FC138F1DF716EE00744006 /* AppDelegate.swift */; };
-		C9FC13921DF716EE00744006 /* GameScene.sks in Resources */ = {isa = PBXBuildFile; fileRef = C9FC13911DF716EE00744006 /* GameScene.sks */; };
-		C9FC13941DF716EE00744006 /* Actions.sks in Resources */ = {isa = PBXBuildFile; fileRef = C9FC13931DF716EE00744006 /* Actions.sks */; };
-		C9FC13961DF716EE00744006 /* GameScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9FC13951DF716EE00744006 /* GameScene.swift */; };
+		C9FC13921DF716EE00744006 /* InfiniteGameScene.sks in Resources */ = {isa = PBXBuildFile; fileRef = C9FC13911DF716EE00744006 /* InfiniteGameScene.sks */; };
+		C9FC13961DF716EE00744006 /* InfiniteGameScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9FC13951DF716EE00744006 /* InfiniteGameScene.swift */; };
 		C9FC13981DF716EE00744006 /* GameViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9FC13971DF716EE00744006 /* GameViewController.swift */; };
-		C9FC139B1DF716EE00744006 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = C9FC13991DF716EE00744006 /* Main.storyboard */; };
 		C9FC139D1DF716EE00744006 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = C9FC139C1DF716EE00744006 /* Assets.xcassets */; };
-		C9FC13A01DF716EE00744006 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = C9FC139E1DF716EE00744006 /* LaunchScreen.storyboard */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		C91E19EC1DF7238D00D7ABCD /* AppAnimations.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = AppAnimations.sks; sourceTree = "<group>"; };
+		C91E19F71DF7246500D7ABCD /* Obstacle.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = Obstacle.sks; sourceTree = "<group>"; };
+		C91E19F91DF7246F00D7ABCD /* Hero.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = Hero.sks; sourceTree = "<group>"; };
+		C91E19FB1DF725FE00D7ABCD /* Main.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Main.storyboard; sourceTree = "<group>"; };
+		C9C2CF9E1DFEFE51001DB1B6 /* InfScoreboardAnimations.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = InfScoreboardAnimations.sks; sourceTree = "<group>"; };
+		C9C2CFA01DFEFECC001DB1B6 /* flap.caf */ = {isa = PBXFileReference; lastKnownFileType = file; name = flap.caf; path = SFX/flap.caf; sourceTree = "<group>"; };
+		C9C2CFA11DFEFECC001DB1B6 /* goal.caf */ = {isa = PBXFileReference; lastKnownFileType = file; name = goal.caf; path = SFX/goal.caf; sourceTree = "<group>"; };
+		C9C2CFAC1DFF0003001DB1B6 /* CGFloat+Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "CGFloat+Extensions.swift"; sourceTree = "<group>"; };
+		C9C2CFAD1DFF0003001DB1B6 /* MSButtonNode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MSButtonNode.swift; sourceTree = "<group>"; };
+		C9C2CFAE1DFF0003001DB1B6 /* pixelFont.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = pixelFont.ttf; sourceTree = "<group>"; };
+		C9C2CFAF1DFF0003001DB1B6 /* Sounds.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Sounds.swift; sourceTree = "<group>"; };
+		C9C97FE81DFB61F600627547 /* InfiniteScoreboard.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = InfiniteScoreboard.sks; sourceTree = "<group>"; };
 		C9FC138C1DF716EE00744006 /* HoppyHare.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = HoppyHare.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		C9FC138F1DF716EE00744006 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		C9FC13911DF716EE00744006 /* GameScene.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = GameScene.sks; sourceTree = "<group>"; };
-		C9FC13931DF716EE00744006 /* Actions.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = Actions.sks; sourceTree = "<group>"; };
-		C9FC13951DF716EE00744006 /* GameScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameScene.swift; sourceTree = "<group>"; };
+		C9FC13911DF716EE00744006 /* InfiniteGameScene.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = InfiniteGameScene.sks; sourceTree = "<group>"; };
+		C9FC13951DF716EE00744006 /* InfiniteGameScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InfiniteGameScene.swift; sourceTree = "<group>"; };
 		C9FC13971DF716EE00744006 /* GameViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameViewController.swift; sourceTree = "<group>"; };
-		C9FC139A1DF716EE00744006 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		C9FC139C1DF716EE00744006 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
-		C9FC139F1DF716EE00744006 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		C9FC13A11DF716EE00744006 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -41,6 +59,58 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		C9C2CFB41DFF02B2001DB1B6 /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				C9FC139C1DF716EE00744006 /* Assets.xcassets */,
+				C9C2CFAE1DFF0003001DB1B6 /* pixelFont.ttf */,
+			);
+			name = Resources;
+			sourceTree = "<group>";
+		};
+		C9C2CFB51DFF02D8001DB1B6 /* Sounds */ = {
+			isa = PBXGroup;
+			children = (
+				C9C2CFAF1DFF0003001DB1B6 /* Sounds.swift */,
+				C9C2CFA01DFEFECC001DB1B6 /* flap.caf */,
+				C9C2CFA11DFEFECC001DB1B6 /* goal.caf */,
+			);
+			name = Sounds;
+			sourceTree = "<group>";
+		};
+		C9C2CFB61DFF02F3001DB1B6 /* Libs */ = {
+			isa = PBXGroup;
+			children = (
+				C9C2CFAC1DFF0003001DB1B6 /* CGFloat+Extensions.swift */,
+				C9C2CFAD1DFF0003001DB1B6 /* MSButtonNode.swift */,
+			);
+			name = Libs;
+			sourceTree = "<group>";
+		};
+		C9C2CFB71DFF0316001DB1B6 /* App Files */ = {
+			isa = PBXGroup;
+			children = (
+				C9FC13A11DF716EE00744006 /* Info.plist */,
+				C9FC138F1DF716EE00744006 /* AppDelegate.swift */,
+				C9FC13971DF716EE00744006 /* GameViewController.swift */,
+				C91E19EC1DF7238D00D7ABCD /* AppAnimations.sks */,
+			);
+			name = "App Files";
+			sourceTree = "<group>";
+		};
+		C9C2CFB81DFF0373001DB1B6 /* InfGamemode */ = {
+			isa = PBXGroup;
+			children = (
+				C9FC13951DF716EE00744006 /* InfiniteGameScene.swift */,
+				C9FC13911DF716EE00744006 /* InfiniteGameScene.sks */,
+				C9C97FE81DFB61F600627547 /* InfiniteScoreboard.sks */,
+				C9C2CF9E1DFEFE51001DB1B6 /* InfScoreboardAnimations.sks */,
+				C91E19F91DF7246F00D7ABCD /* Hero.sks */,
+				C91E19F71DF7246500D7ABCD /* Obstacle.sks */,
+			);
+			name = InfGamemode;
+			sourceTree = "<group>";
+		};
 		C9FC13831DF716EE00744006 = {
 			isa = PBXGroup;
 			children = (
@@ -60,15 +130,12 @@
 		C9FC138E1DF716EE00744006 /* HoppyHare */ = {
 			isa = PBXGroup;
 			children = (
-				C9FC138F1DF716EE00744006 /* AppDelegate.swift */,
-				C9FC13911DF716EE00744006 /* GameScene.sks */,
-				C9FC13931DF716EE00744006 /* Actions.sks */,
-				C9FC13951DF716EE00744006 /* GameScene.swift */,
-				C9FC13971DF716EE00744006 /* GameViewController.swift */,
-				C9FC13991DF716EE00744006 /* Main.storyboard */,
-				C9FC139C1DF716EE00744006 /* Assets.xcassets */,
-				C9FC139E1DF716EE00744006 /* LaunchScreen.storyboard */,
-				C9FC13A11DF716EE00744006 /* Info.plist */,
+				C9C2CFB71DFF0316001DB1B6 /* App Files */,
+				C9C2CFB81DFF0373001DB1B6 /* InfGamemode */,
+				C9C2CFB41DFF02B2001DB1B6 /* Resources */,
+				C9C2CFB51DFF02D8001DB1B6 /* Sounds */,
+				C9C2CFB61DFF02F3001DB1B6 /* Libs */,
+				C91E19FB1DF725FE00D7ABCD /* Main.storyboard */,
 			);
 			path = HoppyHare;
 			sourceTree = "<group>";
@@ -100,7 +167,7 @@
 			isa = PBXProject;
 			attributes = {
 				LastSwiftUpdateCheck = 0810;
-				LastUpgradeCheck = 0810;
+				LastUpgradeCheck = 0820;
 				ORGANIZATIONNAME = Mattkx4;
 				TargetAttributes = {
 					C9FC138B1DF716EE00744006 = {
@@ -133,11 +200,17 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				C9FC139B1DF716EE00744006 /* Main.storyboard in Resources */,
-				C9FC13921DF716EE00744006 /* GameScene.sks in Resources */,
+				C9C2CF9F1DFEFE51001DB1B6 /* InfScoreboardAnimations.sks in Resources */,
+				C91E19ED1DF7238D00D7ABCD /* AppAnimations.sks in Resources */,
+				C91E19F81DF7246500D7ABCD /* Obstacle.sks in Resources */,
+				C91E19FC1DF725FE00D7ABCD /* Main.storyboard in Resources */,
+				C91E19FA1DF7246F00D7ABCD /* Hero.sks in Resources */,
+				C9FC13921DF716EE00744006 /* InfiniteGameScene.sks in Resources */,
 				C9FC139D1DF716EE00744006 /* Assets.xcassets in Resources */,
-				C9FC13A01DF716EE00744006 /* LaunchScreen.storyboard in Resources */,
-				C9FC13941DF716EE00744006 /* Actions.sks in Resources */,
+				C9C2CFB21DFF0003001DB1B6 /* pixelFont.ttf in Resources */,
+				C9C97FE91DFB61F600627547 /* InfiniteScoreboard.sks in Resources */,
+				C9C2CFA31DFEFECC001DB1B6 /* flap.caf in Resources */,
+				C9C2CFA41DFEFECC001DB1B6 /* goal.caf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -148,32 +221,16 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				C9FC13961DF716EE00744006 /* GameScene.swift in Sources */,
+				C9FC13961DF716EE00744006 /* InfiniteGameScene.swift in Sources */,
 				C9FC13981DF716EE00744006 /* GameViewController.swift in Sources */,
+				C9C2CFB01DFF0003001DB1B6 /* CGFloat+Extensions.swift in Sources */,
+				C9C2CFB31DFF0003001DB1B6 /* Sounds.swift in Sources */,
 				C9FC13901DF716EE00744006 /* AppDelegate.swift in Sources */,
+				C9C2CFB11DFF0003001DB1B6 /* MSButtonNode.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
-
-/* Begin PBXVariantGroup section */
-		C9FC13991DF716EE00744006 /* Main.storyboard */ = {
-			isa = PBXVariantGroup;
-			children = (
-				C9FC139A1DF716EE00744006 /* Base */,
-			);
-			name = Main.storyboard;
-			sourceTree = "<group>";
-		};
-		C9FC139E1DF716EE00744006 /* LaunchScreen.storyboard */ = {
-			isa = PBXVariantGroup;
-			children = (
-				C9FC139F1DF716EE00744006 /* Base */,
-			);
-			name = LaunchScreen.storyboard;
-			sourceTree = "<group>";
-		};
-/* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
 		C9FC13A21DF716EE00744006 /* Debug */ = {
@@ -194,6 +251,7 @@
 				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
 				CLANG_WARN_SUSPICIOUS_MOVES = YES;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
@@ -216,7 +274,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 10.1;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = iphoneos;
@@ -243,6 +301,7 @@
 				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
 				CLANG_WARN_SUSPICIOUS_MOVES = YES;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
@@ -259,7 +318,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 10.1;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				SDKROOT = iphoneos;
 				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
@@ -271,8 +330,10 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				DEVELOPMENT_TEAM = T8CP9U4B3M;
 				INFOPLIST_FILE = HoppyHare/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.mattkx4.HoppyHare;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -284,8 +345,10 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				DEVELOPMENT_TEAM = T8CP9U4B3M;
 				INFOPLIST_FILE = HoppyHare/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.mattkx4.HoppyHare;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -312,6 +375,7 @@
 				C9FC13A61DF716EE00744006 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
