@@ -1,8 +1,8 @@
 //
 //  GameViewController.swift
-//  HoppyHare
+//  HoppyBunny
 //
-//  Created by Matthew Mehrtens on 12/6/16.
+//  Created by Matthew Mehrtens on 11/30/16.
 //  Copyright © 2016 Mattkx4. All rights reserved.
 //
 
@@ -11,13 +11,15 @@ import SpriteKit
 import GameplayKit
 
 class GameViewController: UIViewController {
+    
+    static var hasLoadedSounds = false
 
     override func viewDidLoad() {
         super.viewDidLoad()
         
         if let view = self.view as! SKView? {
             // Load the SKScene from 'GameScene.sks'
-            if let scene = SKScene(fileNamed: "GameScene") {
+            if let scene = SKScene(fileNamed: "InfiniteGameScene") {
                 // Set the scale mode to scale to fit the window
                 scene.scaleMode = .aspectFill
                 
@@ -27,13 +29,13 @@ class GameViewController: UIViewController {
             
             view.ignoresSiblingOrder = true
             
-            view.showsFPS = true
-            view.showsNodeCount = true
+            view.showsFPS = false
+            view.showsNodeCount = false
         }
     }
 
     override var shouldAutorotate: Bool {
-        return true
+        return false
     }
 
     override var supportedInterfaceOrientations: UIInterfaceOrientationMask {
