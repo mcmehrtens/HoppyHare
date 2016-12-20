@@ -29,7 +29,8 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     /* Label references */
     var startLabel: SKLabelNode!
     var loadingLabel: SKLabelNode!
-    var titleLabel: SKNode!
+    var titleLabel_0: SKLabelNode!
+    var titleLabel_1: SKLabelNode!
     var infScoreboardScore: SKLabelNode!
     var infScoreboardHighScoreLabel: SKLabelNode!
     var infScoreboardHighScoreNumber: SKLabelNode!
@@ -93,7 +94,8 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         /* Set label references */
         startLabel = self.childNode(withName: "startLabel") as! SKLabelNode
         loadingLabel = self.childNode(withName: "loadingLabel") as! SKLabelNode
-        titleLabel = self.childNode(withName: "titleNode")!
+        titleLabel_0 = self.childNode(withName: "titleLabel_0") as! SKLabelNode
+        titleLabel_1 = self.childNode(withName: "titleLabel_1") as! SKLabelNode
         infScoreboardScore = self.childNode(withName: "//infScoreboardScore") as! SKLabelNode
         infScoreboardHighScoreLabel = self.childNode(withName: "//infScoreboardHighScoreLabel") as! SKLabelNode
         infScoreboardHighScoreNumber = self.childNode(withName: "//infScoreboardHighScoreNumber") as! SKLabelNode
@@ -312,14 +314,18 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             loadingLabel.run(slideOffLoadingLabel)
             
             /* Slide on the title */
-            let slideOnTitle: SKAction = SKAction.init(named: "titleSlideOn")!
-            titleLabel.run(slideOnTitle)
+            let titleLabel_0SlideOn: SKAction = SKAction.init(named: "titleLabel_0SlideOn")!
+            let titleLabel_1SlideOn: SKAction = SKAction.init(named: "titleLabel_1SlideOn")!
+            titleLabel_0.run(titleLabel_0SlideOn)
+            titleLabel_1.run(titleLabel_1SlideOn)
             
             /* When setting the state to .Active, the flashing "start" label needs to go away and the score board text needs to appear. */
         case .Active:
             /* Slide the title off the screen */
-            let slideOffTitle: SKAction = SKAction.init(named: "titleSlideOff")!
-            titleLabel.run(slideOffTitle)
+            let titleLabel_0SlideOff: SKAction = SKAction.init(named: "titleLabel_0SlideOff")!
+            let titleLabel_1SlideOff: SKAction = SKAction.init(named: "titleLabel_1SlideOff")!
+            titleLabel_0.run(titleLabel_0SlideOff)
+            titleLabel_1.run(titleLabel_1SlideOff)
             
             startLabel.isHidden = true
             initializeScoreboard()
