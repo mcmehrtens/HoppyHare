@@ -9,21 +9,30 @@
 import Foundation
 import SpriteKit
 
-class GameSounds {
+struct Sounds {
     /* Check if the sounds have been initialized */
     static var hasBeenInitialized = false
     
-    /* Sounds */
-    static var flapSFX: SKAction!
-    static var goalSFX: SKAction!
+    /* Declare a dictionary to hold the sounds */
+    static var sounds: [String: SKAction?] = [:]
     
     /* This function initializes all the sounds being used in the game */
     static func initializeSounds() {
-        if !GameSounds.hasBeenInitialized {
-            GameSounds.flapSFX = SKAction.playSoundFileNamed("flap", waitForCompletion: false)
-            GameSounds.goalSFX = SKAction.playSoundFileNamed("goal", waitForCompletion: false)
+        if !Sounds.hasBeenInitialized {
+            sounds["flap"] = SKAction.playSoundFileNamed("flap", waitForCompletion: false)
+            sounds["goal"] = SKAction.playSoundFileNamed("goal", waitForCompletion: false)
             
-            GameSounds.hasBeenInitialized = true
+            Sounds.hasBeenInitialized = true
+        }
+    }
+    
+    /* This function plays the sound */
+    static func playSound(soundName: String, object: GameScene) {
+        /* Check if there's a vlue in the dictionary for the name provided */
+        if sounds[soundName] != nil {
+            object.run(sounds[soundName]!!)
+        } else {
+            print("[ERROR] Sound with the name \(soundName) doesn't exist.")
         }
     }
 }

@@ -14,11 +14,6 @@ enum GameState {
     case Active, GameOver, Ready, Preparing
 }
 
-/* Different sounds used in the game */
-enum Sound {
-    case Flap, Goal
-}
-
 class GameScene: SKScene, SKPhysicsContactDelegate {
     
     /* Game management */
@@ -128,7 +123,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         physicsWorld.contactDelegate = self
         
         /* Initialize the sounds. Check if they've been initialized first. */
-        GameSounds.initializeSounds()
+        Sounds.initializeSounds()
         
         /* Store the value of the defaults in local variables */
         initDefaults()
@@ -403,7 +398,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         hero.physicsBody?.applyImpulse(CGVector(dx: 0, dy: 180))
         
         /* Play SFX */
-        playSound(soundType: .Flap)
+        Sounds.playSound(soundName: "flap", object: self)
         
         /* Apply subtle rotation */
         hero.physicsBody?.applyAngularImpulse(CGFloat(0.1))
@@ -533,7 +528,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         infScoreboardScore.text = String(points)
         
         /* Play the goal sound */
-        playSound(soundType: .Goal)
+        Sounds.playSound(soundName: "goal", object: self)
         
         /* This checks if the player has surpassed the current high score. If yes, this sets the color of the high score labels to gold to notify the player that he's making history. */
         if points > highScore {
@@ -543,17 +538,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             /* Set the font color to yellloooowwwwwwwww */
             infScoreboardHighScoreLabel.fontColor = UIColor(red: 1.0, green: (215/255), blue: 0.0, alpha: 1.0)
             infScoreboardHighScoreNumber.fontColor = UIColor(red: 1.0, green: (215/255), blue: 0.0, alpha: 1.0)
-        }
-    }
-    
-    /* This function plays a sound based on the parameter given. */
-    func playSound(soundType: Sound) {
-        /* Play SFX */
-        switch soundType {
-        case .Flap:
-            self.run(GameSounds.flapSFX)
-        case .Goal:
-            self.run(GameSounds.goalSFX)
         }
     }
 }
