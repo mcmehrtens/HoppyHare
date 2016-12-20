@@ -29,6 +29,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     /* Label references */
     var startLabel: SKLabelNode!
     var loadingLabel: SKLabelNode!
+    var titleLabel: SKNode!
     var infScoreboardScore: SKLabelNode!
     var infScoreboardHighScoreLabel: SKLabelNode!
     var infScoreboardHighScoreNumber: SKLabelNode!
@@ -92,6 +93,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         /* Set label references */
         startLabel = self.childNode(withName: "startLabel") as! SKLabelNode
         loadingLabel = self.childNode(withName: "loadingLabel") as! SKLabelNode
+        titleLabel = self.childNode(withName: "titleNode")!
         infScoreboardScore = self.childNode(withName: "//infScoreboardScore") as! SKLabelNode
         infScoreboardHighScoreLabel = self.childNode(withName: "//infScoreboardHighScoreLabel") as! SKLabelNode
         infScoreboardHighScoreNumber = self.childNode(withName: "//infScoreboardHighScoreNumber") as! SKLabelNode
@@ -306,11 +308,19 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             startLabel.isHidden = false
             
             /* Slide off the loading label */
-            let slideOffLoadingLabel: SKAction = SKAction.init(named: "Slide Off - Score Label_1")!
+            let slideOffLoadingLabel: SKAction = SKAction.init(named: "loadingLabelSlideOff")!
             loadingLabel.run(slideOffLoadingLabel)
+            
+            /* Slide on the title */
+            let slideOnTitle: SKAction = SKAction.init(named: "titleSlideOn")!
+            titleLabel.run(slideOnTitle)
             
             /* When setting the state to .Active, the flashing "start" label needs to go away and the score board text needs to appear. */
         case .Active:
+            /* Slide the title off the screen */
+            let slideOffTitle: SKAction = SKAction.init(named: "titleSlideOff")!
+            titleLabel.run(slideOffTitle)
+            
             startLabel.isHidden = true
             initializeScoreboard()
             gameState = .Active
