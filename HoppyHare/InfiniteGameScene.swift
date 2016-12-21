@@ -14,7 +14,7 @@ enum GameState {
     case Active, GameOver, Ready, Preparing
 }
 
-class GameScene: SKScene, SKPhysicsContactDelegate {
+class InfiniteGameScene: SKScene, SKPhysicsContactDelegate {
     
     /* Game management */
     var gameState: GameState = .Preparing
@@ -67,7 +67,20 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     
     /* Defaults */
     let defaults = UserDefaults.standard
-    var highScore: Int!
+    var allTimeHighScore: Int!
+    var allTimeJumps: Int!
+    var allTimeScore: Int!
+    var allTimeMinutesPlayed: Int!
+    var longestRunningGame: Int!
+    var favoriteCostume: String!
+    var numOfCostumesDiscovered: Int!
+    var numOfTimesScorePre1: Int!
+    var numOfTimesScoreExc25: Int!
+    var numOfTimesScoreExc50: Int!
+    var numOfTimesScoreExc100: Int!
+    var numOfTimesScoreExc250: Int!
+    var numOfTimesScoreExc500: Int!
+    var numOfTimesScoreExc1000: Int!
     
     override func didMove(to view: SKView) {
         /* Set up your scene here */
@@ -111,7 +124,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             let skView = self.view as SKView!
             
             /* Load Game scene */
-            let scene = GameScene(fileNamed:"InfiniteGameScene") as GameScene!
+            let scene = InfiniteGameScene(fileNamed:"InfiniteGameScene") as InfiniteGameScene!
             
             /* Ensure correct aspect mode */
             scene!.scaleMode = .aspectFill
@@ -133,19 +146,19 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         initDefaults()
         
         /* Set the high score label */
-        infScoreboardHighScoreNumber.text = String(highScore)
+        infScoreboardHighScoreNumber.text = String(allTimeHighScore)
     }
     
     /* Initialize defaults */
     func initDefaults() {
         /* Get the high score value */
-        highScore = defaults.integer(forKey: "HighScore")
+        allTimeHighScore = defaults.integer(forKey: "AllTimeHighScore")
     }
     
     /* Reset defaults */
     func resetDefaults() {
         /* This is for testing purposes only */
-        defaults.set(0, forKey: "HighScore")
+        defaults.set(0, forKey: "AllTimeHighScore")
     }
     
     /* This func is called before each frame is rendered. */
@@ -334,9 +347,9 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             /* Lot's of things happening here. #1, stop all angular velocity. #2: Set the angular velocity = 0. #3: Stop the flapping animation. #4: Run the death animation. #5: Shake the screen. #6: Show the restart button.*/
         case .GameOver:
             /* Set new high score if the score is higher than the current high score. */
-            if points > highScore {
-                highScore = points
-                defaults.set(highScore, forKey: "HighScore")
+            if points > allTimeHighScore {
+                allTimeHighScore = points
+                defaults.set(allTimeHighScore, forKey: "HighScore")
             }
             
             /* Run the kill hero animation */
@@ -543,11 +556,16 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         /* Update score label */
         infScoreboardScore.text = String(points)
         
+        /* Resize the score if it's over 99 or 999 */
+        if points == 100 || points == 1000 {
+            infScoreboardScore.run(SKAction.init(named: "infScoreboardScoreShrink_0")!)
+        }
+        
         /* Play the goal sound */
         Sounds.playSound(soundName: "goal", object: self)
         
         /* This checks if the player has surpassed the current high score. If yes, this sets the color of the high score labels to gold to notify the player that he's making history. */
-        if points > highScore {
+        if points > allTimeHighScore {
             /* Set the highScore number to the number of points the player currently has */
             infScoreboardHighScoreNumber.text = String(points)
             

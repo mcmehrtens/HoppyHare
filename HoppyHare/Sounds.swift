@@ -27,7 +27,7 @@ struct Sounds {
     }
     
     /* This function plays the sound */
-    static func playSound(soundName: String, object: GameScene) {
+    static func playSound(soundName: String, object: InfiniteGameScene) {
         /* Check if there's a vlue in the dictionary for the name provided */
         if sounds[soundName] != nil {
             object.run(sounds[soundName]!!)

@@ -19,6 +19,7 @@
 		C9C2CFB21DFF0003001DB1B6 /* pixelFont.ttf in Resources */ = {isa = PBXBuildFile; fileRef = C9C2CFAE1DFF0003001DB1B6 /* pixelFont.ttf */; };
 		C9C2CFB31DFF0003001DB1B6 /* Sounds.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9C2CFAF1DFF0003001DB1B6 /* Sounds.swift */; };
 		C9C97FE91DFB61F600627547 /* InfiniteScoreboard.sks in Resources */ = {isa = PBXBuildFile; fileRef = C9C97FE81DFB61F600627547 /* InfiniteScoreboard.sks */; };
+		C9D5405D1E0AE7C200CAE1D1 /* GameStats.sks in Resources */ = {isa = PBXBuildFile; fileRef = C9D5405C1E0AE7C200CAE1D1 /* GameStats.sks */; };
 		C9FC13901DF716EE00744006 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9FC138F1DF716EE00744006 /* AppDelegate.swift */; };
 		C9FC13921DF716EE00744006 /* InfiniteGameScene.sks in Resources */ = {isa = PBXBuildFile; fileRef = C9FC13911DF716EE00744006 /* InfiniteGameScene.sks */; };
 		C9FC13961DF716EE00744006 /* InfiniteGameScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9FC13951DF716EE00744006 /* InfiniteGameScene.swift */; };
@@ -39,6 +40,7 @@
 		C9C2CFAE1DFF0003001DB1B6 /* pixelFont.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = pixelFont.ttf; sourceTree = "<group>"; };
 		C9C2CFAF1DFF0003001DB1B6 /* Sounds.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Sounds.swift; sourceTree = "<group>"; };
 		C9C97FE81DFB61F600627547 /* InfiniteScoreboard.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = InfiniteScoreboard.sks; sourceTree = "<group>"; };
+		C9D5405C1E0AE7C200CAE1D1 /* GameStats.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = GameStats.sks; sourceTree = "<group>"; };
 		C9FC138C1DF716EE00744006 /* HoppyHare.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = HoppyHare.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		C9FC138F1DF716EE00744006 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		C9FC13911DF716EE00744006 /* InfiniteGameScene.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = InfiniteGameScene.sks; sourceTree = "<group>"; };
@@ -135,6 +137,7 @@
 				C9C2CFB41DFF02B2001DB1B6 /* Resources */,
 				C9C2CFB51DFF02D8001DB1B6 /* Sounds */,
 				C9C2CFB61DFF02F3001DB1B6 /* Libs */,
+				C9D5405C1E0AE7C200CAE1D1 /* GameStats.sks */,
 				C91E19FB1DF725FE00D7ABCD /* Main.storyboard */,
 			);
 			path = HoppyHare;
@@ -201,6 +204,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				C9C2CF9F1DFEFE51001DB1B6 /* InfScoreboardAnimations.sks in Resources */,
+				C9D5405D1E0AE7C200CAE1D1 /* GameStats.sks in Resources */,
 				C91E19ED1DF7238D00D7ABCD /* AppAnimations.sks in Resources */,
 				C91E19F81DF7246500D7ABCD /* Obstacle.sks in Resources */,
 				C91E19FC1DF725FE00D7ABCD /* Main.storyboard in Resources */,
