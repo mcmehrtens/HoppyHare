@@ -70,17 +70,15 @@ class InfiniteGameScene: SKScene, SKPhysicsContactDelegate {
     var allTimeHighScore: Int!
     var allTimeJumps: Int!
     var allTimeScore: Int!
-    var allTimeMinutesPlayed: Int!
-    var longestRunningGame: Int!
-    var favoriteCostume: String!
+    var totalTimePlayed: Int!
+    var totalGamesPlayed: Int!
     var numOfCostumesDiscovered: Int!
-    var numOfTimesScorePre1: Int!
+    var favCostume: String!
+    var numOfTimesScorePrec1: Int!
     var numOfTimesScoreExc25: Int!
     var numOfTimesScoreExc50: Int!
     var numOfTimesScoreExc100: Int!
     var numOfTimesScoreExc250: Int!
-    var numOfTimesScoreExc500: Int!
-    var numOfTimesScoreExc1000: Int!
     
     override func didMove(to view: SKView) {
         /* Set up your scene here */
