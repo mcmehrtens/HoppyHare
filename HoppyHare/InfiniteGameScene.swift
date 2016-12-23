@@ -42,8 +42,9 @@ class InfiniteGameScene: SKScene, SKPhysicsContactDelegate {
     var hasGeneratedFirstObstacle = false
     var scoreLabelHasShrunk = false
     
-    /* UI Connections */
+    /* Buttons */
     var buttonRestart: MSButtonNode!
+    //var buttonGameStats: MSButtonNode!
 
     /* Score counter */
     var points = 0
@@ -80,9 +81,8 @@ class InfiniteGameScene: SKScene, SKPhysicsContactDelegate {
     var numOfTimesScoreExc100: Int!
     var numOfTimesScoreExc250: Int!
     
+    /* Set up your scene here */
     override func didMove(to view: SKView) {
-        /* Set up your scene here */
-        
         /* Recursive node search for 'hero' (child of referenced node) */
         hero = self.childNode(withName: "//hero") as! SKSpriteNode
         
@@ -112,8 +112,9 @@ class InfiniteGameScene: SKScene, SKPhysicsContactDelegate {
         infScoreboardHighScoreNumber = self.childNode(withName: "//infScoreboardHighScoreNumber") as! SKLabelNode
         infScoreboardHighScoreNode = self.childNode(withName: "//infScoreboardHighScoreNode")!
         
-        /* Set UI connections */
+        /* Set button connections */
         buttonRestart = self.childNode(withName: "buttonRestart") as! MSButtonNode
+        //buttonGameStats = self.childNode(withName: "buttonGameStats") as! MSButtonNode
         
         /* Setup restart button selection handler */
         buttonRestart.selectedHandler = { [unowned self] in
@@ -122,7 +123,7 @@ class InfiniteGameScene: SKScene, SKPhysicsContactDelegate {
             let skView = self.view as SKView!
             
             /* Load Game scene */
-            let scene = InfiniteGameScene(fileNamed:"InfiniteGameScene") as InfiniteGameScene!
+            let scene = GameStats(fileNamed:"GameStats") as GameStats!
             
             /* Ensure correct aspect mode */
             scene!.scaleMode = .aspectFill
@@ -130,6 +131,22 @@ class InfiniteGameScene: SKScene, SKPhysicsContactDelegate {
             /* Restart game scene */
             skView!.presentScene(scene)
         }
+        
+//        /* Setup back button selection handler */
+//        buttonGameStats.selectedHandler = { [unowned self] in
+//            
+//            /* Grab reference to our SpriteKit view */
+//            let skView = self.view as SKView!
+//            
+//            /* Load Game scene */
+//            let scene = GameStats(fileNamed:"GameStats") as GameStats!
+//            
+//            /* Ensure correct aspect mode */
+//            scene!.scaleMode = .aspectFill
+//            
+//            /* Restart game scene */
+//            skView!.presentScene(scene)
+//        }
         
         /* Hide restart button */
         buttonRestart.state = .hidden
@@ -347,7 +364,7 @@ class InfiniteGameScene: SKScene, SKPhysicsContactDelegate {
             /* Set new high score if the score is higher than the current high score. */
             if points > allTimeHighScore {
                 allTimeHighScore = points
-                defaults.set(allTimeHighScore, forKey: "HighScore")
+                defaults.set(allTimeHighScore, forKey: "AllTimeHighScore")
             }
             
             /* Run the kill hero animation */
