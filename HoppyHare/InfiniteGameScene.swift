@@ -35,6 +35,7 @@ class InfiniteGameScene: SKScene, SKPhysicsContactDelegate {
     var infScoreboardHighScoreLabel: SKLabelNode!
     var infScoreboardHighScoreNumber: SKLabelNode!
     var infScoreboardHighScoreNode: SKNode!
+    var gameStatsLabel: SKLabelNode!
     
     /* Boolean counters */
     var hasJumped = false
@@ -44,7 +45,7 @@ class InfiniteGameScene: SKScene, SKPhysicsContactDelegate {
     
     /* Buttons */
     var buttonRestart: MSButtonNode!
-    //var buttonGameStats: MSButtonNode!
+    var gameStatsButton: MSButtonNode!
 
     /* Score counter */
     var points = 0
@@ -65,21 +66,6 @@ class InfiniteGameScene: SKScene, SKPhysicsContactDelegate {
     let scrollSpeedGround: CGFloat = 110
     let scrollSpeedDistantBG: CGFloat = 10
     let scrollSpeedSky: CGFloat = 35
-    
-    /* Defaults */
-    let defaults = UserDefaults.standard
-    var allTimeHighScore: Int!
-    var allTimeJumps: Int!
-    var allTimeScore: Int!
-    var totalTimePlayed: Int!
-    var totalGamesPlayed: Int!
-    var numOfCostumesDiscovered: Int!
-    var favCostume: String!
-    var numOfTimesScorePrec1: Int!
-    var numOfTimesScoreExc25: Int!
-    var numOfTimesScoreExc50: Int!
-    var numOfTimesScoreExc100: Int!
-    var numOfTimesScoreExc250: Int!
     
     /* Set up your scene here */
     override func didMove(to view: SKView) {
@@ -111,10 +97,11 @@ class InfiniteGameScene: SKScene, SKPhysicsContactDelegate {
         infScoreboardHighScoreLabel = self.childNode(withName: "//infScoreboardHighScoreLabel") as! SKLabelNode
         infScoreboardHighScoreNumber = self.childNode(withName: "//infScoreboardHighScoreNumber") as! SKLabelNode
         infScoreboardHighScoreNode = self.childNode(withName: "//infScoreboardHighScoreNode")!
+        gameStatsLabel = self.childNode(withName: "gameStatsLabel") as! SKLabelNode
         
         /* Set button connections */
         buttonRestart = self.childNode(withName: "buttonRestart") as! MSButtonNode
-        //buttonGameStats = self.childNode(withName: "buttonGameStats") as! MSButtonNode
+        gameStatsButton = self.childNode(withName: "gameStatsButton") as! MSButtonNode
         
         /* Setup restart button selection handler */
         buttonRestart.selectedHandler = { [unowned self] in
@@ -123,7 +110,7 @@ class InfiniteGameScene: SKScene, SKPhysicsContactDelegate {
             let skView = self.view as SKView!
             
             /* Load Game scene */
-            let scene = GameStats(fileNamed:"GameStats") as GameStats!
+            let scene = InfiniteGameScene(fileNamed:"InfiniteGameScene") as InfiniteGameScene!
             
             /* Ensure correct aspect mode */
             scene!.scaleMode = .aspectFill
@@ -132,21 +119,21 @@ class InfiniteGameScene: SKScene, SKPhysicsContactDelegate {
             skView!.presentScene(scene)
         }
         
-//        /* Setup back button selection handler */
-//        buttonGameStats.selectedHandler = { [unowned self] in
-//            
-//            /* Grab reference to our SpriteKit view */
-//            let skView = self.view as SKView!
-//            
-//            /* Load Game scene */
-//            let scene = GameStats(fileNamed:"GameStats") as GameStats!
-//            
-//            /* Ensure correct aspect mode */
-//            scene!.scaleMode = .aspectFill
-//            
-//            /* Restart game scene */
-//            skView!.presentScene(scene)
-//        }
+        /* Setup back button selection handler */
+        gameStatsButton.selectedHandler = { [unowned self] in
+            
+            /* Grab reference to our SpriteKit view */
+            let skView = self.view as SKView!
+            
+            /* Load GameStats */
+            let scene = GameStats(fileNamed:"GameStats") as GameStats!
+            
+            /* Ensure correct aspect mode */
+            scene!.scaleMode = .aspectFill
+            
+            /* Set the view to the GameStats Scene */
+            skView!.presentScene(scene)
+        }
         
         /* Hide restart button */
         buttonRestart.state = .hidden
@@ -157,23 +144,11 @@ class InfiniteGameScene: SKScene, SKPhysicsContactDelegate {
         /* Initialize the sounds. Check if they've been initialized first. */
         Sounds.initializeSounds()
         
-        /* Store the value of the defaults in local variables */
-        initDefaults()
+        /* Get all the game stats from the defaults */
+        StoredStats.initDefaults()
         
         /* Set the high score label */
-        infScoreboardHighScoreNumber.text = String(allTimeHighScore)
-    }
-    
-    /* Initialize defaults */
-    func initDefaults() {
-        /* Get the high score value */
-        allTimeHighScore = defaults.integer(forKey: "AllTimeHighScore")
-    }
-    
-    /* Reset defaults */
-    func resetDefaults() {
-        /* This is for testing purposes only */
-        defaults.set(0, forKey: "AllTimeHighScore")
+        infScoreboardHighScoreNumber.text = String(StoredStats.allTimeHighScore)
     }
     
     /* This func is called before each frame is rendered. */
@@ -362,9 +337,9 @@ class InfiniteGameScene: SKScene, SKPhysicsContactDelegate {
             /* Lot's of things happening here. #1, stop all angular velocity. #2: Set the angular velocity = 0. #3: Stop the flapping animation. #4: Run the death animation. #5: Shake the screen. #6: Show the restart button.*/
         case .GameOver:
             /* Set new high score if the score is higher than the current high score. */
-            if points > allTimeHighScore {
-                allTimeHighScore = points
-                defaults.set(allTimeHighScore, forKey: "AllTimeHighScore")
+            if points > StoredStats.allTimeHighScore {
+                StoredStats.allTimeHighScore = points
+                StoredStats.defaults.set(StoredStats.allTimeHighScore, forKey: "allTimeHighScore")
             }
             
             /* Run the kill hero animation */
@@ -372,6 +347,10 @@ class InfiniteGameScene: SKScene, SKPhysicsContactDelegate {
             
             /* Show restart button */
             buttonRestart.state = .active
+            
+            /* Show the Game Stats Label and the Game Stats Button */
+            gameStatsLabel.isHidden = false
+            gameStatsButton.isHidden = false
             
             /* Set the game state to .GameOver */
             gameState = .GameOver
@@ -580,7 +559,7 @@ class InfiniteGameScene: SKScene, SKPhysicsContactDelegate {
         Sounds.playSound(soundName: "goal", object: self)
         
         /* This checks if the player has surpassed the current high score. If yes, this sets the color of the high score labels to gold to notify the player that he's making history. */
-        if points > allTimeHighScore {
+        if points > StoredStats.allTimeHighScore {
             /* Set the highScore number to the number of points the player currently has */
             infScoreboardHighScoreNumber.text = String(points)
             
