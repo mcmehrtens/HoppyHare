@@ -47,8 +47,9 @@ class InfiniteGameScene: SKScene, SKPhysicsContactDelegate {
     var buttonRestart: MSButtonNode!
     var gameStatsButton: MSButtonNode!
 
-    /* Score counter */
-    var points = 0
+    /* Counters */
+    var score = 0
+    var jumps = 0
     
     /* Time Variables */
     let timeBetweenObstacles = 1.5
@@ -337,9 +338,51 @@ class InfiniteGameScene: SKScene, SKPhysicsContactDelegate {
             /* Lot's of things happening here. #1, stop all angular velocity. #2: Set the angular velocity = 0. #3: Stop the flapping animation. #4: Run the death animation. #5: Shake the screen. #6: Show the restart button.*/
         case .GameOver:
             /* Set new high score if the score is higher than the current high score. */
-            if points > StoredStats.allTimeHighScore {
-                StoredStats.allTimeHighScore = points
-                StoredStats.defaults.set(StoredStats.allTimeHighScore, forKey: "allTimeHighScore")
+            if score > StoredStats.allTimeHighScore {
+                StoredStats.defaults.set(score, forKey: "allTimeHighScore")
+            }
+            
+            /* Add the score onto the allTimeHighScore stat */
+            StoredStats.allTimeScore! += score
+            StoredStats.defaults.set(StoredStats.allTimeScore, forKey: "allTimeScore")
+            
+            /* Add the jumps onto the allTimeJumps stats */
+            StoredStats.allTimeJumps! += jumps
+            StoredStats.defaults.set(StoredStats.allTimeJumps, forKey: "allTimeJumps")
+            
+            /* Check to see if the jumps is greater than the mostJumpsInOneGame stat */
+            if jumps > StoredStats.mostJumpsInOneGame! {
+                /* If yes, set the value of mostJumpsInOneGame to the number of jumps */
+                StoredStats.mostJumpsInOneGame = jumps
+                StoredStats.defaults.set(StoredStats.mostJumpsInOneGame, forKey: "mostJumpsInOneGame")
+            }
+            
+            /* Add one to the total games played */
+            StoredStats.totalGamesPlayed! += 1
+            StoredStats.defaults.set(StoredStats.totalGamesPlayed, forKey: "totalGamesPlayed")
+            
+            /* Check to see the score and increment the appropriate game stats. */
+            if score < 1 {
+                StoredStats.numOfTimesScorePrec1! += 1
+                StoredStats.defaults.set(StoredStats.numOfTimesScorePrec1, forKey: "numOfTimesScorePrec1")
+            } else if score > 25 {
+                StoredStats.numOfTimesScoreExc25! += 1
+                StoredStats.defaults.set(StoredStats.numOfTimesScoreExc25, forKey: "numOfTimesScoreExc25")
+                
+                if score > 50 {
+                    StoredStats.numOfTimesScoreExc50! += 1
+                    StoredStats.defaults.set(StoredStats.numOfTimesScoreExc50, forKey: "numOfTimesScoreExc50")
+                    
+                    if score > 100 {
+                        StoredStats.numOfTimesScoreExc100! += 1
+                        StoredStats.defaults.set(StoredStats.numOfTimesScoreExc100, forKey: "numOfTimesScoreExc100")
+                        
+                        if score > 250 {
+                            StoredStats.numOfTimesScoreExc250! += 1
+                            StoredStats.defaults.set(StoredStats.numOfTimesScoreExc250, forKey: "numOfTimesScoreExc250")
+                        }
+                    }
+                }
             }
             
             /* Run the kill hero animation */
@@ -414,6 +457,9 @@ class InfiniteGameScene: SKScene, SKPhysicsContactDelegate {
     
     /* Jumps the hero into the aiiiirrrrrrr!!!! */
     func jump() {
+        /* Increment the jump counter */
+        jumps += 1
+        
         /* Reset velocity, helps improve response against cumulative falling velocity */
         hero.physicsBody?.velocity = CGVector(dx: 0, dy: 0)
         
@@ -545,13 +591,13 @@ class InfiniteGameScene: SKScene, SKPhysicsContactDelegate {
     /* Increment the score */
     func increaseScore() {
         /* Increment points */
-        points += 1
+        score += 1
         
         /* Update score label */
-        infScoreboardScore.text = String(points)
+        infScoreboardScore.text = String(score)
         
         /* Resize the score if it's over 99 or 999 */
-        if points == 100 || points == 1000 {
+        if score == 100 || score == 1000 {
             infScoreboardScore.run(SKAction.init(named: "infScoreboardScoreShrink_0")!)
         }
         
@@ -559,9 +605,9 @@ class InfiniteGameScene: SKScene, SKPhysicsContactDelegate {
         Sounds.playSound(soundName: "goal", object: self)
         
         /* This checks if the player has surpassed the current high score. If yes, this sets the color of the high score labels to gold to notify the player that he's making history. */
-        if points > StoredStats.allTimeHighScore {
+        if score > StoredStats.allTimeHighScore {
             /* Set the highScore number to the number of points the player currently has */
-            infScoreboardHighScoreNumber.text = String(points)
+            infScoreboardHighScoreNumber.text = String(score)
             
             /* Set the font color to yellloooowwwwwwwww */
             infScoreboardHighScoreLabel.fontColor = UIColor(red: 1.0, green: (215/255), blue: 0.0, alpha: 1.0)

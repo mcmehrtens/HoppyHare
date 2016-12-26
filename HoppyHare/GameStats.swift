@@ -17,8 +17,8 @@ class GameStats: SKScene {
     override func didMove(to view: SKView) {
         /* Set the label references */
         textObjects = [self.childNode(withName: "allTimeHighScoreNode")!]
-        textObjects.append(self.childNode(withName: "allTimeJumpsNode")!)
         textObjects.append(self.childNode(withName: "allTimeScoreNode")!)
+        textObjects.append(self.childNode(withName: "allTimeJumpsNode")!)
         textObjects.append(self.childNode(withName: "mostJumpsInOneGameNode")!)
         textObjects.append(self.childNode(withName: "totalGamesPlayedNode")!)
         textObjects.append(self.childNode(withName: "numOfCostumesDiscoveredNode")!)
@@ -33,6 +33,7 @@ class GameStats: SKScene {
         /* Make the text of all the stat labels = to what they actually are in the defaults */
         (self.childNode(withName: "//allTimeHighScore") as! SKLabelNode).text = String(StoredStats.allTimeHighScore)
         (self.childNode(withName: "//allTimeScore") as! SKLabelNode).text = String(StoredStats.allTimeScore)
+        (self.childNode(withName: "//allTimeJumps") as! SKLabelNode).text = String(StoredStats.allTimeJumps)
         (self.childNode(withName: "//mostJumpsInOneGame") as! SKLabelNode).text = String(StoredStats.mostJumpsInOneGame)
         (self.childNode(withName: "//totalGamesPlayed") as! SKLabelNode).text = String(StoredStats.totalGamesPlayed)
         (self.childNode(withName: "//numOfCostumesDiscovered") as! SKLabelNode).text = String(StoredStats.numOfCostumesDiscovered)
@@ -99,12 +100,12 @@ class GameStats: SKScene {
 struct StoredStats {
     static let defaults = UserDefaults.standard
     static var allTimeHighScore: Int!
-    static var allTimeJumps: Int!
     static var allTimeScore: Int!
+    static var allTimeJumps: Int!
     static var mostJumpsInOneGame: Int!
     static var totalGamesPlayed: Int!
     static var numOfCostumesDiscovered: Int!
-    static var favCostume: String!
+    static var favCostume: String = "Not Implemented"
     static var numOfTimesScorePrec1: Int!
     static var numOfTimesScoreExc25: Int!
     static var numOfTimesScoreExc50: Int!
@@ -115,12 +116,15 @@ struct StoredStats {
     static func initDefaults() {
         /* Get the high score value */
         allTimeHighScore = defaults.integer(forKey: "allTimeHighScore")
-        allTimeJumps = defaults.integer(forKey: "allTimeJumps")
         allTimeScore = defaults.integer(forKey: "allTimeScore")
+        allTimeJumps = defaults.integer(forKey: "allTimeJumps")
         mostJumpsInOneGame = defaults.integer(forKey: "mostJumpsInOneGame")
         totalGamesPlayed = defaults.integer(forKey: "totalGamesPlayed")
         numOfCostumesDiscovered = defaults.integer(forKey: "numOfCostumesDiscovered")
-        favCostume = defaults.string(forKey: "favCostume")
+        if numOfCostumesDiscovered == 0 {
+            numOfCostumesDiscovered = 1
+        }
+        //favCostume = defaults.string(forKey: "favCostume")
         numOfTimesScorePrec1 = defaults.integer(forKey: "numOfTimesScorePrec1")
         numOfTimesScoreExc25 = defaults.integer(forKey: "numOfTimesScoreExc25")
         numOfTimesScoreExc50 = defaults.integer(forKey: "numOfTimesScoreExc50")
