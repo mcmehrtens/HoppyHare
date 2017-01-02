@@ -95,6 +95,57 @@ class GameStats: SKScene {
         /* Restart game scene */
         skView!.presentScene(scene)
     }
+    
+    /* This func updates all game stats in one function. Move this function from the main InfiniteGameScene page to clean things up a bit. */
+    static func updateGameStats(score: Int, jumps: Int) {
+        /* Set new high score if the score is higher than the current high score. */
+        if score > StoredStats.allTimeHighScore {
+            StoredStats.defaults.set(score, forKey: "allTimeHighScore")
+        }
+        
+        /* Add the score onto the allTimeHighScore stat */
+        StoredStats.allTimeScore! += score
+        StoredStats.defaults.set(StoredStats.allTimeScore, forKey: "allTimeScore")
+        
+        /* Add the jumps onto the allTimeJumps stats */
+        StoredStats.allTimeJumps! += jumps
+        StoredStats.defaults.set(StoredStats.allTimeJumps, forKey: "allTimeJumps")
+        
+        /* Check to see if the jumps is greater than the mostJumpsInOneGame stat */
+        if jumps > StoredStats.mostJumpsInOneGame! {
+            /* If yes, set the value of mostJumpsInOneGame to the number of jumps */
+            StoredStats.mostJumpsInOneGame = jumps
+            StoredStats.defaults.set(StoredStats.mostJumpsInOneGame, forKey: "mostJumpsInOneGame")
+        }
+        
+        /* Add one to the total games played */
+        StoredStats.totalGamesPlayed! += 1
+        StoredStats.defaults.set(StoredStats.totalGamesPlayed, forKey: "totalGamesPlayed")
+        
+        /* Check to see the score and increment the appropriate game stats. */
+        if score < 1 {
+            StoredStats.numOfTimesScorePrec1! += 1
+            StoredStats.defaults.set(StoredStats.numOfTimesScorePrec1, forKey: "numOfTimesScorePrec1")
+        } else if score > 25 {
+            StoredStats.numOfTimesScoreExc25! += 1
+            StoredStats.defaults.set(StoredStats.numOfTimesScoreExc25, forKey: "numOfTimesScoreExc25")
+            
+            if score > 50 {
+                StoredStats.numOfTimesScoreExc50! += 1
+                StoredStats.defaults.set(StoredStats.numOfTimesScoreExc50, forKey: "numOfTimesScoreExc50")
+                
+                if score > 100 {
+                    StoredStats.numOfTimesScoreExc100! += 1
+                    StoredStats.defaults.set(StoredStats.numOfTimesScoreExc100, forKey: "numOfTimesScoreExc100")
+                    
+                    if score > 250 {
+                        StoredStats.numOfTimesScoreExc250! += 1
+                        StoredStats.defaults.set(StoredStats.numOfTimesScoreExc250, forKey: "numOfTimesScoreExc250")
+                    }
+                }
+            }
+        }
+    }
 }
 
 struct StoredStats {

@@ -314,76 +314,26 @@ class InfiniteGameScene: SKScene, SKPhysicsContactDelegate {
             startLabel.isHidden = false
             
             /* Slide off the loading label */
-            let slideOffLoadingLabel: SKAction = SKAction.init(named: "loadingLabelSlideOff")!
-            loadingLabel.run(slideOffLoadingLabel)
+            InfiniteGameSceneAnimations.loadingLabelSlideOff(node: loadingLabel)
             
             /* Slide on the title */
-            let titleLabel_0SlideOn: SKAction = SKAction.init(named: "titleLabel_0SlideOn")!
-            let titleLabel_1SlideOn: SKAction = SKAction.init(named: "titleLabel_1SlideOn")!
-            titleLabel_0.run(titleLabel_0SlideOn)
-            titleLabel_1.run(titleLabel_1SlideOn)
+            InfiniteGameSceneAnimations.titleSlideIn(nodes: (titleLabel_0, titleLabel_1))
             
             /* When setting the state to .Active, the flashing "start" label needs to go away and the score board text needs to appear. */
         case .Active:
             /* Slide the title off the screen */
-            let titleLabel_0SlideOff: SKAction = SKAction.init(named: "titleLabel_0SlideOff")!
-            let titleLabel_1SlideOff: SKAction = SKAction.init(named: "titleLabel_1SlideOff")!
-            titleLabel_0.run(titleLabel_0SlideOff)
-            titleLabel_1.run(titleLabel_1SlideOff)
+            InfiniteGameSceneAnimations.titleSlideOff(nodes: (titleLabel_0, titleLabel_1))
+            
+            /* Slide on the scoreboard labels :) */
+            InfiniteGameSceneAnimations.infScoreboardSlideIn(nodes: [infScoreboardScore, infScoreboardHighScoreNode])
             
             startLabel.isHidden = true
-            initializeScoreboard()
             gameState = .Active
             
             /* Lot's of things happening here. #1, stop all angular velocity. #2: Set the angular velocity = 0. #3: Stop the flapping animation. #4: Run the death animation. #5: Shake the screen. #6: Show the restart button.*/
         case .GameOver:
-            /* Set new high score if the score is higher than the current high score. */
-            if score > StoredStats.allTimeHighScore {
-                StoredStats.defaults.set(score, forKey: "allTimeHighScore")
-            }
-            
-            /* Add the score onto the allTimeHighScore stat */
-            StoredStats.allTimeScore! += score
-            StoredStats.defaults.set(StoredStats.allTimeScore, forKey: "allTimeScore")
-            
-            /* Add the jumps onto the allTimeJumps stats */
-            StoredStats.allTimeJumps! += jumps
-            StoredStats.defaults.set(StoredStats.allTimeJumps, forKey: "allTimeJumps")
-            
-            /* Check to see if the jumps is greater than the mostJumpsInOneGame stat */
-            if jumps > StoredStats.mostJumpsInOneGame! {
-                /* If yes, set the value of mostJumpsInOneGame to the number of jumps */
-                StoredStats.mostJumpsInOneGame = jumps
-                StoredStats.defaults.set(StoredStats.mostJumpsInOneGame, forKey: "mostJumpsInOneGame")
-            }
-            
-            /* Add one to the total games played */
-            StoredStats.totalGamesPlayed! += 1
-            StoredStats.defaults.set(StoredStats.totalGamesPlayed, forKey: "totalGamesPlayed")
-            
-            /* Check to see the score and increment the appropriate game stats. */
-            if score < 1 {
-                StoredStats.numOfTimesScorePrec1! += 1
-                StoredStats.defaults.set(StoredStats.numOfTimesScorePrec1, forKey: "numOfTimesScorePrec1")
-            } else if score > 25 {
-                StoredStats.numOfTimesScoreExc25! += 1
-                StoredStats.defaults.set(StoredStats.numOfTimesScoreExc25, forKey: "numOfTimesScoreExc25")
-                
-                if score > 50 {
-                    StoredStats.numOfTimesScoreExc50! += 1
-                    StoredStats.defaults.set(StoredStats.numOfTimesScoreExc50, forKey: "numOfTimesScoreExc50")
-                    
-                    if score > 100 {
-                        StoredStats.numOfTimesScoreExc100! += 1
-                        StoredStats.defaults.set(StoredStats.numOfTimesScoreExc100, forKey: "numOfTimesScoreExc100")
-                        
-                        if score > 250 {
-                            StoredStats.numOfTimesScoreExc250! += 1
-                            StoredStats.defaults.set(StoredStats.numOfTimesScoreExc250, forKey: "numOfTimesScoreExc250")
-                        }
-                    }
-                }
-            }
+            /* Update all the game statistics */
+            GameStats.updateGameStats(score: score, jumps: jumps)
             
             /* Run the kill hero animation */
             killHero()
@@ -401,16 +351,6 @@ class InfiniteGameScene: SKScene, SKPhysicsContactDelegate {
         }
     }
     
-    /* Initializes the scoreboard */
-    func initializeScoreboard() {
-        /* Initialize the slideIn animation */
-        let moveScoreIn: SKAction = SKAction.init(named: "slideItemIn")!
-        
-        /* Slide in all the scoreboard labels and stuff */
-        infScoreboardScore.run(moveScoreIn)
-        infScoreboardHighScoreNode.run(moveScoreIn)
-    }
-    
     /* Kill the hero */
     func killHero() {
         /* Stop any new angular velocity being applied */
@@ -426,6 +366,7 @@ class InfiniteGameScene: SKScene, SKPhysicsContactDelegate {
         let heroDeath = SKAction.run({
             /* Put our hero face down in the dirt */
             self.hero.zRotation = CGFloat(-90).degreesToRadians()
+            
             /* Stop hero from colliding with anything else */
             self.hero.physicsBody?.collisionBitMask = 0
         })
@@ -433,14 +374,8 @@ class InfiniteGameScene: SKScene, SKPhysicsContactDelegate {
         /* Run action */
         hero.run(heroDeath)
         
-        /* Load the shake action resource */
-        let shakeScene:SKAction = SKAction.init(named: "Shake")!
-        
-        /* Loop through all nodes  */
-        for node in self.children {
-            /* Apply effect each ground node */
-            node.run(shakeScene)
-        }
+        /* Shake all the nodes in this scene  */
+        InfiniteGameSceneAnimations.shake(nodes: self.children)
     }
     
     /* Checks if the game is ready to play. Once it's ready, it sets the GameState to .Ready. */
@@ -596,11 +531,6 @@ class InfiniteGameScene: SKScene, SKPhysicsContactDelegate {
         /* Update score label */
         infScoreboardScore.text = String(score)
         
-        /* Resize the score if it's over 99 or 999 */
-        if score == 100 || score == 1000 {
-            infScoreboardScore.run(SKAction.init(named: "infScoreboardScoreShrink_0")!)
-        }
-        
         /* Play the goal sound */
         Sounds.playSound(soundName: "goal", object: self)
         
@@ -610,8 +540,8 @@ class InfiniteGameScene: SKScene, SKPhysicsContactDelegate {
             infScoreboardHighScoreNumber.text = String(score)
             
             /* Set the font color to yellloooowwwwwwwww */
-            infScoreboardHighScoreLabel.fontColor = UIColor(red: 1.0, green: (215/255), blue: 0.0, alpha: 1.0)
-            infScoreboardHighScoreNumber.fontColor = UIColor(red: 1.0, green: (215/255), blue: 0.0, alpha: 1.0)
+            infScoreboardHighScoreLabel.fontColor = CustomColors.colorGold
+            infScoreboardHighScoreNumber.fontColor = CustomColors.colorGold
         }
     }
 }
