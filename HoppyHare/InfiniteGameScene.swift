@@ -354,6 +354,10 @@ class InfiniteGameScene: SKScene, SKPhysicsContactDelegate {
             /* Set the Game Over Menu to be visible */
             gameOverMenuReferenceNode.isHidden = false
             
+            /* Set the proper numbers to the Game Over Menu (the score and the jumps) */
+            gameOverMenuScoreLabels.1.text = String(score)
+            gameOverMenuJumpLabels.1.text = String(jumps)
+            
             /* Set the game state to .GameOver */
             gameState = .GameOver
         default: break
@@ -477,13 +481,13 @@ class InfiniteGameScene: SKScene, SKPhysicsContactDelegate {
     
     /* Displays the menu item by item */
     func displayGameOverMenu() {
-        if gameOverMenuTimer >= 0.5 && gameOverMenuScoreLabels.0.isHidden == true {
+        if gameOverMenuTimer >= 0.75 && gameOverMenuScoreLabels.0.isHidden == true {
             gameOverMenuScoreLabels.0.isHidden = false
             gameOverMenuScoreLabels.1.isHidden = false
-        } else if gameOverMenuTimer >= 1 && gameOverMenuJumpLabels.0.isHidden == true {
+        } else if gameOverMenuTimer >= 1.5 && gameOverMenuJumpLabels.0.isHidden == true {
             gameOverMenuJumpLabels.0.isHidden = false
             gameOverMenuJumpLabels.1.isHidden = false
-        } else if gameOverMenuTimer >= 1.5 && gameOverMenuNewHighScoreLabel.isHidden == true {
+        } else if gameOverMenuTimer >= 2.25 && gameOverMenuNewHighScoreLabel.isHidden == true {
             if score > StoredStats.allTimeHighScore {
                 gameOverMenuNewHighScoreLabel.isHidden = false
             }
