@@ -35,7 +35,12 @@ class InfiniteGameScene: SKScene, SKPhysicsContactDelegate {
     var infScoreboardHighScoreLabel: SKLabelNode!
     var infScoreboardHighScoreNumber: SKLabelNode!
     var infScoreboardHighScoreNode: SKNode!
-    var gameStatsLabel: SKLabelNode!
+    
+    /* Game Over Menu references */
+    var gameOverMenuReferenceNode: SKReferenceNode!
+    var gameOverMenuScoreLabels: (SKLabelNode, SKLabelNode)!
+    var gameOverMenuJumpLabels: (SKLabelNode, SKLabelNode)!
+    var gameOverMenuNewHighScoreLabel: SKLabelNode!
     
     /* Boolean counters */
     var hasJumped = false
@@ -44,8 +49,8 @@ class InfiniteGameScene: SKScene, SKPhysicsContactDelegate {
     var scoreLabelHasShrunk = false
     
     /* Buttons */
-    var buttonRestart: MSButtonNode!
-    var gameStatsButton: MSButtonNode!
+    var gameOverMenuReplayButton_1: MSButtonNode!
+    var gameOverMenuGameStatsButton_1: MSButtonNode!
 
     /* Counters */
     var score = 0
@@ -62,6 +67,7 @@ class InfiniteGameScene: SKScene, SKPhysicsContactDelegate {
     var idleJumpTimer: TimeInterval = 0
     var automaticJumpTimer: TimeInterval = 0
     var timeSinceStart: TimeInterval = 0
+    var gameOverMenuTimer: TimeInterval = 0
     
     /* Scroll Speeds*/
     let scrollSpeedGround: CGFloat = 110
@@ -98,14 +104,19 @@ class InfiniteGameScene: SKScene, SKPhysicsContactDelegate {
         infScoreboardHighScoreLabel = self.childNode(withName: "//infScoreboardHighScoreLabel") as! SKLabelNode
         infScoreboardHighScoreNumber = self.childNode(withName: "//infScoreboardHighScoreNumber") as! SKLabelNode
         infScoreboardHighScoreNode = self.childNode(withName: "//infScoreboardHighScoreNode")!
-        gameStatsLabel = self.childNode(withName: "gameStatsLabel") as! SKLabelNode
+        
+        /* Set the gameOverMenu references */
+        gameOverMenuReferenceNode = self.childNode(withName: "//gameOverMenuReferenceNode") as! SKReferenceNode
+        gameOverMenuScoreLabels = ((self.childNode(withName: "//gameOverMenuScoreLabel_0") as! SKLabelNode), (self.childNode(withName: "//gameOverMenuScoreLabel_1") as! SKLabelNode))
+        gameOverMenuJumpLabels = ((self.childNode(withName: "//gameOverMenuJumpLabel_0") as! SKLabelNode), (self.childNode(withName: "//gameOverMenuJumpLabel_1") as! SKLabelNode))
+        gameOverMenuNewHighScoreLabel = self.childNode(withName: "//gameOverMenuNewHighScoreLabel") as! SKLabelNode
         
         /* Set button connections */
-        buttonRestart = self.childNode(withName: "buttonRestart") as! MSButtonNode
-        gameStatsButton = self.childNode(withName: "gameStatsButton") as! MSButtonNode
+        gameOverMenuReplayButton_1 = self.childNode(withName: "//gameOverMenuReplayButton_1") as! MSButtonNode
+        gameOverMenuGameStatsButton_1 = self.childNode(withName: "//gameOverMenuGameStatsButton_1") as! MSButtonNode
         
         /* Setup restart button selection handler */
-        buttonRestart.selectedHandler = { [unowned self] in
+        gameOverMenuReplayButton_1.selectedHandler = { [unowned self] in
             
             /* Grab reference to our SpriteKit view */
             let skView = self.view as SKView!
@@ -121,7 +132,7 @@ class InfiniteGameScene: SKScene, SKPhysicsContactDelegate {
         }
         
         /* Setup back button selection handler */
-        gameStatsButton.selectedHandler = { [unowned self] in
+        gameOverMenuGameStatsButton_1.selectedHandler = { [unowned self] in
             
             /* Grab reference to our SpriteKit view */
             let skView = self.view as SKView!
@@ -135,9 +146,6 @@ class InfiniteGameScene: SKScene, SKPhysicsContactDelegate {
             /* Set the view to the GameStats Scene */
             skView!.presentScene(scene)
         }
-        
-        /* Hide restart button */
-        buttonRestart.state = .hidden
         
         /* Set physics contact delegate */
         physicsWorld.contactDelegate = self
@@ -175,6 +183,11 @@ class InfiniteGameScene: SKScene, SKPhysicsContactDelegate {
             
             /* Check to see if the bunny is out of bounds */
             checkIfBunnyIsOutOfBounds()
+        }
+        
+        /* Only activate this part of the game if the game is over */
+        if gameState == .GameOver {
+            displayGameOverMenu()
         }
     }
     
@@ -338,12 +351,8 @@ class InfiniteGameScene: SKScene, SKPhysicsContactDelegate {
             /* Run the kill hero animation */
             killHero()
             
-            /* Show restart button */
-            buttonRestart.state = .active
-            
-            /* Show the Game Stats Label and the Game Stats Button */
-            gameStatsLabel.isHidden = false
-            gameStatsButton.isHidden = false
+            /* Set the Game Over Menu to be visible */
+            gameOverMenuReferenceNode.isHidden = false
             
             /* Set the game state to .GameOver */
             gameState = .GameOver
@@ -464,6 +473,23 @@ class InfiniteGameScene: SKScene, SKPhysicsContactDelegate {
         
         /* Increment the timer */
         startLabelTimer += fixedDelta
+    }
+    
+    /* Displays the menu item by item */
+    func displayGameOverMenu() {
+        if gameOverMenuTimer >= 0.5 && gameOverMenuScoreLabels.0.isHidden == true {
+            gameOverMenuScoreLabels.0.isHidden = false
+            gameOverMenuScoreLabels.1.isHidden = false
+        } else if gameOverMenuTimer >= 1 && gameOverMenuJumpLabels.0.isHidden == true {
+            gameOverMenuJumpLabels.0.isHidden = false
+            gameOverMenuJumpLabels.1.isHidden = false
+        } else if gameOverMenuTimer >= 1.5 && gameOverMenuNewHighScoreLabel.isHidden == true {
+            if score > StoredStats.allTimeHighScore {
+                gameOverMenuNewHighScoreLabel.isHidden = false
+            }
+        }
+        
+        gameOverMenuTimer += fixedDelta
     }
     
     /* Check if the bunnies vertical velocity is too high */
