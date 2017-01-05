@@ -10,11 +10,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "HoppyHare/InfiniteGameScene.swift"
-            timestampString = "505096614.952626"
+            timestampString = "505262194.467509"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "347"
-            endingLineNumber = "347"
+            startingLineNumber = "402"
+            endingLineNumber = "402"
             landmarkName = "setGameState(state:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -26,11 +26,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "HoppyHare/InfiniteGameScene.swift"
-            timestampString = "505095740.39858"
+            timestampString = "505262194.467509"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "128"
-            endingLineNumber = "128"
+            startingLineNumber = "164"
+            endingLineNumber = "164"
             landmarkName = "didMove(to:)"
             landmarkType = "7">
          </BreakpointContent>
