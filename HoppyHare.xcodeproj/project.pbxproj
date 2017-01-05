@@ -13,6 +13,7 @@
 		C926F5E11E19AF06007584F7 /* InfiniteGameSceneAnimations.swift in Sources */ = {isa = PBXBuildFile; fileRef = C926F5E01E19AF06007584F7 /* InfiniteGameSceneAnimations.swift */; };
 		C926F5E31E19E82C007584F7 /* CustomColors.swift in Sources */ = {isa = PBXBuildFile; fileRef = C926F5E21E19E82C007584F7 /* CustomColors.swift */; };
 		C942D4211E1D59EF002FEF73 /* GameStatsTab.sks in Resources */ = {isa = PBXBuildFile; fileRef = C942D4201E1D59EF002FEF73 /* GameStatsTab.sks */; };
+		C98C0E301E1ECC8C000E0989 /* StartMenu.sks in Resources */ = {isa = PBXBuildFile; fileRef = C98C0E2F1E1ECC8C000E0989 /* StartMenu.sks */; };
 		C9947A8C1E1B1D7500864E7F /* GameOverMenu.sks in Resources */ = {isa = PBXBuildFile; fileRef = C9947A8B1E1B1D7500864E7F /* GameOverMenu.sks */; };
 		C9C2CFA31DFEFECC001DB1B6 /* flap.caf in Resources */ = {isa = PBXBuildFile; fileRef = C9C2CFA01DFEFECC001DB1B6 /* flap.caf */; };
 		C9C2CFA41DFEFECC001DB1B6 /* goal.caf in Resources */ = {isa = PBXBuildFile; fileRef = C9C2CFA11DFEFECC001DB1B6 /* goal.caf */; };
@@ -26,6 +27,7 @@
 		C9FC13961DF716EE00744006 /* InfiniteGameScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9FC13951DF716EE00744006 /* InfiniteGameScene.swift */; };
 		C9FC13981DF716EE00744006 /* GameViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9FC13971DF716EE00744006 /* GameViewController.swift */; };
 		C9FC139D1DF716EE00744006 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = C9FC139C1DF716EE00744006 /* Assets.xcassets */; };
+		C9FE59761E1EBEF4002AAD65 /* DifficultySelector.sks in Resources */ = {isa = PBXBuildFile; fileRef = C9FE59751E1EBEF4002AAD65 /* DifficultySelector.sks */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -35,6 +37,7 @@
 		C926F5E01E19AF06007584F7 /* InfiniteGameSceneAnimations.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InfiniteGameSceneAnimations.swift; sourceTree = "<group>"; };
 		C926F5E21E19E82C007584F7 /* CustomColors.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CustomColors.swift; sourceTree = "<group>"; };
 		C942D4201E1D59EF002FEF73 /* GameStatsTab.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = GameStatsTab.sks; sourceTree = "<group>"; };
+		C98C0E2F1E1ECC8C000E0989 /* StartMenu.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = StartMenu.sks; sourceTree = "<group>"; };
 		C9947A8B1E1B1D7500864E7F /* GameOverMenu.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = GameOverMenu.sks; sourceTree = "<group>"; };
 		C9C2CFA01DFEFECC001DB1B6 /* flap.caf */ = {isa = PBXFileReference; lastKnownFileType = file; name = flap.caf; path = SFX/flap.caf; sourceTree = "<group>"; };
 		C9C2CFA11DFEFECC001DB1B6 /* goal.caf */ = {isa = PBXFileReference; lastKnownFileType = file; name = goal.caf; path = SFX/goal.caf; sourceTree = "<group>"; };
@@ -50,6 +53,7 @@
 		C9FC13971DF716EE00744006 /* GameViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameViewController.swift; sourceTree = "<group>"; };
 		C9FC139C1DF716EE00744006 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		C9FC13A11DF716EE00744006 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		C9FE59751E1EBEF4002AAD65 /* DifficultySelector.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = DifficultySelector.sks; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -63,6 +67,15 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		C98C0E311E1ECC9D000E0989 /* Entities */ = {
+			isa = PBXGroup;
+			children = (
+				C91E19F91DF7246F00D7ABCD /* Hero.sks */,
+				C91E19F71DF7246500D7ABCD /* Obstacle.sks */,
+			);
+			name = Entities;
+			sourceTree = "<group>";
+		};
 		C9C2CFB41DFF02B2001DB1B6 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
@@ -108,11 +121,11 @@
 				C926F5E01E19AF06007584F7 /* InfiniteGameSceneAnimations.swift */,
 				C9FC13951DF716EE00744006 /* InfiniteGameScene.swift */,
 				C9FC13911DF716EE00744006 /* InfiniteGameScene.sks */,
+				C98C0E2F1E1ECC8C000E0989 /* StartMenu.sks */,
+				C9FE59751E1EBEF4002AAD65 /* DifficultySelector.sks */,
 				C9C97FE81DFB61F600627547 /* InfiniteScoreboard.sks */,
 				C9947A8B1E1B1D7500864E7F /* GameOverMenu.sks */,
 				C942D4201E1D59EF002FEF73 /* GameStatsTab.sks */,
-				C91E19F91DF7246F00D7ABCD /* Hero.sks */,
-				C91E19F71DF7246500D7ABCD /* Obstacle.sks */,
 			);
 			name = InfGamemode;
 			sourceTree = "<group>";
@@ -138,6 +151,7 @@
 			children = (
 				C9C2CFB71DFF0316001DB1B6 /* App Files */,
 				C9C2CFB81DFF0373001DB1B6 /* InfGamemode */,
+				C98C0E311E1ECC9D000E0989 /* Entities */,
 				C9C2CFB41DFF02B2001DB1B6 /* Resources */,
 				C9C2CFB51DFF02D8001DB1B6 /* Sounds */,
 				C9C2CFB61DFF02F3001DB1B6 /* Libs */,
@@ -211,11 +225,13 @@
 				C91E19FA1DF7246F00D7ABCD /* Hero.sks in Resources */,
 				C9FC13921DF716EE00744006 /* InfiniteGameScene.sks in Resources */,
 				C9947A8C1E1B1D7500864E7F /* GameOverMenu.sks in Resources */,
+				C9FE59761E1EBEF4002AAD65 /* DifficultySelector.sks in Resources */,
 				C9FC139D1DF716EE00744006 /* Assets.xcassets in Resources */,
 				C9C2CFB21DFF0003001DB1B6 /* pixelFont.ttf in Resources */,
 				C9C97FE91DFB61F600627547 /* InfiniteScoreboard.sks in Resources */,
 				C9C2CFA31DFEFECC001DB1B6 /* flap.caf in Resources */,
 				C9C2CFA41DFEFECC001DB1B6 /* goal.caf in Resources */,
+				C98C0E301E1ECC8C000E0989 /* StartMenu.sks in Resources */,
 				C942D4211E1D59EF002FEF73 /* GameStatsTab.sks in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

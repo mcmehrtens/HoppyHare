@@ -136,6 +136,46 @@ class InfiniteGameSceneAnimations: SKScene {
         /* ...and slide 'er up and off babyyyyyyy! */
         node.run(loadingLabelSlideOff)
     }
+    
+    /* This animation slides the startMenu closed */
+    static func startMenuCloseSlide(node: SKNode) {
+        /* Slide the label to the correct position */
+        let startMenuCloseSlide = SKAction.move(to: CGPoint(x: -250, y: -209.5), duration: 0.5)
+        startMenuCloseSlide.timingMode = SKActionTimingMode.easeOut
+        
+        /* DO IT */
+        node.run(startMenuCloseSlide)
+    }
+    
+    /* This animation slides the startMenu open */
+    static func startMenuOpenSlide(node: SKNode) {
+        /* Slide the label to the correct position */
+        let startMenuOpenSlide = SKAction.move(to: CGPoint(x: 0, y: -209.5), duration: 0.75)
+        startMenuOpenSlide.timingMode = SKActionTimingMode.easeOut
+        
+        /* Slide it */
+        node.run(startMenuOpenSlide)
+    }
+    
+    /* This animation slides the startMenu off */
+    static func startMenuOffSlide(node: SKNode) {
+        /* Slide the label to the correct position */
+        let startMenuOffSlide = SKAction.move(to: CGPoint(x: -270, y: -209.5), duration: 0.5)
+        startMenuOffSlide.timingMode = SKActionTimingMode.easeOut
+        
+        /* JUST DO IT */
+        node.run(startMenuOffSlide)
+    }
+    
+    /* This animation slides on the inGameDifficulty Label */
+    static func inGameDifficultyLabelSlideIn(node: SKNode) {
+        /* Slide the label down */
+        let inGameDifficultyLabelSlideDown = SKAction.move(by: CGVector(dx: 0, dy: -25), duration: 0.5)
+        inGameDifficultyLabelSlideDown.timingMode = SKActionTimingMode.easeOut
+        
+        /* Slide that sucker */
+        node.run(inGameDifficultyLabelSlideDown)
+    }
 }
 
 /* DEPRECATED CODE */
