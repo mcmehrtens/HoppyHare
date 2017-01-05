@@ -84,7 +84,7 @@ class InfiniteGameScene: SKScene, SKPhysicsContactDelegate {
     
     /* Scroll Speeds*/
     let scrollSpeedGround: CGFloat = 110
-    let scrollSpeedDistantBG: CGFloat = 10
+    let scrollSpeedDistantBG: CGFloat = 8
     let scrollSpeedSky: CGFloat = 35
     
     /* Set up your scene here */
@@ -406,6 +406,9 @@ class InfiniteGameScene: SKScene, SKPhysicsContactDelegate {
             
             /* Run the kill hero animation */
             killHero()
+            
+            /* Slide the scoreboard off the screen */
+            InfiniteGameSceneAnimations.infScoreboardSlideOff(nodes: [infScoreboardScore, infScoreboardHighScoreNode])
             
             /* Set the Game Over Menu to be visible */
             gameOverMenuReferenceNode.isHidden = false
