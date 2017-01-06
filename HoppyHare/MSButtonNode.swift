@@ -31,7 +31,6 @@ class MSButtonNode: SKSpriteNode {
             case .selected:
                 /* Semi transparent */
                 self.alpha = 0.7
-                self.scale(to: CGSize(width: self.size.width * 0.75, height: self.size.height * 0.75))
                 break
             case .hidden:
                 /* Disable touch */

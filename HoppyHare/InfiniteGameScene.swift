@@ -92,25 +92,11 @@ class InfiniteGameScene: SKScene, SKPhysicsContactDelegate {
     var inGameDifficultyLabelNode: SKNode!
     var inGameDifficulty: SKLabelNode!
     
-    /* Game Over Menu references */
-    var gameOverMenuReferenceNode: SKReferenceNode!
-    var gameOverMenuScoreLabelNode: SKNode!
-    var gameOverMenuJumpLabelNode: SKNode!
-    var gameOverMenuHighScoreLabelNode: SKNode!
-    var gameOverMenuNewHighScoreLabel: SKLabelNode!
-    var gameOverMenuScoreLabel_1: SKLabelNode!
-    var gameOverMenuJumpLabel_1: SKLabelNode!
-    var gameOverMenuHighScoreLabel_1: SKLabelNode!
-    
-    /* Start menu references */
-    var startMenuReferenceNode: SKReferenceNode!
-    var startMenuRightChevron: SKSpriteNode!
-    var startMenuLeftChevron: SKSpriteNode!
+    /* UI Elements */
+    var startMenu: UIStartMenu!
+    var gameOverMenu: UIGameOverMenu!
     
     /* Difficulty Selector References */
-    var diffSelectorReferenceNode: SKReferenceNode!
-    var diffSelectorLabels: [SKLabelNode] = []
-    var diffSelectorButtons: [MSButtonNode] = []
     
     /* Array that contains all the text label nodes from the game stats tab */
     var gameStatsTabReferenceNode: SKReferenceNode!
@@ -121,7 +107,7 @@ class InfiniteGameScene: SKScene, SKPhysicsContactDelegate {
     var labelsHaveSlid = false
     var hasGeneratedFirstObstacle = false
     var scoreLabelHasShrunk = false
-    var startMenuDisplayed = false
+    var newHighScore = false
     
     /* Buttons */
     var gameOverMenuReplayButton_1: MSButtonNode!
@@ -129,9 +115,6 @@ class InfiniteGameScene: SKScene, SKPhysicsContactDelegate {
     var gameStatsTabBackButton_1: MSButtonNode!
     var gameStatsTabReplayButton_1: MSButtonNode!
     var gameStatsTabShareButton_1: MSButtonNode!
-    var startMenuButton_1: MSButtonNode!
-    var startMenuDiffSelectorButton_1: MSButtonNode!
-    var startMenuSafetyButton: MSButtonNode!
 
     /* Counters */
     var score = 0
@@ -150,7 +133,6 @@ class InfiniteGameScene: SKScene, SKPhysicsContactDelegate {
     var idleJumpTimer: TimeInterval = 0
     var automaticJumpTimer: TimeInterval = 0
     var timeSinceStart: TimeInterval = 0
-    var gameOverMenuTimer: TimeInterval = 0
     var gameStatsTabTimer: TimeInterval = 0
     
     /* Scroll Speeds*/
@@ -191,46 +173,6 @@ class InfiniteGameScene: SKScene, SKPhysicsContactDelegate {
         inGameDifficultyLabelNode = self.childNode(withName: "inGameDifficultyLabelNode")!
         inGameDifficulty = self.childNode(withName: "//inGameDifficulty") as! SKLabelNode
         
-        /* Set the gameOverMenu references */
-        gameOverMenuReferenceNode = self.childNode(withName: "//gameOverMenuReferenceNode") as! SKReferenceNode
-        gameOverMenuScoreLabelNode = self.childNode(withName: "//gameOverMenuScoreLabelNode")!
-        gameOverMenuJumpLabelNode = self.childNode(withName: "//gameOverMenuJumpLabelNode")!
-        gameOverMenuHighScoreLabelNode = self.childNode(withName: "//gameOverMenuHighScoreLabelNode")!
-        gameOverMenuNewHighScoreLabel = self.childNode(withName: "//gameOverMenuNewHighScoreLabel") as! SKLabelNode
-        gameOverMenuScoreLabel_1 = self.childNode(withName: "//gameOverMenuScoreLabel_1") as! SKLabelNode
-        gameOverMenuJumpLabel_1 = self.childNode(withName: "//gameOverMenuJumpLabel_1") as! SKLabelNode
-        gameOverMenuHighScoreLabel_1 = self.childNode(withName: "//gameOverMenuHighScoreLabel_1") as! SKLabelNode
-        
-        /* Set the startMenu references */
-        startMenuReferenceNode = self.childNode(withName: "//startMenuReferenceNode") as! SKReferenceNode
-        startMenuRightChevron = self.childNode(withName: "//startMenuRightChevron") as! SKSpriteNode
-        startMenuLeftChevron = self.childNode(withName: "//startMenuLeftChevron") as! SKSpriteNode
-        
-        /* Set the diffSelector references */
-        diffSelectorReferenceNode = self.childNode(withName: "//diffSelectorReferenceNode") as! SKReferenceNode
-        
-        diffSelectorLabels = [self.childNode(withName: "//diffSelectorButtonOneLabel") as! SKLabelNode]
-        diffSelectorLabels.append(self.childNode(withName: "//diffSelectorButtonTwoLabel") as! SKLabelNode)
-        diffSelectorLabels.append(self.childNode(withName: "//diffSelectorButtonThreeLabel") as! SKLabelNode)
-        diffSelectorLabels.append(self.childNode(withName: "//diffSelectorButtonFourLabel") as! SKLabelNode)
-        diffSelectorLabels.append(self.childNode(withName: "//diffSelectorButtonFiveLabel") as! SKLabelNode)
-        diffSelectorLabels.append(self.childNode(withName: "//diffSelectorButtonSixLabel") as! SKLabelNode)
-        diffSelectorLabels.append(self.childNode(withName: "//diffSelectorButtonSevenLabel") as! SKLabelNode)
-        diffSelectorLabels.append(self.childNode(withName: "//diffSelectorButtonEightLabel") as! SKLabelNode)
-        diffSelectorLabels.append(self.childNode(withName: "//diffSelectorButtonNineLabel") as! SKLabelNode)
-        diffSelectorLabels.append(self.childNode(withName: "//diffSelectorButtonTenLabel") as! SKLabelNode)
-        
-        diffSelectorButtons = [self.childNode(withName: "//diffSelectorButtonOne_1") as! MSButtonNode]
-        diffSelectorButtons.append(self.childNode(withName: "//diffSelectorButtonTwo_1") as! MSButtonNode)
-        diffSelectorButtons.append(self.childNode(withName: "//diffSelectorButtonThree_1") as! MSButtonNode)
-        diffSelectorButtons.append(self.childNode(withName: "//diffSelectorButtonFour_1") as! MSButtonNode)
-        diffSelectorButtons.append(self.childNode(withName: "//diffSelectorButtonFive_1") as! MSButtonNode)
-        diffSelectorButtons.append(self.childNode(withName: "//diffSelectorButtonSix_1") as! MSButtonNode)
-        diffSelectorButtons.append(self.childNode(withName: "//diffSelectorButtonSeven_1") as! MSButtonNode)
-        diffSelectorButtons.append(self.childNode(withName: "//diffSelectorButtonEight_1") as! MSButtonNode)
-        diffSelectorButtons.append(self.childNode(withName: "//diffSelectorButtonNine_1") as! MSButtonNode)
-        diffSelectorButtons.append(self.childNode(withName: "//diffSelectorButtonTen_1") as! MSButtonNode)
-        
         /* Set the gameStatTab references */
         gameStatsTabReferenceNode = self.childNode(withName: "gameStatsTabReferenceNode") as! SKReferenceNode
         gameStatsTabLabelNodes = [self.childNode(withName: "//gameStatsTabAllTimeHighScoreNode")!]
@@ -249,140 +191,9 @@ class InfiniteGameScene: SKScene, SKPhysicsContactDelegate {
         gameStatsTabLabelNodes.append(self.childNode(withName: "//gameStatsTabNumOfTimesScoreExc1000Node")!)
         
         /* Set button connections */
-        gameOverMenuReplayButton_1 = self.childNode(withName: "//gameOverMenuReplayButton_1") as! MSButtonNode
-        gameOverMenuGameStatsButton_1 = self.childNode(withName: "//gameOverMenuGameStatsButton_1") as! MSButtonNode
         gameStatsTabBackButton_1 = self.childNode(withName: "//gameStatsTabBackButton_1") as! MSButtonNode
         gameStatsTabReplayButton_1 = self.childNode(withName: "//gameStatsTabReplayButton_1") as! MSButtonNode
         gameStatsTabShareButton_1 = self.childNode(withName: "//gameStatsTabShareButton_1") as! MSButtonNode
-        startMenuButton_1 = self.childNode(withName: "//startMenuButton_1") as! MSButtonNode
-        startMenuDiffSelectorButton_1 = self.childNode(withName: "//startMenuDiffSelectorButton_1") as! MSButtonNode
-        startMenuSafetyButton = self.childNode(withName: "//startMenuSafetyButton") as! MSButtonNode
-        
-        /* Setup restart button selection handler */
-        gameOverMenuReplayButton_1.selectedHandler = { [unowned self] in
-            /* Grab reference to our SpriteKit view */
-            let skView = self.view as SKView!
-            
-            /* Load Game scene */
-            let scene = InfiniteGameScene(fileNamed:"InfiniteGameScene") as InfiniteGameScene!
-            
-            /* Ensure correct aspect mode */
-            scene!.scaleMode = .aspectFill
-            
-            /* Restart game scene */
-            skView!.presentScene(scene)
-        }
-        
-        /* Setup gameOverMenuGameStatsButton button selection handler */
-        gameOverMenuGameStatsButton_1.selectedHandler = {
-            self.gameStatsTabReferenceNode.isHidden = false
-        }
-        
-        /* Below are the handlers for the startMenu */
-        
-        /* Empty handler for the safetyButton */
-        startMenuSafetyButton.selectedHandler = {}
-        
-        /* Handler for the startMenuButton_1. This slides the thing in or out */
-        startMenuButton_1.selectedHandler = {
-            if self.startMenuDisplayed {
-                // Slide the menu in
-                InfiniteGameSceneAnimations.startMenuCloseSlide(node: self.startMenuReferenceNode)
-                
-                /* Close visible windows from the startMenu */
-                self.closeVisibleWindows()
-                
-                /* Change the arrow to the RIGHT direction */
-                self.startMenuRightChevron.isHidden = false
-                self.startMenuLeftChevron.isHidden = true
-                
-                /* Set the startMenuDisplayed variable to false */
-                self.startMenuDisplayed = false
-            } else {
-                // Slide the menu out
-                InfiniteGameSceneAnimations.startMenuOpenSlide(node: self.startMenuReferenceNode)
-                
-                /* Change the arrow to the LEFT direction */
-                self.startMenuRightChevron.isHidden = true
-                self.startMenuLeftChevron.isHidden = false
-                
-                /* Set the startMenuDisplayed variable to true */
-                self.startMenuDisplayed = true
-            }
-        }
-        
-        /* Handler for the diffSelectorButton */
-        startMenuDiffSelectorButton_1.selectedHandler = {
-            if self.diffSelectorReferenceNode.isHidden {
-                self.diffSelectorReferenceNode.isHidden = false
-                
-                self.setGameDifficultyLabels()
-            } else {
-                self.diffSelectorReferenceNode.isHidden = true
-            }
-        }
-        
-        /* Set the handlers for the diffSelector buttons */
-        diffSelectorButtons[0].selectedHandler = {
-            self.diffSelectorReferenceNode.isHidden = true
-            
-            StoredStats.gameDifficulty = 1
-            StoredStats.defaults.set(StoredStats.gameDifficulty, forKey: "gameDifficulty")
-        }
-        diffSelectorButtons[1].selectedHandler = {
-            self.diffSelectorReferenceNode.isHidden = true
-            
-            StoredStats.gameDifficulty = 2
-            StoredStats.defaults.set(StoredStats.gameDifficulty, forKey: "gameDifficulty")
-        }
-        diffSelectorButtons[2].selectedHandler = {
-            self.diffSelectorReferenceNode.isHidden = true
-            
-            StoredStats.gameDifficulty = 3
-            StoredStats.defaults.set(StoredStats.gameDifficulty, forKey: "gameDifficulty")
-        }
-        diffSelectorButtons[3].selectedHandler = {
-            self.diffSelectorReferenceNode.isHidden = true
-            
-            StoredStats.gameDifficulty = 4
-            StoredStats.defaults.set(StoredStats.gameDifficulty, forKey: "gameDifficulty")
-        }
-        diffSelectorButtons[4].selectedHandler = {
-            self.diffSelectorReferenceNode.isHidden = true
-            
-            StoredStats.gameDifficulty = 5
-            StoredStats.defaults.set(StoredStats.gameDifficulty, forKey: "gameDifficulty")
-        }
-        diffSelectorButtons[5].selectedHandler = {
-            self.diffSelectorReferenceNode.isHidden = true
-            
-            StoredStats.gameDifficulty = 6
-            StoredStats.defaults.set(StoredStats.gameDifficulty, forKey: "gameDifficulty")
-        }
-        diffSelectorButtons[6].selectedHandler = {
-            self.diffSelectorReferenceNode.isHidden = true
-            
-            StoredStats.gameDifficulty = 7
-            StoredStats.defaults.set(StoredStats.gameDifficulty, forKey: "gameDifficulty")
-        }
-        diffSelectorButtons[7].selectedHandler = {
-            self.diffSelectorReferenceNode.isHidden = true
-            
-            StoredStats.gameDifficulty = 8
-            StoredStats.defaults.set(StoredStats.gameDifficulty, forKey: "gameDifficulty")
-        }
-        diffSelectorButtons[8].selectedHandler = {
-            self.diffSelectorReferenceNode.isHidden = true
-            
-            StoredStats.gameDifficulty = 9
-            StoredStats.defaults.set(StoredStats.gameDifficulty, forKey: "gameDifficulty")
-        }
-        diffSelectorButtons[9].selectedHandler = {
-            self.diffSelectorReferenceNode.isHidden = true
-            
-            StoredStats.gameDifficulty = 10
-            StoredStats.defaults.set(StoredStats.gameDifficulty, forKey: "gameDifficulty")
-        }
         
         /* Below are the handlers for the gameStatTab */
         
@@ -445,11 +256,6 @@ class InfiniteGameScene: SKScene, SKPhysicsContactDelegate {
             
             /* Check to see if the bunny is out of bounds */
             checkIfBunnyIsOutOfBounds()
-        }
-        
-        /* Only activate this part of the game if gameOverMenu is visible */
-        if !gameOverMenuReferenceNode.isHidden {
-            displayGameOverMenu()
         }
         
         /* Activate this part of the game if the gameStatsTab is visible */
@@ -602,32 +408,34 @@ class InfiniteGameScene: SKScene, SKPhysicsContactDelegate {
         case .Ready:
             gameState = .Ready
             startLabel.isHidden = false
-            startMenuReferenceNode.isHidden = false
+            
+            /* Add the startMenu onto the screen */
+            startMenu = UIStartMenu(baseScene: self, pos: CGPoint(x: -270, y: -209.5), zPos: ZPositions.zPosStartMenu, referenceName: "startMenuReferenceNode", resourcePath: "StartMenu", resourceType: "sks")
+            startMenu.addElement()
             
             /* Slide on the startMenu */
-            InfiniteGameSceneAnimations.startMenuCloseSlide(node: startMenuReferenceNode)
+            startMenu.closeSlide()
             
             /* Slide off the loading label */
-            InfiniteGameSceneAnimations.loadingLabelSlideOff(node: loadingLabel)
+            GameAnimations.loadingLabelSlideOff(node: loadingLabel)
             
             /* Slide on the title */
-            InfiniteGameSceneAnimations.titleSlideIn(nodes: (titleLabel_0, titleLabel_1))
+            GameAnimations.titleSlideIn(nodes: (titleLabel_0, titleLabel_1))
             
             /* When setting the state to .Active, the flashing "start" label needs to go away and the score board text needs to appear. */
         case .Active:
             /* Slide the title off the screen */
-            InfiniteGameSceneAnimations.titleSlideOff(nodes: (titleLabel_0, titleLabel_1))
+            GameAnimations.titleSlideOff(nodes: (titleLabel_0, titleLabel_1))
             
             /* Slide off the startMenu and close any visible windows */
-            InfiniteGameSceneAnimations.startMenuOffSlide(node: startMenuReferenceNode)
-            closeVisibleWindows()
+            startMenu.offSlide()
             
             /* Set the inGameDifficultyLabel to the proper value and slide it in */
             inGameDifficulty.text = String(StoredStats.gameDifficulty)
-            InfiniteGameSceneAnimations.inGameDifficultyLabelSlideIn(node: inGameDifficultyLabelNode)
+            GameAnimations.inGameDifficultyLabelSlideIn(node: inGameDifficultyLabelNode)
             
             /* Slide on the scoreboard labels :) */
-            InfiniteGameSceneAnimations.infScoreboardSlideIn(nodes: [infScoreboardScore, infScoreboardHighScoreNode])
+            GameAnimations.infScoreboardSlideIn(nodes: [infScoreboardScore, infScoreboardHighScoreNode])
             
             /* Set the final game difficulty */
             GameDifficulty.setDifficulty()
@@ -645,15 +453,11 @@ class InfiniteGameScene: SKScene, SKPhysicsContactDelegate {
             killHero()
             
             /* Slide the scoreboard off the screen */
-            InfiniteGameSceneAnimations.infScoreboardSlideOff(nodes: [infScoreboardScore, infScoreboardHighScoreNode])
-            
-            /* Set the proper numbers to the Game Over Menu (the score and the jumps) */
-            gameOverMenuScoreLabel_1.text = String(score)
-            gameOverMenuJumpLabel_1.text = String(jumps)
-            gameOverMenuHighScoreLabel_1.text = String(StoredStats.allTimeHighScore)
+            GameAnimations.infScoreboardSlideOff(nodes: [infScoreboardScore, infScoreboardHighScoreNode])
             
             /* Set the Game Over Menu to be visible */
-            gameOverMenuReferenceNode.isHidden = false
+            gameOverMenu = UIGameOverMenu(baseScene: self, pos: CGPoint(x: 0, y: 0), zPos: 5, referenceName: "gameOverMenuReferenceNode", resourcePath: "GameOverMenu", resourceType: "sks", score: score, jumps: jumps, highScore: StoredStats.allTimeHighScore, newHighScore: newHighScore)
+            gameOverMenu.addElement()
             
             /* Set the game state to .GameOver */
             gameState = .GameOver
@@ -684,8 +488,8 @@ class InfiniteGameScene: SKScene, SKPhysicsContactDelegate {
         /* Run action */
         hero.run(heroDeath)
         
-        /* Shake all the nodes in this scene  */
-        InfiniteGameSceneAnimations.shake(nodes: self.children)
+        /* Shake the scene  */
+        shake()
     }
     
     /* Checks if the game is ready to play. Once it's ready, it sets the GameState to .Ready. */
@@ -776,26 +580,6 @@ class InfiniteGameScene: SKScene, SKPhysicsContactDelegate {
         startLabelTimer += fixedDelta
     }
     
-    /* Displays the game over menu item by item */
-    func displayGameOverMenu() {
-        if gameOverMenuTimer >= 0.5 {
-            gameOverMenuScoreLabelNode.isHidden = false
-        }
-        if gameOverMenuTimer >= 1.0 {
-            gameOverMenuJumpLabelNode.isHidden = false
-        }
-        if gameOverMenuTimer >= 1.5 {
-            gameOverMenuHighScoreLabelNode.isHidden = false
-        }
-        if gameOverMenuTimer >= 2.0 {
-            if score > oldHighScore {
-                gameOverMenuNewHighScoreLabel.isHidden = false
-            }
-        }
-        
-        gameOverMenuTimer += fixedDelta
-    }
-    
     /* Check if the bunnies vertical velocity is too high */
     func checkVelocityY() {
         /* Grab current velocity */
@@ -857,7 +641,6 @@ class InfiniteGameScene: SKScene, SKPhysicsContactDelegate {
     func increaseScore() {
         /* Increment points */
         score += 1
-        
         /* Update score label */
         infScoreboardScore.text = String(score)
         
@@ -875,24 +658,23 @@ class InfiniteGameScene: SKScene, SKPhysicsContactDelegate {
         }
     }
     
-    /* Check to see if any windows are open */
-    func closeVisibleWindows() {
-        let nodes: [SKNode] = [diffSelectorReferenceNode, gameOverMenuReferenceNode, gameStatsTabReferenceNode]
-        for node in nodes {
-            node.isHidden = true
-        }
-    }
-    
-    /* Set the Game Difficulty Selector Label Nodes */
-    func setGameDifficultyLabels() {
-        let gameDifficultyLabel = diffSelectorLabels[StoredStats.gameDifficulty - 1]
+    /* This animation shakes the screen when the hero dies */
+    func shake() {
+        /* Shake #1 */
+        let shakeOne = SKAction.move(by: CGVector(dx: 4, dy: 2), duration: 0.1)
         
-        for label in diffSelectorLabels {
-            if label == gameDifficultyLabel {
-                label.fontColor = CustomColors.colorGold
-            } else {
-                label.fontColor = CustomColors.colorWhite
-            }
+        /* Shake #2 */
+        let shakeTwo = SKAction.move(by: CGVector(dx: -8, dy: -4), duration: 0.1)
+        
+        /* Shake #3 */
+        let shakeThree = SKAction.move(by: CGVector(dx: 4, dy: 2), duration: 0.1)
+        
+        /* This puts all the shakes one after another. NOTE: due to the math here, the screen should end up in the same original position.*/
+        let shake = SKAction.sequence([shakeOne, shakeTwo, shakeThree])
+        
+        /* Run the shake action in all nodes in the scene */
+        for obj in self.children {
+            obj.run(shake)
         }
     }
     
@@ -949,10 +731,11 @@ class InfiniteGameScene: SKScene, SKPhysicsContactDelegate {
         oldHighScore = StoredStats.allTimeHighScore
         
         if score > StoredStats.allTimeHighScore {
+            newHighScore = true
+            
             StoredStats.allTimeHighScore = score
             StoredStats.defaults.set(StoredStats.allTimeHighScore, forKey: "allTimeHighScore")
             (self.childNode(withName: "//gameStatsTabAllTimeHighScore") as! SKLabelNode).fontColor = CustomColors.colorGold
-            (self.childNode(withName: "//gameOverMenuScoreLabel_1") as! SKLabelNode).fontColor = CustomColors.colorGold
         }
         
         /* Add the score onto the allTimeScore stat */
@@ -969,7 +752,6 @@ class InfiniteGameScene: SKScene, SKPhysicsContactDelegate {
             StoredStats.mostJumpsInOneGame = jumps
             StoredStats.defaults.set(StoredStats.mostJumpsInOneGame, forKey: "mostJumpsInOneGame")
             (self.childNode(withName: "//gameStatsTabMostJumpsInOneGame") as! SKLabelNode).fontColor = CustomColors.colorGold
-            (self.childNode(withName: "//gameOverMenuJumpLabel_1") as! SKLabelNode).fontColor = CustomColors.colorGold
         }
         
         /* Add one to the total games played */

@@ -8,7 +8,7 @@
 import SpriteKit
 import GameplayKit
 
-class InfiniteGameSceneAnimations: SKScene {
+class GameAnimations: SKScene {
     
     /* This animation slides in the scoreboard once the player has tapped the screen */
     static func infScoreboardSlideIn(nodes: [SKNode]) {
@@ -71,25 +71,6 @@ class InfiniteGameSceneAnimations: SKScene {
         }
     }
     
-    /* This animation shakes the screen when the hero dies */
-    static func shake(nodes: [SKNode]) {
-        /* Shake #1 */
-        let shakeOne = SKAction.move(by: CGVector(dx: 4, dy: 2), duration: 0.1)
-        
-        /* Shake #2 */
-        let shakeTwo = SKAction.move(by: CGVector(dx: -8, dy: -4), duration: 0.1)
-        
-        /* Shake #3 */
-        let shakeThree = SKAction.move(by: CGVector(dx: 4, dy: 2), duration: 0.1)
-        
-        /* This puts all the shakes one after another. NOTE: due to the math here, the screen should end up in the same original position.*/
-        let shake = SKAction.sequence([shakeOne, shakeTwo, shakeThree])
-        
-        for obj in nodes {
-            obj.run(shake)
-        }
-    }
-    
     /* This animation slides the title onto the screen horizontally. The parameters: nodes.0 is the first title label. nodes.1 is the second title label. This will have be adjusted later when I get a proper textured title (maybe)*/
     static func titleSlideIn(nodes: (SKNode, SKNode)) {
         /* Slides the first title label in */
@@ -131,40 +112,10 @@ class InfiniteGameSceneAnimations: SKScene {
         loadingLabelSlideDown.timingMode = SKActionTimingMode.easeInEaseOut
         
         /* ... put it all together... */
-        let loadingLabelSlideOff = SKAction.sequence([loadingLabelSlideUp, loadingLabelSlideDown])
+        let loadingLabelSlideOff = SKAction.sequence([loadingLabelSlideUp, loadingLabelSlideDown, SKAction.run { node.removeFromParent() }])
         
         /* ...and slide 'er up and off babyyyyyyy! */
         node.run(loadingLabelSlideOff)
-    }
-    
-    /* This animation slides the startMenu closed */
-    static func startMenuCloseSlide(node: SKNode) {
-        /* Slide the label to the correct position */
-        let startMenuCloseSlide = SKAction.move(to: CGPoint(x: -250, y: -209.5), duration: 0.5)
-        startMenuCloseSlide.timingMode = SKActionTimingMode.easeOut
-        
-        /* DO IT */
-        node.run(startMenuCloseSlide)
-    }
-    
-    /* This animation slides the startMenu open */
-    static func startMenuOpenSlide(node: SKNode) {
-        /* Slide the label to the correct position */
-        let startMenuOpenSlide = SKAction.move(to: CGPoint(x: 0, y: -209.5), duration: 0.75)
-        startMenuOpenSlide.timingMode = SKActionTimingMode.easeOut
-        
-        /* Slide it */
-        node.run(startMenuOpenSlide)
-    }
-    
-    /* This animation slides the startMenu off */
-    static func startMenuOffSlide(node: SKNode) {
-        /* Slide the label to the correct position */
-        let startMenuOffSlide = SKAction.move(to: CGPoint(x: -270, y: -209.5), duration: 0.5)
-        startMenuOffSlide.timingMode = SKActionTimingMode.easeOut
-        
-        /* JUST DO IT */
-        node.run(startMenuOffSlide)
     }
     
     /* This animation slides on the inGameDifficulty Label */
