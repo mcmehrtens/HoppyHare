@@ -85,28 +85,17 @@ class InfiniteGameScene: SKScene, SKPhysicsContactDelegate {
     var loadingLabel: SKLabelNode!
     var titleLabel_0: SKLabelNode!
     var titleLabel_1: SKLabelNode!
-    var infScoreboardScore: SKLabelNode!
-    var infScoreboardHighScoreLabel: SKLabelNode!
-    var infScoreboardHighScoreNumber: SKLabelNode!
-    var infScoreboardHighScoreNode: SKNode!
     var inGameDifficultyLabelNode: SKNode!
     var inGameDifficulty: SKLabelNode!
     
     /* UI Elements */
     var startMenu: UIStartMenu!
     var gameOverMenu: UIGameOverMenu!
-    
-    /* Difficulty Selector References */
-    
-    /* Array that contains all the text label nodes from the game stats tab */
-    var gameStatsTabReferenceNode: SKReferenceNode!
-    var gameStatsTabLabelNodes: [SKNode] = []
+    var infiniteScoreboard: UIInfiniteScoreboard!
     
     /* Boolean counters */
     var hasJumped = false
-    var labelsHaveSlid = false
     var hasGeneratedFirstObstacle = false
-    var scoreLabelHasShrunk = false
     var newHighScore = false
     
     /* Buttons */
@@ -119,7 +108,6 @@ class InfiniteGameScene: SKScene, SKPhysicsContactDelegate {
     /* Counters */
     var score = 0
     var jumps = 0
-    var gameStatsTabCounter = 0
     var oldHighScore = 0
     
     /* Time Variables */
@@ -133,7 +121,6 @@ class InfiniteGameScene: SKScene, SKPhysicsContactDelegate {
     var idleJumpTimer: TimeInterval = 0
     var automaticJumpTimer: TimeInterval = 0
     var timeSinceStart: TimeInterval = 0
-    var gameStatsTabTimer: TimeInterval = 0
     
     /* Scroll Speeds*/
     let scrollSpeedGround: CGFloat = 110
@@ -166,59 +153,8 @@ class InfiniteGameScene: SKScene, SKPhysicsContactDelegate {
         loadingLabel = self.childNode(withName: "loadingLabel") as! SKLabelNode
         titleLabel_0 = self.childNode(withName: "titleLabel_0") as! SKLabelNode
         titleLabel_1 = self.childNode(withName: "titleLabel_1") as! SKLabelNode
-        infScoreboardScore = self.childNode(withName: "//infScoreboardScore") as! SKLabelNode
-        infScoreboardHighScoreLabel = self.childNode(withName: "//infScoreboardHighScoreLabel") as! SKLabelNode
-        infScoreboardHighScoreNumber = self.childNode(withName: "//infScoreboardHighScoreNumber") as! SKLabelNode
-        infScoreboardHighScoreNode = self.childNode(withName: "//infScoreboardHighScoreNode")!
         inGameDifficultyLabelNode = self.childNode(withName: "inGameDifficultyLabelNode")!
         inGameDifficulty = self.childNode(withName: "//inGameDifficulty") as! SKLabelNode
-        
-        /* Set the gameStatTab references */
-        gameStatsTabReferenceNode = self.childNode(withName: "gameStatsTabReferenceNode") as! SKReferenceNode
-        gameStatsTabLabelNodes = [self.childNode(withName: "//gameStatsTabAllTimeHighScoreNode")!]
-        gameStatsTabLabelNodes.append(self.childNode(withName: "//gameStatsTabAllTimeScoreNode")!)
-        gameStatsTabLabelNodes.append(self.childNode(withName: "//gameStatsTabAllTimeJumpsNode")!)
-        gameStatsTabLabelNodes.append(self.childNode(withName: "//gameStatsTabMostJumpsInOneGameNode")!)
-        gameStatsTabLabelNodes.append(self.childNode(withName: "//gameStatsTabTotalGamesPlayedNode")!)
-        gameStatsTabLabelNodes.append(self.childNode(withName: "//gameStatsTabNumOfCostumesDiscoveredNode")!)
-        gameStatsTabLabelNodes.append(self.childNode(withName: "//gameStatsTabFavCostumeNode")!)
-        gameStatsTabLabelNodes.append(self.childNode(withName: "//gameStatsTabNumOfTimesScorePrec1Node")!)
-        gameStatsTabLabelNodes.append(self.childNode(withName: "//gameStatsTabNumOfTimesScoreExc25Node")!)
-        gameStatsTabLabelNodes.append(self.childNode(withName: "//gameStatsTabNumOfTimesScoreExc50Node")!)
-        gameStatsTabLabelNodes.append(self.childNode(withName: "//gameStatsTabNumOfTimesScoreExc100Node")!)
-        gameStatsTabLabelNodes.append(self.childNode(withName: "//gameStatsTabNumOfTimesScoreExc250Node")!)
-        gameStatsTabLabelNodes.append(self.childNode(withName: "//gameStatsTabNumOfTimesScoreExc500Node")!)
-        gameStatsTabLabelNodes.append(self.childNode(withName: "//gameStatsTabNumOfTimesScoreExc1000Node")!)
-        
-        /* Set button connections */
-        gameStatsTabBackButton_1 = self.childNode(withName: "//gameStatsTabBackButton_1") as! MSButtonNode
-        gameStatsTabReplayButton_1 = self.childNode(withName: "//gameStatsTabReplayButton_1") as! MSButtonNode
-        gameStatsTabShareButton_1 = self.childNode(withName: "//gameStatsTabShareButton_1") as! MSButtonNode
-        
-        /* Below are the handlers for the gameStatTab */
-        
-        /* Handler for the back button */
-        gameStatsTabBackButton_1.selectedHandler = {
-            self.gameStatsTabReferenceNode.isHidden = true
-        }
-        
-        /* Handler for the replay button. Same as the gameOverMenuReplayButton_1 handler */
-        gameStatsTabReplayButton_1.selectedHandler = {
-            /* Grab reference to our SpriteKit view */
-            let skView = self.view as SKView!
-            
-            /* Load Game scene */
-            let scene = InfiniteGameScene(fileNamed:"InfiniteGameScene") as InfiniteGameScene!
-            
-            /* Ensure correct aspect mode */
-            scene!.scaleMode = .aspectFill
-            
-            /* Restart game scene */
-            skView!.presentScene(scene)
-        }
-        
-        /* Handler for the share button */
-        // Nothing here yet :/
         
         /* Set physics contact delegate */
         physicsWorld.contactDelegate = self
@@ -228,9 +164,6 @@ class InfiniteGameScene: SKScene, SKPhysicsContactDelegate {
         
         /* Get all the game stats from the defaults */
         StoredStats.initDefaults()
-        
-        /* Set the high score label */
-        infScoreboardHighScoreNumber.text = String(StoredStats.allTimeHighScore)
     }
     
     /* This func is called before each frame is rendered. */
@@ -256,11 +189,6 @@ class InfiniteGameScene: SKScene, SKPhysicsContactDelegate {
             
             /* Check to see if the bunny is out of bounds */
             checkIfBunnyIsOutOfBounds()
-        }
-        
-        /* Activate this part of the game if the gameStatsTab is visible */
-        if !gameStatsTabReferenceNode.isHidden {
-            displayGameStatsTab()
         }
     }
     
@@ -377,7 +305,8 @@ class InfiniteGameScene: SKScene, SKPhysicsContactDelegate {
         if nodeA.name == "goal" || nodeB.name == "goal" {
             
             /* Run the code to increase the score by 1 */
-            increaseScore()
+            score += 1
+            infiniteScoreboard.increaseScore(score: score)
         }
     }
     
@@ -435,7 +364,9 @@ class InfiniteGameScene: SKScene, SKPhysicsContactDelegate {
             GameAnimations.inGameDifficultyLabelSlideIn(node: inGameDifficultyLabelNode)
             
             /* Slide on the scoreboard labels :) */
-            GameAnimations.infScoreboardSlideIn(nodes: [infScoreboardScore, infScoreboardHighScoreNode])
+            infiniteScoreboard = UIInfiniteScoreboard(baseScene: self, pos: CGPoint(x: 0, y: -212.5), zPos: 3, referenceName: "infiniteScoreboardReferenceNode", resourcePath: "InfiniteScoreboard", resourceType: "sks")
+            infiniteScoreboard.addElement()
+            infiniteScoreboard.onSlide()
             
             /* Set the final game difficulty */
             GameDifficulty.setDifficulty()
@@ -447,13 +378,12 @@ class InfiniteGameScene: SKScene, SKPhysicsContactDelegate {
         case .GameOver:
             /* Update all the game statistics */
             updateGameStats(score: score, jumps: jumps)
-            updateGameStatsTabDisplay()
             
             /* Run the kill hero animation */
             killHero()
             
             /* Slide the scoreboard off the screen */
-            GameAnimations.infScoreboardSlideOff(nodes: [infScoreboardScore, infScoreboardHighScoreNode])
+            infiniteScoreboard.offSlide()
             
             /* Set the Game Over Menu to be visible */
             gameOverMenu = UIGameOverMenu(baseScene: self, pos: CGPoint(x: 0, y: 0), zPos: 5, referenceName: "gameOverMenuReferenceNode", resourcePath: "GameOverMenu", resourceType: "sks", score: score, jumps: jumps, highScore: StoredStats.allTimeHighScore, newHighScore: newHighScore)
@@ -637,27 +567,6 @@ class InfiniteGameScene: SKScene, SKPhysicsContactDelegate {
         scrollSprite(nodes: scrollLayerSprites[2]!, scrollLayer: scrollLayers[2]!, scrollSpeed: scrollSpeedSky)
     }
     
-    /* Increment the score */
-    func increaseScore() {
-        /* Increment points */
-        score += 1
-        /* Update score label */
-        infScoreboardScore.text = String(score)
-        
-        /* Play the goal sound */
-        Sounds.playSound(soundName: "goal", object: self)
-        
-        /* This checks if the player has surpassed the current high score. If yes, this sets the color of the high score labels to gold to notify the player that he's making history. */
-        if score > StoredStats.allTimeHighScore {
-            /* Set the highScore number to the number of points the player currently has */
-            infScoreboardHighScoreNumber.text = String(score)
-            
-            /* Set the font color to yellloooowwwwwwwww */
-            infScoreboardHighScoreLabel.fontColor = CustomColors.colorGold
-            infScoreboardHighScoreNumber.fontColor = CustomColors.colorGold
-        }
-    }
-    
     /* This animation shakes the screen when the hero dies */
     func shake() {
         /* Shake #1 */
@@ -682,49 +591,6 @@ class InfiniteGameScene: SKScene, SKPhysicsContactDelegate {
      * ALL THE GAME STAT TAB FUNCTIONS ARE UNDER HERE
      */
     
-    /* Displays the game stats tab item by item */
-    func displayGameStatsTab() {
-        /* If not all the labels are visible yet, do this: */
-        if gameStatsTabCounter < gameStatsTabLabelNodes.count {
-            
-            /* If the timer is 0.15 or higher, do this: */
-            if gameStatsTabTimer >= 0.45 {
-                
-                /* Set the next gameStatsTabLabel to visible */
-                gameStatsTabLabelNodes[gameStatsTabCounter].isHidden = false
-                gameStatsTabLabelNodes[gameStatsTabCounter + 1].isHidden = false
-                
-                /* Increment the counter */
-                gameStatsTabCounter += 2
-                
-                /* Reset the timer */
-                gameStatsTabTimer = 0.0
-            }
-            
-            /* Increment the timer */
-            gameStatsTabTimer += fixedDelta
-        }
-    }
-    
-    /* Updates the values of the labels in the gameStatsTab*/
-    func updateGameStatsTabDisplay() {
-        /* Make the text of all the stat labels = to what they actually are in the defaults */
-        (self.childNode(withName: "//gameStatsTabAllTimeHighScore") as! SKLabelNode).text = String(StoredStats.allTimeHighScore)
-        (self.childNode(withName: "//gameStatsTabAllTimeScore") as! SKLabelNode).text = String(StoredStats.allTimeScore)
-        (self.childNode(withName: "//gameStatsTabAllTimeJumps") as! SKLabelNode).text = String(StoredStats.allTimeJumps)
-        (self.childNode(withName: "//gameStatsTabMostJumpsInOneGame") as! SKLabelNode).text = String(StoredStats.mostJumpsInOneGame)
-        (self.childNode(withName: "//gameStatsTabTotalGamesPlayed") as! SKLabelNode).text = String(StoredStats.totalGamesPlayed)
-        (self.childNode(withName: "//gameStatsTabNumOfCostumesDiscovered") as! SKLabelNode).text = String(StoredStats.numOfCostumesDiscovered)
-        (self.childNode(withName: "//gameStatsTabFavCostume") as! SKLabelNode).text = StoredStats.favCostume
-        (self.childNode(withName: "//gameStatsTabNumOfTimesScorePrec1") as! SKLabelNode).text = String(StoredStats.numOfTimesScorePrec1)
-        (self.childNode(withName: "//gameStatsTabNumOfTimesScoreExc25") as! SKLabelNode).text = String(StoredStats.numOfTimesScoreExc25)
-        (self.childNode(withName: "//gameStatsTabNumOfTimesScoreExc50") as! SKLabelNode).text = String(StoredStats.numOfTimesScoreExc50)
-        (self.childNode(withName: "//gameStatsTabNumOfTimesScoreExc100") as! SKLabelNode).text = String(StoredStats.numOfTimesScoreExc100)
-        (self.childNode(withName: "//gameStatsTabNumOfTimesScoreExc250") as! SKLabelNode).text = String(StoredStats.numOfTimesScoreExc250)
-        (self.childNode(withName: "//gameStatsTabNumOfTimesScoreExc500") as! SKLabelNode).text = String(StoredStats.numOfTimesScoreExc500)
-        (self.childNode(withName: "//gameStatsTabNumOfTimesScoreExc1000") as! SKLabelNode).text = String(StoredStats.numOfTimesScoreExc1000)
-    }
-    
     /* This func updates all game stats in one function. If we break a new high score for something, set the color in the gameStatsTab to be golden!!!!! */
     func updateGameStats(score: Int, jumps: Int) {
         /* Set new high score if the score is higher than the current high score. */
@@ -735,7 +601,6 @@ class InfiniteGameScene: SKScene, SKPhysicsContactDelegate {
             
             StoredStats.allTimeHighScore = score
             StoredStats.defaults.set(StoredStats.allTimeHighScore, forKey: "allTimeHighScore")
-            (self.childNode(withName: "//gameStatsTabAllTimeHighScore") as! SKLabelNode).fontColor = CustomColors.colorGold
         }
         
         /* Add the score onto the allTimeScore stat */
@@ -751,7 +616,6 @@ class InfiniteGameScene: SKScene, SKPhysicsContactDelegate {
             /* If yes, set the value of mostJumpsInOneGame to the number of jumps */
             StoredStats.mostJumpsInOneGame = jumps
             StoredStats.defaults.set(StoredStats.mostJumpsInOneGame, forKey: "mostJumpsInOneGame")
-            (self.childNode(withName: "//gameStatsTabMostJumpsInOneGame") as! SKLabelNode).fontColor = CustomColors.colorGold
         }
         
         /* Add one to the total games played */

@@ -86,6 +86,7 @@ class UIStartMenu: UIElement {
         /* Slide the start menu off, then remove the startMenuReferenceNode, then remove the difficultySelectorReferenceNode*/
         referenceNode.run(SKAction.sequence([offSlide, SKAction.run { self.removeElement() }]))
         
+        /* If diffSelector is on the screen, then remove it */
         if self.diffSelector != nil { self.diffSelector.removeElement() }
     }
 }

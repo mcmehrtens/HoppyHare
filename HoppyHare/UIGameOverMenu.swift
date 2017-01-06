@@ -15,6 +15,8 @@ class UIGameOverMenu: UIElement {
     var highScore: Int!
     var newHighScore: Bool = false
     
+    var gameStatsTab: UIGameStatsTab!
+    
     init(baseScene: SKScene, pos: CGPoint, zPos: Int, referenceName: String, resourcePath: String, resourceType: String, score: Int, jumps: Int, highScore: Int, newHighScore: Bool) {
         super.init(baseScene: baseScene, pos: pos, zPos: zPos, referenceName: referenceName, resourcePath: resourcePath, resourceType: resourceType)
         
@@ -28,13 +30,19 @@ class UIGameOverMenu: UIElement {
         super.addElement()
         setButtonHandlers()
         updateValues()
-        animateMenu()
+        animate()
     }
     
     /* Set the button handlers for the GameOverMenu */
     override func setButtonHandlers() {
-        //let gameOverMenuGameStatsButton_1 = referenceNode.childNode(withName: "//gameOverMenuGameStatsButton_1") as! MSButtonNode
+        let gameOverMenuGameStatsButton_1 = referenceNode.childNode(withName: "//gameOverMenuGameStatsButton_1") as! MSButtonNode
         let gameOverMenuReplayButton_1 = referenceNode.childNode(withName: "//gameOverMenuReplayButton_1") as! MSButtonNode
+        
+        /* Set the handler for the game stats tab button */
+        gameOverMenuGameStatsButton_1.selectedHandler = {
+            self.gameStatsTab = UIGameStatsTab(baseScene: self.baseScene, pos: CGPoint(x: 0, y: 0), zPos: 6, referenceName: "gameStatsTbReferenceNode", resourcePath: "GameStatsTab", resourceType: "sks")
+            self.gameStatsTab.addElement()
+        }
         
         /* Set the handler for the replay button */
         gameOverMenuReplayButton_1.selectedHandler = {
@@ -65,7 +73,7 @@ class UIGameOverMenu: UIElement {
     }
     
     /* Animate the gameOverMenu */
-    func animateMenu() {
+    func animate() {
         /* Get the references to the labels */
         let gameOverMenuScoreLabel_1 = referenceNode.childNode(withName: "//gameOverMenuScoreLabel_1") as! SKLabelNode
         let gameOverMenuJumpLabel_1 = referenceNode.childNode(withName: "//gameOverMenuJumpLabel_1") as! SKLabelNode

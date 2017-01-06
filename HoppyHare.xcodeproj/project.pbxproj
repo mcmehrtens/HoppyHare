@@ -13,6 +13,8 @@
 		C926F5E11E19AF06007584F7 /* GameAnimations.swift in Sources */ = {isa = PBXBuildFile; fileRef = C926F5E01E19AF06007584F7 /* GameAnimations.swift */; };
 		C926F5E31E19E82C007584F7 /* CustomColors.swift in Sources */ = {isa = PBXBuildFile; fileRef = C926F5E21E19E82C007584F7 /* CustomColors.swift */; };
 		C942D4211E1D59EF002FEF73 /* GameStatsTab.sks in Resources */ = {isa = PBXBuildFile; fileRef = C942D4201E1D59EF002FEF73 /* GameStatsTab.sks */; };
+		C9765B241E20480700D07DE7 /* UIGameStatsTab.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9765B231E20480700D07DE7 /* UIGameStatsTab.swift */; };
+		C9765B2A1E20584500D07DE7 /* UIInfiniteScoreboard.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9765B291E20584500D07DE7 /* UIInfiniteScoreboard.swift */; };
 		C98C0E301E1ECC8C000E0989 /* StartMenu.sks in Resources */ = {isa = PBXBuildFile; fileRef = C98C0E2F1E1ECC8C000E0989 /* StartMenu.sks */; };
 		C98C0E351E1FE3B0000E0989 /* UIElement.swift in Sources */ = {isa = PBXBuildFile; fileRef = C98C0E341E1FE3B0000E0989 /* UIElement.swift */; };
 		C98C0E371E1FE6B2000E0989 /* ZPositions.swift in Sources */ = {isa = PBXBuildFile; fileRef = C98C0E361E1FE6B2000E0989 /* ZPositions.swift */; };
@@ -42,6 +44,8 @@
 		C926F5E01E19AF06007584F7 /* GameAnimations.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GameAnimations.swift; sourceTree = "<group>"; };
 		C926F5E21E19E82C007584F7 /* CustomColors.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CustomColors.swift; sourceTree = "<group>"; };
 		C942D4201E1D59EF002FEF73 /* GameStatsTab.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = GameStatsTab.sks; sourceTree = "<group>"; };
+		C9765B231E20480700D07DE7 /* UIGameStatsTab.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIGameStatsTab.swift; sourceTree = "<group>"; };
+		C9765B291E20584500D07DE7 /* UIInfiniteScoreboard.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIInfiniteScoreboard.swift; sourceTree = "<group>"; };
 		C98C0E2F1E1ECC8C000E0989 /* StartMenu.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = StartMenu.sks; sourceTree = "<group>"; };
 		C98C0E341E1FE3B0000E0989 /* UIElement.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIElement.swift; sourceTree = "<group>"; };
 		C98C0E361E1FE6B2000E0989 /* ZPositions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ZPositions.swift; sourceTree = "<group>"; };
@@ -77,6 +81,42 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		C9765B251E20562400D07DE7 /* DifficultySelector */ = {
+			isa = PBXGroup;
+			children = (
+				C98C0E3B1E2016F7000E0989 /* UIDiffSelector.swift */,
+				C9FE59751E1EBEF4002AAD65 /* DiffSelector.sks */,
+			);
+			name = DifficultySelector;
+			sourceTree = "<group>";
+		};
+		C9765B261E20564300D07DE7 /* GameOverMenu */ = {
+			isa = PBXGroup;
+			children = (
+				C98C0E3D1E202B25000E0989 /* UIGameOverMenu.swift */,
+				C9947A8B1E1B1D7500864E7F /* GameOverMenu.sks */,
+			);
+			name = GameOverMenu;
+			sourceTree = "<group>";
+		};
+		C9765B271E20566500D07DE7 /* GameStatsTab */ = {
+			isa = PBXGroup;
+			children = (
+				C9765B231E20480700D07DE7 /* UIGameStatsTab.swift */,
+				C942D4201E1D59EF002FEF73 /* GameStatsTab.sks */,
+			);
+			name = GameStatsTab;
+			sourceTree = "<group>";
+		};
+		C9765B281E20582600D07DE7 /* InfiniteScoreboard */ = {
+			isa = PBXGroup;
+			children = (
+				C9765B291E20584500D07DE7 /* UIInfiniteScoreboard.swift */,
+				C9C97FE81DFB61F600627547 /* InfiniteScoreboard.sks */,
+			);
+			name = InfiniteScoreboard;
+			sourceTree = "<group>";
+		};
 		C98C0E311E1ECC9D000E0989 /* Entities */ = {
 			isa = PBXGroup;
 			children = (
@@ -94,6 +134,10 @@
 				C926F5E21E19E82C007584F7 /* CustomColors.swift */,
 				C98C0E361E1FE6B2000E0989 /* ZPositions.swift */,
 				C98C0E3A1E2016DF000E0989 /* StartMenu */,
+				C9765B251E20562400D07DE7 /* DifficultySelector */,
+				C9765B261E20564300D07DE7 /* GameOverMenu */,
+				C9765B271E20566500D07DE7 /* GameStatsTab */,
+				C9765B281E20582600D07DE7 /* InfiniteScoreboard */,
 			);
 			name = UserInterface;
 			sourceTree = "<group>";
@@ -103,10 +147,6 @@
 			children = (
 				C98C0E381E20168F000E0989 /* UIStartMenu.swift */,
 				C98C0E2F1E1ECC8C000E0989 /* StartMenu.sks */,
-				C98C0E3B1E2016F7000E0989 /* UIDiffSelector.swift */,
-				C9FE59751E1EBEF4002AAD65 /* DiffSelector.sks */,
-				C98C0E3D1E202B25000E0989 /* UIGameOverMenu.swift */,
-				C9947A8B1E1B1D7500864E7F /* GameOverMenu.sks */,
 			);
 			name = StartMenu;
 			sourceTree = "<group>";
@@ -154,8 +194,6 @@
 			children = (
 				C9FC13951DF716EE00744006 /* InfiniteGameScene.swift */,
 				C9FC13911DF716EE00744006 /* InfiniteGameScene.sks */,
-				C9C97FE81DFB61F600627547 /* InfiniteScoreboard.sks */,
-				C942D4201E1D59EF002FEF73 /* GameStatsTab.sks */,
 			);
 			name = InfGamemode;
 			sourceTree = "<group>";
@@ -279,12 +317,14 @@
 				C98C0E351E1FE3B0000E0989 /* UIElement.swift in Sources */,
 				C98C0E3C1E2016F7000E0989 /* UIDiffSelector.swift in Sources */,
 				C9C2CFB01DFF0003001DB1B6 /* CGFloat+Extensions.swift in Sources */,
+				C9765B241E20480700D07DE7 /* UIGameStatsTab.swift in Sources */,
 				C9C2CFB31DFF0003001DB1B6 /* Sounds.swift in Sources */,
 				C9FC13901DF716EE00744006 /* AppDelegate.swift in Sources */,
 				C9C2CFB11DFF0003001DB1B6 /* MSButtonNode.swift in Sources */,
 				C926F5E31E19E82C007584F7 /* CustomColors.swift in Sources */,
 				C926F5E11E19AF06007584F7 /* GameAnimations.swift in Sources */,
 				C98C0E371E1FE6B2000E0989 /* ZPositions.swift in Sources */,
+				C9765B2A1E20584500D07DE7 /* UIInfiniteScoreboard.swift in Sources */,
 				C98C0E391E20168F000E0989 /* UIStartMenu.swift in Sources */,
 				C98C0E3E1E202B25000E0989 /* UIGameOverMenu.swift in Sources */,
 			);

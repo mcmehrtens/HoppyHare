@@ -9,68 +9,6 @@ import SpriteKit
 import GameplayKit
 
 class GameAnimations: SKScene {
-    
-    /* This animation slides in the scoreboard once the player has tapped the screen */
-    static func infScoreboardSlideIn(nodes: [SKNode]) {
-        /* Slide the node up */
-        let infScoreboardSlideUp = SKAction.move(by: CGVector(dx: 0.0, dy: 64.5), duration: 0.35)
-        infScoreboardSlideUp.timingMode = SKActionTimingMode.easeOut
-        
-        /* Slide the node down */
-        let infScoreboardSlideDown = SKAction.move(by: CGVector(dx: 0.0, dy: -5), duration: 0.2)
-        infScoreboardSlideDown.timingMode = SKActionTimingMode.easeInEaseOut
-        
-        /* This gives the items a +0.1 delayed start time each time the action is called */
-        var startTime = 0.0
-        
-        /* Loop through all the objects from the parameters */
-        for obj in nodes {
-            /* Create an action to wait (this is the start time; starts at 0.0; each time is +0.1) */
-            let wait = SKAction.wait(forDuration: startTime)
-            
-            /* Make the animation sequence (wait, slide the node up, slide the node down) */
-            let infScoreboardSlideIn = SKAction.sequence([wait, infScoreboardSlideUp, infScoreboardSlideDown])
-            
-            /* Run the animation */
-            obj.run(infScoreboardSlideIn)
-            
-            /* Increment the start time */
-            startTime += 0.1
-        }
-    }
-    
-    /* This animation slides off the scoreboard once the hero dies */
-    static func infScoreboardSlideOff(nodes: [SKNode]) {
-        /* Slide the node up */
-        let infScoreboardSlideUp = SKAction.move(by: CGVector(dx: 0.0, dy: 5), duration: 0.2)
-        infScoreboardSlideUp.timingMode = SKActionTimingMode.easeOut
-        
-        /* Slide the node down */
-        let infScoreboardSlideDown = SKAction.move(by: CGVector(dx: 0.0, dy: -64.5), duration: 0.35)
-        infScoreboardSlideDown.timingMode = SKActionTimingMode.easeInEaseOut
-        
-        /* This gives the items a +0.1 delayed start time each time the action is called */
-        var startTime = 0.0
-        
-        /* Reverse the order of the nodes */
-        let reversedNodes = nodes.reversed()
-        
-        /* Loop through all the objects from the parameters */
-        for obj in reversedNodes {
-            /* Create an action to wait (this is the start time; starts at 0.0; each time is +0.1) */
-            let wait = SKAction.wait(forDuration: startTime)
-            
-            /* Make the animation sequence (wait, slide the node up, slide the node down) */
-            let infScoreboardSlideIn = SKAction.sequence([wait, infScoreboardSlideUp, infScoreboardSlideDown])
-            
-            /* Run the animation */
-            obj.run(infScoreboardSlideIn)
-            
-            /* Increment the start time */
-            startTime += 0.1
-        }
-    }
-    
     /* This animation slides the title onto the screen horizontally. The parameters: nodes.0 is the first title label. nodes.1 is the second title label. This will have be adjusted later when I get a proper textured title (maybe)*/
     static func titleSlideIn(nodes: (SKNode, SKNode)) {
         /* Slides the first title label in */
