@@ -40,7 +40,7 @@ class UIGameOverMenu: UIElement {
         
         /* Set the handler for the game stats tab button */
         gameStatsButton.selectedHandler = {
-            self.gameStatsTab = UIGameStatsTab(baseScene: self.baseScene, pos: CGPoint(x: 0, y: 0), zPos: 6, referenceName: "gameStatsTabReferenceNode", resourcePath: "GameStatsTab", resourceType: "sks")
+            self.gameStatsTab = UIGameStatsTab(baseScene: self.baseScene, pos: CGPoint(x: 0, y: 0), zPos: 6, referenceName: "gameStatsTabReferenceNode", resourcePath: "UIGameStatsTab", resourceType: "sks")
         }
         
         /* Set the handler for the replay button */

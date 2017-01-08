@@ -11,6 +11,7 @@ import GameplayKit
 
 class UIStartMenu: UIElement {
     var diffSelector: UIDiffSelector!
+    var gameStats: UIGameStats!
     
     override func addElement() {
         super.addElement()
@@ -21,6 +22,7 @@ class UIStartMenu: UIElement {
         let safetyButton = referenceNode.childNode(withName: ".//safetyButton") as! MSButtonNode
         let toggleMenuButton = referenceNode.childNode(withName: ".//toggleMenuButton") as! MSButtonNode
         let diffSelectorButton = referenceNode.childNode(withName: ".//diffSelectorButton") as! MSButtonNode
+        let gameStatsButton = referenceNode.childNode(withName: ".//gameStatsButton") as! MSButtonNode
         
         let rightChevronNode = referenceNode.childNode(withName: ".//rightChevronNode")!
         let leftChevronNode = referenceNode.childNode(withName: ".//leftChevronNode")!
@@ -39,8 +41,11 @@ class UIStartMenu: UIElement {
                 leftChevronNode.isHidden = true
                 
                 /* Check to see if the diffSelector is visible */
-                if self.diffSelector != nil {
-                    self.diffSelector.removeElement()
+                if let diffSelector = self.diffSelector {
+                    diffSelector.removeElement()
+                }
+                if let gameStats = self.gameStats {
+                    gameStats.removeElement()
                 }
             } else {
                 // Slide the menu out
@@ -55,9 +60,26 @@ class UIStartMenu: UIElement {
         /* Handler for the diffSelectorButton */
         diffSelectorButton.selectedHandler = {
             if self.baseScene.childNode(withName: "//diffSelectorReferenceNode") == nil {
-                self.diffSelector = UIDiffSelector(baseScene: self.baseScene, pos: CGPoint(x: 0, y: 0), zPos: 1, referenceName: "diffSelectorReferenceNode", resourcePath: "DiffSelector", resourceType: "sks")
+                self.diffSelector = UIDiffSelector(baseScene: self.baseScene, pos: CGPoint(x: 0, y: 0), zPos: 5, referenceName: "diffSelectorReferenceNode", resourcePath: "UIDiffSelector", resourceType: "sks")
+                
+                if let gameStats = self.gameStats {
+                    gameStats.removeElement()
+                }
             } else {
                 self.diffSelector.removeElement()
+            }
+        }
+        
+        /* Handler for the gameStatsButton */
+        gameStatsButton.selectedHandler = {
+            if self.baseScene.childNode(withName: "//gameStatsReferenceNode") == nil {
+                self.gameStats = UIGameStats(baseScene: self.baseScene, pos: CGPoint(x: 0, y: 0), zPos: 5, referenceName: "gameStatsReferenceNode", resourcePath: "UIGameStats", resourceType: "sks")
+                
+                if let diffSelector = self.diffSelector {
+                    diffSelector.removeElement()
+                }
+            } else {
+                self.gameStats.removeElement()
             }
         }
     }

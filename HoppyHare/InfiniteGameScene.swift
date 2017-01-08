@@ -302,7 +302,7 @@ class InfiniteGameScene: SKScene, SKPhysicsContactDelegate {
             startLabel.isHidden = false
             
             /* Add the startMenu onto the screen */
-            startMenu = UIStartMenu(baseScene: self, pos: CGPoint(x: -270, y: -209.5), zPos: ZPositions.zPosStartMenu, referenceName: "startMenuReferenceNode", resourcePath: "StartMenu", resourceType: "sks")
+            startMenu = UIStartMenu(baseScene: self, pos: CGPoint(x: -270, y: -209.5), zPos: ZPositions.zPosStartMenu, referenceName: "startMenuReferenceNode", resourcePath: "UIStartMenu", resourceType: "sks")
             
             /* Slide on the startMenu */
             startMenu.closeSlide()
@@ -326,7 +326,7 @@ class InfiniteGameScene: SKScene, SKPhysicsContactDelegate {
             GameAnimations.inGameDifficultyLabelSlideIn(node: inGameDifficultyLabelNode)
             
             /* Add the infiniteScoreboard :) */
-            infiniteScoreboard = UIInfiniteScoreboard(baseScene: self, pos: CGPoint(x: 0, y: -212.5), zPos: 3, referenceName: "infiniteScoreboardReferenceNode", resourcePath: "InfiniteScoreboard", resourceType: "sks", scoreLabelName: "score", highScoreLabelName: "highScore")
+            infiniteScoreboard = UIInfiniteScoreboard(baseScene: self, pos: CGPoint(x: 0, y: -212.5), zPos: 3, referenceName: "infiniteScoreboardReferenceNode", resourcePath: "UIInfiniteScoreboard", resourceType: "sks", scoreLabelName: "score", highScoreLabelName: "highScore")
             infiniteScoreboard.onSlide()
             
             /* Set the final game difficulty */
@@ -347,7 +347,7 @@ class InfiniteGameScene: SKScene, SKPhysicsContactDelegate {
             infiniteScoreboard.offSlide()
             
             /* Set the Game Over Menu to be visible */
-            gameOverMenu = UIGameOverMenu(baseScene: self, pos: CGPoint(x: 0, y: 0), zPos: 5, referenceName: "gameOverMenuReferenceNode", resourcePath: "GameOverMenu", resourceType: "sks", score: score, jumps: jumps, highScore: GameStats.getStat(statName: GameStats.highScore), isNewHighScore: isNewHighScore)
+            gameOverMenu = UIGameOverMenu(baseScene: self, pos: CGPoint(x: 0, y: 0), zPos: 5, referenceName: "gameOverMenuReferenceNode", resourcePath: "UIGameOverMenu", resourceType: "sks", score: score, jumps: jumps, highScore: GameStats.getStat(statName: GameStats.highScore), isNewHighScore: isNewHighScore)
             
             /* Set the game state to .GameOver */
             gameState = .GameOver

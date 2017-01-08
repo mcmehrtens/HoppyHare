@@ -32,15 +32,6 @@ class UIGameStatsTab: UIElement {
         labels.append(referenceNode.childNode(withName: ".//totalGames") as! SKLabelNode)
     }
     
-    /* Animates the gameStatsTab */
-    func animate() {
-        /* Wait for 0.45 seconds */
-        let wait = SKAction.wait(forDuration: TimeInterval(0.45))
-        
-        /* Animated the referenceNode */
-        self.referenceNode.run(SKAction.sequence([wait, SKAction.run { self.labels[0].isHidden = false }, wait, SKAction.run { self.labels[1].isHidden = false }, wait, SKAction.run { self.labels[2].isHidden = false }, wait, SKAction.run { self.labels[3].isHidden = false }, wait, SKAction.run { self.labels[4].isHidden = false }, wait, SKAction.run { self.labels[5].isHidden = false }]))
-    }
-    
     /* Updates the values of the labels in the gameStatsTab */
     func updateLabels() {
         /* Make the text of all the stat labels = to what they actually are in the defaults */
@@ -50,6 +41,15 @@ class UIGameStatsTab: UIElement {
         labels[3].text = String(GameStats.getStat(statName: GameStats.avgJumps))
         labels[4].text = String(GameStats.getStat(statName: GameStats.totalJumps))
         labels[5].text = String(GameStats.getStat(statName: GameStats.totalGames))
+    }
+    
+    /* Animates the gameStatsTab */
+    func animate() {
+        /* Wait for 0.45 seconds */
+        let wait = SKAction.wait(forDuration: TimeInterval(0.45))
+        
+        /* Animated the referenceNode */
+        self.referenceNode.run(SKAction.sequence([wait, SKAction.run { self.labels[0].isHidden = false }, wait, SKAction.run { self.labels[1].isHidden = false }, wait, SKAction.run { self.labels[2].isHidden = false }, wait, SKAction.run { self.labels[3].isHidden = false }, wait, SKAction.run { self.labels[4].isHidden = false }, wait, SKAction.run { self.labels[5].isHidden = false }]))
     }
     
     /* Sets the button handlers for the game stats tab*/
@@ -78,5 +78,48 @@ class UIGameStatsTab: UIElement {
             /* Restart game scene */
             skView!.presentScene(scene)
         }
+    }
+}
+
+class UIGameStats: UIElement {
+    var nodes: [SKNode] = []
+    var labels: [SKLabelNode] = []
+    
+    /* Override the addElement method and remove the setButtonhandlers function call */
+    override func addElement() {
+        super.addElement()
+        populateLabels()
+        updateLabels()
+        animate()
+    }
+    
+    /* Populates the label arrary */
+    func populateLabels() {
+        labels = [referenceNode.childNode(withName: ".//highScore") as! SKLabelNode]
+        labels.append(referenceNode.childNode(withName: ".//avgScore") as! SKLabelNode)
+        labels.append(referenceNode.childNode(withName: ".//jumpRecord") as! SKLabelNode)
+        labels.append(referenceNode.childNode(withName: ".//avgJumps") as! SKLabelNode)
+        labels.append(referenceNode.childNode(withName: ".//totalJumps") as! SKLabelNode)
+        labels.append(referenceNode.childNode(withName: ".//totalGames") as! SKLabelNode)
+    }
+    
+    /* Updates the values of the labels in the gameStatsTab */
+    func updateLabels() {
+        /* Make the text of all the stat labels = to what they actually are in the defaults */
+        labels[0].text = String(GameStats.getStat(statName: GameStats.highScore))
+        labels[1].text = String(GameStats.getStat(statName: GameStats.avgScore))
+        labels[2].text = String(GameStats.getStat(statName: GameStats.jumpRecord))
+        labels[3].text = String(GameStats.getStat(statName: GameStats.avgJumps))
+        labels[4].text = String(GameStats.getStat(statName: GameStats.totalJumps))
+        labels[5].text = String(GameStats.getStat(statName: GameStats.totalGames))
+    }
+    
+    /* Animates the gameStatsTab */
+    func animate() {
+        /* Wait for 0.45 seconds */
+        let wait = SKAction.wait(forDuration: TimeInterval(0.45))
+        
+        /* Animated the referenceNode */
+        self.referenceNode.run(SKAction.sequence([wait, SKAction.run { self.labels[0].isHidden = false }, wait, SKAction.run { self.labels[1].isHidden = false }, wait, SKAction.run { self.labels[2].isHidden = false }, wait, SKAction.run { self.labels[3].isHidden = false }, wait, SKAction.run { self.labels[4].isHidden = false }, wait, SKAction.run { self.labels[5].isHidden = false }]))
     }
 }
