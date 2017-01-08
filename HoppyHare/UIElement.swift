@@ -25,6 +25,8 @@ class UIElement {
         self.resourcePath = resourcePath
         self.resourceType = resourceType
         self.referenceName = referenceName
+        
+        addElement()
     }
     
     func setButtonHandlers() {}

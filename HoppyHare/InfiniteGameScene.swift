@@ -14,60 +14,6 @@ enum GameState {
     case Active, GameOver, Ready, Preparing
 }
 
-/* Struct that has the variables with the different game difficulty */
-struct GameDifficulty {
-    static var goalHeight: CGFloat!
-    static var maxHeight: CGFloat!
-    static var minHeight: CGFloat!
-    
-    static func setDifficulty() {
-        switch StoredStats.gameDifficulty {
-        case 1:
-            self.goalHeight = 103.5
-            self.maxHeight = 161.0
-            self.minHeight = -36.0
-        case 2:
-            self.goalHeight = 102.0
-            self.maxHeight = 162.0
-            self.minHeight = -37.0
-        case 3:
-            self.goalHeight = 100.5
-            self.maxHeight = 163.0
-            self.minHeight = -38.0
-        case 4:
-            self.goalHeight = 99.0
-            self.maxHeight = 164.0
-            self.minHeight = -39.0
-        case 5:
-            self.goalHeight = 97.5
-            self.maxHeight = 165.0
-            self.minHeight = -40.0
-        case 6:
-            self.goalHeight = 96.0
-            self.maxHeight = 166.0
-            self.minHeight = -41.0
-        case 7:
-            self.goalHeight = 94.5
-            self.maxHeight = 167.0
-            self.minHeight = -42.0
-        case 8:
-            self.goalHeight = 93.0
-            self.maxHeight = 168.0
-            self.minHeight = -43.0
-        case 9:
-            self.goalHeight = 91.5
-            self.maxHeight = 169.0
-            self.minHeight = -44.0
-        case 10:
-            self.goalHeight = 90.0
-            self.maxHeight = 170.0
-            self.minHeight = -45.0
-        default:
-            print("[Error] Difficulty level out of bounds.")
-        }
-    }
-}
-
 class InfiniteGameScene: SKScene, SKPhysicsContactDelegate {
     
     /* Game management */
@@ -96,7 +42,7 @@ class InfiniteGameScene: SKScene, SKPhysicsContactDelegate {
     /* Boolean counters */
     var hasJumped = false
     var hasGeneratedFirstObstacle = false
-    var newHighScore = false
+    var isNewHighScore = false
     
     /* Buttons */
     var gameOverMenuReplayButton_1: MSButtonNode!
@@ -162,8 +108,8 @@ class InfiniteGameScene: SKScene, SKPhysicsContactDelegate {
         /* Initialize the sounds. Check if they've been initialized first. */
         Sounds.initializeSounds()
         
-        /* Get all the game stats from the defaults */
-        StoredStats.initDefaults()
+        /* Get the old high score */
+        oldHighScore = GameStats.getStat(statName: GameStats.highScore)
     }
     
     /* This func is called before each frame is rendered. */
@@ -259,34 +205,44 @@ class InfiniteGameScene: SKScene, SKPhysicsContactDelegate {
             /* Set the hasGeneratedFirstObstacle */
             hasGeneratedFirstObstacle = true
             
-            /* Create a new obstacle reference object using our obstacle resource */
-            let resourcePath = Bundle.main.path(forResource: "Obstacle", ofType: "sks")
-            let newObstacle = SKReferenceNode(url: NSURL(fileURLWithPath: resourcePath!) as URL)
+            /* Generate an obstacle */
+            generateObstacle()
             
-            let goal = newObstacle.childNode(withName: "//goal") as! SKSpriteNode
-            let obstacleTop = newObstacle.childNode(withName: "//SKSpriteNode_0") as! SKSpriteNode
-            let obstacleBottom = newObstacle.childNode(withName: "//SKSpriteNode_1") as! SKSpriteNode
-            
-            goal.size.height = GameDifficulty.goalHeight
-            goal.position.y = CGFloat(0)
-            obstacleTop.position = CGPoint(x: 0, y: (GameDifficulty.goalHeight / 2) + (obstacleTop.size.height / 2))
-            obstacleBottom.position = CGPoint(x: 0, y: -(GameDifficulty.goalHeight / 2) - (obstacleBottom.size.height / 2))
-            
-            obstacleLayer.addChild(newObstacle)
-            
-            /* Generate new obstacle position, start just outside screen and with a random y value */
-            let randomPosition = CGPoint(x: ((self.size.width / 2) + ((obstacleLayer.childNode(withName: "/SKNode") as! SKSpriteNode).size.width / 2)), y: CGFloat.random(min: GameDifficulty.minHeight, max: GameDifficulty.maxHeight))
-            
-            /* Convert new node position back to obstacle layer space */
-            newObstacle.position = self.convert(randomPosition, to: obstacleLayer)
-            
-            // Reset spawn timer
+            /* Reset spawn timer */
             spawnTimer = 0
         }
         
         /* Increment the obstacle spawn timer */
         spawnTimer += fixedDelta
     }
+    
+    /* Generates an obstacle at a random position */
+    func generateObstacle() {
+        /* Create a new obstacle reference object using our obstacle resource */
+        let resourcePath = Bundle.main.path(forResource: "Obstacle", ofType: "sks")
+        let newObstacle = SKReferenceNode(url: NSURL(fileURLWithPath: resourcePath!) as URL)
+        
+        /* Get references to the individual sprite nodes within our newObstacle */
+        let goal = newObstacle.childNode(withName: "//goal") as! SKSpriteNode
+        let obstacleTop = newObstacle.childNode(withName: "//obstacleTop") as! SKSpriteNode
+        let obstacleBottom = newObstacle.childNode(withName: "//obstacleBottom") as! SKSpriteNode
+        
+        /* Set the proper y-values and heights for the sprites in the newObstacle */
+        goal.size.height = GameDifficulty.goalHeight
+        goal.position.y = CGFloat(0)
+        obstacleTop.position = CGPoint(x: 0, y: (GameDifficulty.goalHeight / 2) + (obstacleTop.size.height / 2))
+        obstacleBottom.position = CGPoint(x: 0, y: -(GameDifficulty.goalHeight / 2) - (obstacleBottom.size.height / 2))
+        
+        /* Add the obstacle to the obstacleLayer */
+        obstacleLayer.addChild(newObstacle)
+        
+        /* Generate new obstacle position, start just outside screen and with a random y value */
+        let randomPosition = CGPoint(x: ((self.size.width / 2) + ((obstacleLayer.childNode(withName: "/SKNode") as! SKSpriteNode).size.width / 2)), y: CGFloat.random(min: GameDifficulty.minHeight, max: GameDifficulty.maxHeight))
+        
+        /* Convert new node position back to obstacle layer space */
+        newObstacle.position = self.convert(randomPosition, to: obstacleLayer)
+    }
+    
     
     /* Increment the score when the hero stops making contact with the goal entity */
     func didEnd(_ contact: SKPhysicsContact) {
@@ -306,6 +262,13 @@ class InfiniteGameScene: SKScene, SKPhysicsContactDelegate {
             
             /* Run the code to increase the score by 1 */
             score += 1
+            
+            if score > oldHighScore {
+                isNewHighScore = true
+                GameStats.setStat(statName: GameStats.highScore, value: score)
+                infiniteScoreboard.updateHighScoreLabel(highScore: GameStats.getStat(statName: GameStats.highScore))
+            }
+            
             infiniteScoreboard.increaseScore(score: score)
         }
     }
@@ -340,7 +303,6 @@ class InfiniteGameScene: SKScene, SKPhysicsContactDelegate {
             
             /* Add the startMenu onto the screen */
             startMenu = UIStartMenu(baseScene: self, pos: CGPoint(x: -270, y: -209.5), zPos: ZPositions.zPosStartMenu, referenceName: "startMenuReferenceNode", resourcePath: "StartMenu", resourceType: "sks")
-            startMenu.addElement()
             
             /* Slide on the startMenu */
             startMenu.closeSlide()
@@ -360,12 +322,11 @@ class InfiniteGameScene: SKScene, SKPhysicsContactDelegate {
             startMenu.offSlide()
             
             /* Set the inGameDifficultyLabel to the proper value and slide it in */
-            inGameDifficulty.text = String(StoredStats.gameDifficulty)
+            inGameDifficulty.text = String(GameStats.getStat(statName: GameStats.gameDiff))
             GameAnimations.inGameDifficultyLabelSlideIn(node: inGameDifficultyLabelNode)
             
-            /* Slide on the scoreboard labels :) */
-            infiniteScoreboard = UIInfiniteScoreboard(baseScene: self, pos: CGPoint(x: 0, y: -212.5), zPos: 3, referenceName: "infiniteScoreboardReferenceNode", resourcePath: "InfiniteScoreboard", resourceType: "sks")
-            infiniteScoreboard.addElement()
+            /* Add the infiniteScoreboard :) */
+            infiniteScoreboard = UIInfiniteScoreboard(baseScene: self, pos: CGPoint(x: 0, y: -212.5), zPos: 3, referenceName: "infiniteScoreboardReferenceNode", resourcePath: "InfiniteScoreboard", resourceType: "sks", scoreLabelName: "score", highScoreLabelName: "highScore")
             infiniteScoreboard.onSlide()
             
             /* Set the final game difficulty */
@@ -376,8 +337,8 @@ class InfiniteGameScene: SKScene, SKPhysicsContactDelegate {
             
             /* Lot's of things happening here. #1, stop all angular velocity. #2: Set the angular velocity = 0. #3: Stop the flapping animation. #4: Run the death animation. #5: Shake the screen. #6: Show the restart button.*/
         case .GameOver:
-            /* Update all the game statistics */
-            updateGameStats(score: score, jumps: jumps)
+            /* Set the game stats */
+            GameStats.updateStats(score: score, jumps: jumps)
             
             /* Run the kill hero animation */
             killHero()
@@ -386,8 +347,7 @@ class InfiniteGameScene: SKScene, SKPhysicsContactDelegate {
             infiniteScoreboard.offSlide()
             
             /* Set the Game Over Menu to be visible */
-            gameOverMenu = UIGameOverMenu(baseScene: self, pos: CGPoint(x: 0, y: 0), zPos: 5, referenceName: "gameOverMenuReferenceNode", resourcePath: "GameOverMenu", resourceType: "sks", score: score, jumps: jumps, highScore: StoredStats.allTimeHighScore, newHighScore: newHighScore)
-            gameOverMenu.addElement()
+            gameOverMenu = UIGameOverMenu(baseScene: self, pos: CGPoint(x: 0, y: 0), zPos: 5, referenceName: "gameOverMenuReferenceNode", resourcePath: "GameOverMenu", resourceType: "sks", score: score, jumps: jumps, highScore: GameStats.getStat(statName: GameStats.highScore), isNewHighScore: isNewHighScore)
             
             /* Set the game state to .GameOver */
             gameState = .GameOver
@@ -585,118 +545,5 @@ class InfiniteGameScene: SKScene, SKPhysicsContactDelegate {
         for obj in self.children {
             obj.run(shake)
         }
-    }
-    
-    /*
-     * ALL THE GAME STAT TAB FUNCTIONS ARE UNDER HERE
-     */
-    
-    /* This func updates all game stats in one function. If we break a new high score for something, set the color in the gameStatsTab to be golden!!!!! */
-    func updateGameStats(score: Int, jumps: Int) {
-        /* Set new high score if the score is higher than the current high score. */
-        oldHighScore = StoredStats.allTimeHighScore
-        
-        if score > StoredStats.allTimeHighScore {
-            newHighScore = true
-            
-            StoredStats.allTimeHighScore = score
-            StoredStats.defaults.set(StoredStats.allTimeHighScore, forKey: "allTimeHighScore")
-        }
-        
-        /* Add the score onto the allTimeScore stat */
-        StoredStats.allTimeScore! += score
-        StoredStats.defaults.set(StoredStats.allTimeScore, forKey: "allTimeScore")
-        
-        /* Add the jumps onto the allTimeJumps stats */
-        StoredStats.allTimeJumps! += jumps
-        StoredStats.defaults.set(StoredStats.allTimeJumps, forKey: "allTimeJumps")
-        
-        /* Check to see if the jumps is greater than the mostJumpsInOneGame stat */
-        if jumps > StoredStats.mostJumpsInOneGame! {
-            /* If yes, set the value of mostJumpsInOneGame to the number of jumps */
-            StoredStats.mostJumpsInOneGame = jumps
-            StoredStats.defaults.set(StoredStats.mostJumpsInOneGame, forKey: "mostJumpsInOneGame")
-        }
-        
-        /* Add one to the total games played */
-        StoredStats.totalGamesPlayed! += 1
-        StoredStats.defaults.set(StoredStats.totalGamesPlayed, forKey: "totalGamesPlayed")
-        
-        /* Check to see the score and increment the appropriate game stats. */
-        if score < 1 {
-            StoredStats.numOfTimesScorePrec1! += 1
-            StoredStats.defaults.set(StoredStats.numOfTimesScorePrec1, forKey: "numOfTimesScorePrec1")
-        } else if score > 25 {
-            StoredStats.numOfTimesScoreExc25! += 1
-            StoredStats.defaults.set(StoredStats.numOfTimesScoreExc25, forKey: "numOfTimesScoreExc25")
-            
-            if score > 50 {
-                StoredStats.numOfTimesScoreExc50! += 1
-                StoredStats.defaults.set(StoredStats.numOfTimesScoreExc50, forKey: "numOfTimesScoreExc50")
-                
-                if score > 100 {
-                    StoredStats.numOfTimesScoreExc100! += 1
-                    StoredStats.defaults.set(StoredStats.numOfTimesScoreExc100, forKey: "numOfTimesScoreExc100")
-                    
-                    if score > 250 {
-                        StoredStats.numOfTimesScoreExc250! += 1
-                        StoredStats.defaults.set(StoredStats.numOfTimesScoreExc250, forKey: "numOfTimesScoreExc250")
-                        
-                        if score > 500 {
-                            StoredStats.numOfTimesScoreExc500! += 1
-                            StoredStats.defaults.set(StoredStats.numOfTimesScoreExc500, forKey: "numOfTimesScoreExc500")
-                            
-                            if score > 1000 {
-                                StoredStats.numOfTimesScoreExc1000! += 1
-                                StoredStats.defaults.set(StoredStats.numOfTimesScoreExc1000, forKey: "numOfTimesScoreExc1000")
-                            }
-                        }
-                    }
-                }
-            }
-        }
-    }
-}
-
-struct StoredStats {
-    static let defaults = UserDefaults.standard
-    static var allTimeHighScore: Int!
-    static var allTimeScore: Int!
-    static var allTimeJumps: Int!
-    static var mostJumpsInOneGame: Int!
-    static var totalGamesPlayed: Int!
-    static var numOfCostumesDiscovered: Int!
-    static var favCostume: String = "Not Implemented" // This will be fixed later
-    static var numOfTimesScorePrec1: Int!
-    static var numOfTimesScoreExc25: Int!
-    static var numOfTimesScoreExc50: Int!
-    static var numOfTimesScoreExc100: Int!
-    static var numOfTimesScoreExc250: Int!
-    static var numOfTimesScoreExc500: Int!
-    static var numOfTimesScoreExc1000: Int!
-    
-    static var gameDifficulty: Int!
-    
-    /* Initialize defaults */
-    static func initDefaults() {
-        /* Get the high score value */
-        allTimeHighScore = defaults.integer(forKey: "allTimeHighScore")
-        allTimeScore = defaults.integer(forKey: "allTimeScore")
-        allTimeJumps = defaults.integer(forKey: "allTimeJumps")
-        mostJumpsInOneGame = defaults.integer(forKey: "mostJumpsInOneGame")
-        totalGamesPlayed = defaults.integer(forKey: "totalGamesPlayed")
-        numOfCostumesDiscovered = defaults.integer(forKey: "numOfCostumesDiscovered")
-        if numOfCostumesDiscovered == 0 { numOfCostumesDiscovered = 1 } /* You always have the default costume unlocked ;) */
-        //favCostume = defaults.string(forKey: "favCostume")
-        numOfTimesScorePrec1 = defaults.integer(forKey: "numOfTimesScorePrec1")
-        numOfTimesScoreExc25 = defaults.integer(forKey: "numOfTimesScoreExc25")
-        numOfTimesScoreExc50 = defaults.integer(forKey: "numOfTimesScoreExc50")
-        numOfTimesScoreExc100 = defaults.integer(forKey: "numOfTimesScoreExc100")
-        numOfTimesScoreExc250 = defaults.integer(forKey: "numOfTimesScoreExc250")
-        numOfTimesScoreExc500 = defaults.integer(forKey: "numOfTimesScoreExc500")
-        numOfTimesScoreExc1000 = defaults.integer(forKey: "numOfTimesScoreExc1000")
-        
-        gameDifficulty = defaults.integer(forKey: "gameDifficulty")
-        if gameDifficulty == 0 { gameDifficulty = 1 } // Game Difficulty 1 is the lowest
     }
 }

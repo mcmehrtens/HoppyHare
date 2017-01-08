@@ -18,22 +18,25 @@ class UIStartMenu: UIElement {
     }
     
     override func setButtonHandlers() {
-        let startMenuSafetyButton = referenceNode.childNode(withName: "//startMenuSafetyButton") as! MSButtonNode
-        let startMenuButton_1 = referenceNode.childNode(withName: "//startMenuButton_1") as! MSButtonNode
-        let startMenuDiffSelectorButton_1 = referenceNode.childNode(withName: "//startMenuDiffSelectorButton_1") as! MSButtonNode
+        let safetyButton = referenceNode.childNode(withName: ".//safetyButton") as! MSButtonNode
+        let toggleMenuButton = referenceNode.childNode(withName: ".//toggleMenuButton") as! MSButtonNode
+        let diffSelectorButton = referenceNode.childNode(withName: ".//diffSelectorButton") as! MSButtonNode
+        
+        let rightChevronNode = referenceNode.childNode(withName: ".//rightChevronNode")!
+        let leftChevronNode = referenceNode.childNode(withName: ".//leftChevronNode")!
         
         /* Set the handler for the safety button */
-        startMenuSafetyButton.selectedHandler = {}
+        safetyButton.selectedHandler = {}
         
         /* Handler for the startMenuButton_1. This slides the thing in or out */
-        startMenuButton_1.selectedHandler = {
-            if self.referenceNode.childNode(withName: "//startMenuRightChevronNode")!.isHidden {
+        toggleMenuButton.selectedHandler = {
+            if rightChevronNode.isHidden {
                 // Slide the menu in
                 self.closeSlide()
                 
                 /* Change the arrow to the RIGHT direction */
-                self.referenceNode.childNode(withName: "//startMenuRightChevronNode")!.isHidden = false
-                self.referenceNode.childNode(withName: "//startMenuLeftChevronNode")!.isHidden = true
+                rightChevronNode.isHidden = false
+                leftChevronNode.isHidden = true
                 
                 /* Check to see if the diffSelector is visible */
                 if self.diffSelector != nil {
@@ -44,16 +47,15 @@ class UIStartMenu: UIElement {
                 self.openSlide()
                 
                 /* Change the arrow to the LEFT direction */
-                self.referenceNode.childNode(withName: "//startMenuRightChevronNode")!.isHidden = true
-                self.referenceNode.childNode(withName: "//startMenuLeftChevronNode")!.isHidden = false
+                rightChevronNode.isHidden = true
+                leftChevronNode.isHidden = false
             }
         }
         
         /* Handler for the diffSelectorButton */
-        startMenuDiffSelectorButton_1.selectedHandler = {
+        diffSelectorButton.selectedHandler = {
             if self.baseScene.childNode(withName: "//diffSelectorReferenceNode") == nil {
                 self.diffSelector = UIDiffSelector(baseScene: self.baseScene, pos: CGPoint(x: 0, y: 0), zPos: 1, referenceName: "diffSelectorReferenceNode", resourcePath: "DiffSelector", resourceType: "sks")
-                self.diffSelector.addElement()
             } else {
                 self.diffSelector.removeElement()
             }

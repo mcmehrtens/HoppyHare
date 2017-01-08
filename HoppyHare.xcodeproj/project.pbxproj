@@ -13,6 +13,7 @@
 		C926F5E11E19AF06007584F7 /* GameAnimations.swift in Sources */ = {isa = PBXBuildFile; fileRef = C926F5E01E19AF06007584F7 /* GameAnimations.swift */; };
 		C926F5E31E19E82C007584F7 /* CustomColors.swift in Sources */ = {isa = PBXBuildFile; fileRef = C926F5E21E19E82C007584F7 /* CustomColors.swift */; };
 		C942D4211E1D59EF002FEF73 /* GameStatsTab.sks in Resources */ = {isa = PBXBuildFile; fileRef = C942D4201E1D59EF002FEF73 /* GameStatsTab.sks */; };
+		C9577DDE1E21EDC300B65F40 /* UIScoreboard.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9577DDD1E21EDC300B65F40 /* UIScoreboard.swift */; };
 		C9765B241E20480700D07DE7 /* UIGameStatsTab.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9765B231E20480700D07DE7 /* UIGameStatsTab.swift */; };
 		C9765B2A1E20584500D07DE7 /* UIInfiniteScoreboard.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9765B291E20584500D07DE7 /* UIInfiniteScoreboard.swift */; };
 		C98C0E301E1ECC8C000E0989 /* StartMenu.sks in Resources */ = {isa = PBXBuildFile; fileRef = C98C0E2F1E1ECC8C000E0989 /* StartMenu.sks */; };
@@ -29,6 +30,8 @@
 		C9C2CFB21DFF0003001DB1B6 /* pixelFont.ttf in Resources */ = {isa = PBXBuildFile; fileRef = C9C2CFAE1DFF0003001DB1B6 /* pixelFont.ttf */; };
 		C9C2CFB31DFF0003001DB1B6 /* Sounds.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9C2CFAF1DFF0003001DB1B6 /* Sounds.swift */; };
 		C9C97FE91DFB61F600627547 /* InfiniteScoreboard.sks in Resources */ = {isa = PBXBuildFile; fileRef = C9C97FE81DFB61F600627547 /* InfiniteScoreboard.sks */; };
+		C9E2FA441E21794000EB2139 /* GameDifficulty.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9E2FA431E21794000EB2139 /* GameDifficulty.swift */; };
+		C9E2FA471E21A93200EB2139 /* GameStats.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9E2FA461E21A93200EB2139 /* GameStats.swift */; };
 		C9FC13901DF716EE00744006 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9FC138F1DF716EE00744006 /* AppDelegate.swift */; };
 		C9FC13921DF716EE00744006 /* InfiniteGameScene.sks in Resources */ = {isa = PBXBuildFile; fileRef = C9FC13911DF716EE00744006 /* InfiniteGameScene.sks */; };
 		C9FC13961DF716EE00744006 /* InfiniteGameScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9FC13951DF716EE00744006 /* InfiniteGameScene.swift */; };
@@ -44,6 +47,7 @@
 		C926F5E01E19AF06007584F7 /* GameAnimations.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GameAnimations.swift; sourceTree = "<group>"; };
 		C926F5E21E19E82C007584F7 /* CustomColors.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CustomColors.swift; sourceTree = "<group>"; };
 		C942D4201E1D59EF002FEF73 /* GameStatsTab.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = GameStatsTab.sks; sourceTree = "<group>"; };
+		C9577DDD1E21EDC300B65F40 /* UIScoreboard.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIScoreboard.swift; sourceTree = "<group>"; };
 		C9765B231E20480700D07DE7 /* UIGameStatsTab.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIGameStatsTab.swift; sourceTree = "<group>"; };
 		C9765B291E20584500D07DE7 /* UIInfiniteScoreboard.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIInfiniteScoreboard.swift; sourceTree = "<group>"; };
 		C98C0E2F1E1ECC8C000E0989 /* StartMenu.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = StartMenu.sks; sourceTree = "<group>"; };
@@ -60,6 +64,8 @@
 		C9C2CFAE1DFF0003001DB1B6 /* pixelFont.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = pixelFont.ttf; sourceTree = "<group>"; };
 		C9C2CFAF1DFF0003001DB1B6 /* Sounds.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Sounds.swift; sourceTree = "<group>"; };
 		C9C97FE81DFB61F600627547 /* InfiniteScoreboard.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = InfiniteScoreboard.sks; sourceTree = "<group>"; };
+		C9E2FA431E21794000EB2139 /* GameDifficulty.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GameDifficulty.swift; sourceTree = "<group>"; };
+		C9E2FA461E21A93200EB2139 /* GameStats.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GameStats.swift; sourceTree = "<group>"; };
 		C9FC138C1DF716EE00744006 /* HoppyHare.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = HoppyHare.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		C9FC138F1DF716EE00744006 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		C9FC13911DF716EE00744006 /* InfiniteGameScene.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = InfiniteGameScene.sks; sourceTree = "<group>"; };
@@ -81,6 +87,15 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		C9577DDC1E21EDAB00B65F40 /* Scoreboards */ = {
+			isa = PBXGroup;
+			children = (
+				C9577DDD1E21EDC300B65F40 /* UIScoreboard.swift */,
+				C9765B281E20582600D07DE7 /* InfiniteScoreboard */,
+			);
+			name = Scoreboards;
+			sourceTree = "<group>";
+		};
 		C9765B251E20562400D07DE7 /* DifficultySelector */ = {
 			isa = PBXGroup;
 			children = (
@@ -129,6 +144,7 @@
 		C98C0E331E1FE396000E0989 /* UserInterface */ = {
 			isa = PBXGroup;
 			children = (
+				C9577DDC1E21EDAB00B65F40 /* Scoreboards */,
 				C98C0E341E1FE3B0000E0989 /* UIElement.swift */,
 				C926F5E01E19AF06007584F7 /* GameAnimations.swift */,
 				C926F5E21E19E82C007584F7 /* CustomColors.swift */,
@@ -137,7 +153,6 @@
 				C9765B251E20562400D07DE7 /* DifficultySelector */,
 				C9765B261E20564300D07DE7 /* GameOverMenu */,
 				C9765B271E20566500D07DE7 /* GameStatsTab */,
-				C9765B281E20582600D07DE7 /* InfiniteScoreboard */,
 			);
 			name = UserInterface;
 			sourceTree = "<group>";
@@ -198,6 +213,23 @@
 			name = InfGamemode;
 			sourceTree = "<group>";
 		};
+		C9E2FA421E21792500EB2139 /* Gamemodes */ = {
+			isa = PBXGroup;
+			children = (
+				C9E2FA431E21794000EB2139 /* GameDifficulty.swift */,
+				C9C2CFB81DFF0373001DB1B6 /* InfGamemode */,
+			);
+			name = Gamemodes;
+			sourceTree = "<group>";
+		};
+		C9E2FA451E21A91A00EB2139 /* GameStats */ = {
+			isa = PBXGroup;
+			children = (
+				C9E2FA461E21A93200EB2139 /* GameStats.swift */,
+			);
+			name = GameStats;
+			sourceTree = "<group>";
+		};
 		C9FC13831DF716EE00744006 = {
 			isa = PBXGroup;
 			children = (
@@ -218,7 +250,8 @@
 			isa = PBXGroup;
 			children = (
 				C9C2CFB71DFF0316001DB1B6 /* App Files */,
-				C9C2CFB81DFF0373001DB1B6 /* InfGamemode */,
+				C9E2FA451E21A91A00EB2139 /* GameStats */,
+				C9E2FA421E21792500EB2139 /* Gamemodes */,
 				C98C0E331E1FE396000E0989 /* UserInterface */,
 				C98C0E311E1ECC9D000E0989 /* Entities */,
 				C9C2CFB41DFF02B2001DB1B6 /* Resources */,
@@ -314,6 +347,7 @@
 			files = (
 				C9FC13961DF716EE00744006 /* InfiniteGameScene.swift in Sources */,
 				C9FC13981DF716EE00744006 /* GameViewController.swift in Sources */,
+				C9E2FA471E21A93200EB2139 /* GameStats.swift in Sources */,
 				C98C0E351E1FE3B0000E0989 /* UIElement.swift in Sources */,
 				C98C0E3C1E2016F7000E0989 /* UIDiffSelector.swift in Sources */,
 				C9C2CFB01DFF0003001DB1B6 /* CGFloat+Extensions.swift in Sources */,
@@ -324,9 +358,11 @@
 				C926F5E31E19E82C007584F7 /* CustomColors.swift in Sources */,
 				C926F5E11E19AF06007584F7 /* GameAnimations.swift in Sources */,
 				C98C0E371E1FE6B2000E0989 /* ZPositions.swift in Sources */,
+				C9E2FA441E21794000EB2139 /* GameDifficulty.swift in Sources */,
 				C9765B2A1E20584500D07DE7 /* UIInfiniteScoreboard.swift in Sources */,
 				C98C0E391E20168F000E0989 /* UIStartMenu.swift in Sources */,
 				C98C0E3E1E202B25000E0989 /* UIGameOverMenu.swift in Sources */,
+				C9577DDE1E21EDC300B65F40 /* UIScoreboard.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -11,101 +11,75 @@ import GameplayKit
 
 class UIDiffSelector: UIElement {
     var labels: [SKLabelNode] = []
-    var buttons: [MSButtonNode] = []
     
     override func addElement() {
         super.addElement()
         populateLabels()
-        populateButtons()
         setGameDifficultyLabels()
         setButtonHandlers()
     }
     
     /* Populates the array that contains all the labels */
     func populateLabels() {
-        labels = [referenceNode.childNode(withName: "//diffSelectorButtonOneLabel") as! SKLabelNode]
-        labels.append(referenceNode.childNode(withName: "//diffSelectorButtonTwoLabel") as! SKLabelNode)
-        labels.append(referenceNode.childNode(withName: "//diffSelectorButtonThreeLabel") as! SKLabelNode)
-        labels.append(referenceNode.childNode(withName: "//diffSelectorButtonFourLabel") as! SKLabelNode)
-        labels.append(referenceNode.childNode(withName: "//diffSelectorButtonFiveLabel") as! SKLabelNode)
-        labels.append(referenceNode.childNode(withName: "//diffSelectorButtonSixLabel") as! SKLabelNode)
-        labels.append(referenceNode.childNode(withName: "//diffSelectorButtonSevenLabel") as! SKLabelNode)
-        labels.append(referenceNode.childNode(withName: "//diffSelectorButtonEightLabel") as! SKLabelNode)
-        labels.append(referenceNode.childNode(withName: "//diffSelectorButtonNineLabel") as! SKLabelNode)
-        labels.append(referenceNode.childNode(withName: "//diffSelectorButtonTenLabel") as! SKLabelNode)
-    }
-    
-    /* Populates the array that contains all the buttons */
-    func populateButtons() {
-        buttons = [referenceNode.childNode(withName: "//diffSelectorButtonOne_1") as! MSButtonNode]
-        buttons.append(referenceNode.childNode(withName: "//diffSelectorButtonTwo_1") as! MSButtonNode)
-        buttons.append(referenceNode.childNode(withName: "//diffSelectorButtonThree_1") as! MSButtonNode)
-        buttons.append(referenceNode.childNode(withName: "//diffSelectorButtonFour_1") as! MSButtonNode)
-        buttons.append(referenceNode.childNode(withName: "//diffSelectorButtonFive_1") as! MSButtonNode)
-        buttons.append(referenceNode.childNode(withName: "//diffSelectorButtonSix_1") as! MSButtonNode)
-        buttons.append(referenceNode.childNode(withName: "//diffSelectorButtonSeven_1") as! MSButtonNode)
-        buttons.append(referenceNode.childNode(withName: "//diffSelectorButtonEight_1") as! MSButtonNode)
-        buttons.append(referenceNode.childNode(withName: "//diffSelectorButtonNine_1") as! MSButtonNode)
-        buttons.append(referenceNode.childNode(withName: "//diffSelectorButtonTen_1") as! MSButtonNode)
+        labels = [referenceNode.childNode(withName: ".//buttonOneLabel") as! SKLabelNode]
+        labels.append(referenceNode.childNode(withName: ".//buttonTwoLabel") as! SKLabelNode)
+        labels.append(referenceNode.childNode(withName: ".//buttonThreeLabel") as! SKLabelNode)
+        labels.append(referenceNode.childNode(withName: ".//buttonFourLabel") as! SKLabelNode)
+        labels.append(referenceNode.childNode(withName: ".//buttonFiveLabel") as! SKLabelNode)
+        labels.append(referenceNode.childNode(withName: ".//buttonSixLabel") as! SKLabelNode)
+        labels.append(referenceNode.childNode(withName: ".//buttonSevenLabel") as! SKLabelNode)
+        labels.append(referenceNode.childNode(withName: ".//buttonEightLabel") as! SKLabelNode)
+        labels.append(referenceNode.childNode(withName: ".//buttonNineLabel") as! SKLabelNode)
+        labels.append(referenceNode.childNode(withName: ".//buttonTenLabel") as! SKLabelNode)
     }
     
     /* Set the handlers for all the buttons */
     override func setButtonHandlers() {
-        buttons[0].selectedHandler = {
+        (referenceNode.childNode(withName: ".//buttonOne") as! MSButtonNode).selectedHandler = {
             self.removeElement()
-            StoredStats.gameDifficulty = 1
-            StoredStats.defaults.set(StoredStats.gameDifficulty, forKey: "gameDifficulty")
+            GameStats.setStat(statName: GameStats.gameDiff, value: 1)
         }
-        buttons[1].selectedHandler = {
+        (referenceNode.childNode(withName: ".//buttonTwo") as! MSButtonNode).selectedHandler = {
             self.removeElement()
-            StoredStats.gameDifficulty = 2
-            StoredStats.defaults.set(StoredStats.gameDifficulty, forKey: "gameDifficulty")
+            GameStats.setStat(statName: GameStats.gameDiff, value: 2)
         }
-        buttons[2].selectedHandler = {
+        (referenceNode.childNode(withName: ".//buttonThree") as! MSButtonNode).selectedHandler = {
             self.removeElement()
-            StoredStats.gameDifficulty = 3
-            StoredStats.defaults.set(StoredStats.gameDifficulty, forKey: "gameDifficulty")
+            GameStats.setStat(statName: GameStats.gameDiff, value: 3)
         }
-        buttons[3].selectedHandler = {
+        (referenceNode.childNode(withName: ".//buttonFour") as! MSButtonNode).selectedHandler = {
             self.removeElement()
-            StoredStats.gameDifficulty = 4
-            StoredStats.defaults.set(StoredStats.gameDifficulty, forKey: "gameDifficulty")
+            GameStats.setStat(statName: GameStats.gameDiff, value: 4)
         }
-        buttons[4].selectedHandler = {
+        (referenceNode.childNode(withName: ".//buttonFive") as! MSButtonNode).selectedHandler = {
             self.removeElement()
-            StoredStats.gameDifficulty = 5
-            StoredStats.defaults.set(StoredStats.gameDifficulty, forKey: "gameDifficulty")
+            GameStats.setStat(statName: GameStats.gameDiff, value: 5)
         }
-        buttons[5].selectedHandler = {
+        (referenceNode.childNode(withName: ".//buttonSix") as! MSButtonNode).selectedHandler = {
             self.removeElement()
-            StoredStats.gameDifficulty = 6
-            StoredStats.defaults.set(StoredStats.gameDifficulty, forKey: "gameDifficulty")
+            GameStats.setStat(statName: GameStats.gameDiff, value: 6)
         }
-        buttons[6].selectedHandler = {
+        (referenceNode.childNode(withName: ".//buttonSeven") as! MSButtonNode).selectedHandler = {
             self.removeElement()
-            StoredStats.gameDifficulty = 7
-            StoredStats.defaults.set(StoredStats.gameDifficulty, forKey: "gameDifficulty")
+            GameStats.setStat(statName: GameStats.gameDiff, value: 7)
         }
-        buttons[7].selectedHandler = {
+        (referenceNode.childNode(withName: ".//buttonEight") as! MSButtonNode).selectedHandler = {
             self.removeElement()
-            StoredStats.gameDifficulty = 8
-            StoredStats.defaults.set(StoredStats.gameDifficulty, forKey: "gameDifficulty")
+            GameStats.setStat(statName: GameStats.gameDiff, value: 8)
         }
-        buttons[8].selectedHandler = {
+        (referenceNode.childNode(withName: ".//buttonNine") as! MSButtonNode).selectedHandler = {
             self.removeElement()
-            StoredStats.gameDifficulty = 9
-            StoredStats.defaults.set(StoredStats.gameDifficulty, forKey: "gameDifficulty")
+            GameStats.setStat(statName: GameStats.gameDiff, value: 9)
         }
-        buttons[9].selectedHandler = {
+        (referenceNode.childNode(withName: ".//buttonTen") as! MSButtonNode).selectedHandler = {
             self.removeElement()
-            StoredStats.gameDifficulty = 10
-            StoredStats.defaults.set(StoredStats.gameDifficulty, forKey: "gameDifficulty")
+            GameStats.setStat(statName: GameStats.gameDiff, value: 10)
         }
     }
     
     /* Set the Game Difficulty Selector Label Nodes */
     func setGameDifficultyLabels() {
-        let selectedLabel = labels[StoredStats.gameDifficulty - 1]
+        let selectedLabel = labels[GameStats.getStat(statName: GameStats.gameDiff) - 1]
         
         for label in labels {
             if label == selectedLabel {

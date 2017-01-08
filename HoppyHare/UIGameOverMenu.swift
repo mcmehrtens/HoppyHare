@@ -13,17 +13,17 @@ class UIGameOverMenu: UIElement {
     var score: Int!
     var jumps: Int!
     var highScore: Int!
-    var newHighScore: Bool = false
+    var isNewHighScore: Bool = false
     
     var gameStatsTab: UIGameStatsTab!
     
-    init(baseScene: SKScene, pos: CGPoint, zPos: Int, referenceName: String, resourcePath: String, resourceType: String, score: Int, jumps: Int, highScore: Int, newHighScore: Bool) {
-        super.init(baseScene: baseScene, pos: pos, zPos: zPos, referenceName: referenceName, resourcePath: resourcePath, resourceType: resourceType)
-        
+    init(baseScene: SKScene, pos: CGPoint, zPos: Int, referenceName: String, resourcePath: String, resourceType: String, score: Int, jumps: Int, highScore: Int, isNewHighScore: Bool) {
         self.score = score
         self.jumps = jumps
         self.highScore = highScore
-        self.newHighScore = newHighScore
+        self.isNewHighScore = isNewHighScore
+        
+        super.init(baseScene: baseScene, pos: pos, zPos: zPos, referenceName: referenceName, resourcePath: resourcePath, resourceType: resourceType)
     }
     
     override func addElement() {
@@ -35,22 +35,21 @@ class UIGameOverMenu: UIElement {
     
     /* Set the button handlers for the GameOverMenu */
     override func setButtonHandlers() {
-        let gameOverMenuGameStatsButton_1 = referenceNode.childNode(withName: "//gameOverMenuGameStatsButton_1") as! MSButtonNode
-        let gameOverMenuReplayButton_1 = referenceNode.childNode(withName: "//gameOverMenuReplayButton_1") as! MSButtonNode
+        let gameStatsButton = referenceNode.childNode(withName: "//gameStatsButton") as! MSButtonNode
+        let replayButton = referenceNode.childNode(withName: "//replayButton") as! MSButtonNode
         
         /* Set the handler for the game stats tab button */
-        gameOverMenuGameStatsButton_1.selectedHandler = {
-            self.gameStatsTab = UIGameStatsTab(baseScene: self.baseScene, pos: CGPoint(x: 0, y: 0), zPos: 6, referenceName: "gameStatsTbReferenceNode", resourcePath: "GameStatsTab", resourceType: "sks")
-            self.gameStatsTab.addElement()
+        gameStatsButton.selectedHandler = {
+            self.gameStatsTab = UIGameStatsTab(baseScene: self.baseScene, pos: CGPoint(x: 0, y: 0), zPos: 6, referenceName: "gameStatsTabReferenceNode", resourcePath: "GameStatsTab", resourceType: "sks")
         }
         
         /* Set the handler for the replay button */
-        gameOverMenuReplayButton_1.selectedHandler = {
+        replayButton.selectedHandler = {
             /* Grab reference to our SpriteKit view */
             let skView = self.baseScene.view as SKView!
             
             /* Load Game scene */
-            let scene = InfiniteGameScene(fileNamed:"InfiniteGameScene") as InfiniteGameScene!
+            let scene = InfiniteGameScene(fileNamed: "InfiniteGameScene") as InfiniteGameScene!
             
             /* Ensure correct aspect mode */
             scene!.scaleMode = .aspectFill
@@ -63,42 +62,42 @@ class UIGameOverMenu: UIElement {
     /* Update values */
     func updateValues() {
         /* Get the references to the labels */
-        let gameOverMenuScoreLabel_1 = referenceNode.childNode(withName: "//gameOverMenuScoreLabel_1") as! SKLabelNode
-        let gameOverMenuJumpLabel_1 = referenceNode.childNode(withName: "//gameOverMenuJumpLabel_1") as! SKLabelNode
-        let gameOverMenuHighScoreLabel_1 = referenceNode.childNode(withName: "//gameOverMenuHighScoreLabel_1") as! SKLabelNode
+        let score = referenceNode.childNode(withName: ".//score") as! SKLabelNode
+        let jumps = referenceNode.childNode(withName: ".//jumps") as! SKLabelNode
+        let highScore = referenceNode.childNode(withName: ".//highScore") as! SKLabelNode
         
-        gameOverMenuScoreLabel_1.text = String(score)
-        gameOverMenuJumpLabel_1.text = String(jumps)
-        gameOverMenuHighScoreLabel_1.text = String(highScore)
+        score.text = String(self.score)
+        jumps.text = String(self.jumps)
+        highScore.text = String(self.highScore)
     }
     
     /* Animate the gameOverMenu */
     func animate() {
         /* Get the references to the labels */
-        let gameOverMenuScoreLabel_1 = referenceNode.childNode(withName: "//gameOverMenuScoreLabel_1") as! SKLabelNode
-        let gameOverMenuJumpLabel_1 = referenceNode.childNode(withName: "//gameOverMenuJumpLabel_1") as! SKLabelNode
-        let gameOverMenuHighScoreLabel_1 = referenceNode.childNode(withName: "//gameOverMenuHighScoreLabel_1") as! SKLabelNode
-        let gameOverMenuNewHighScoreLabel = referenceNode.childNode(withName: "//gameOverMenuNewHighScoreLabel") as! SKLabelNode
+        let score = referenceNode.childNode(withName: ".//score") as! SKLabelNode
+        let jumps = referenceNode.childNode(withName: ".//jumps") as! SKLabelNode
+        let highScore = referenceNode.childNode(withName: ".//highScore") as! SKLabelNode
+        let newHighScoreLabel = referenceNode.childNode(withName: ".//newHighScoreLabel") as! SKLabelNode
         
         /* Display the score label */
         let displayScore = SKAction.run {
-            gameOverMenuScoreLabel_1.isHidden = false
+            score.isHidden = false
         }
         
         /* Display the jump label */
         let displayJumps = SKAction.run {
-            gameOverMenuJumpLabel_1.isHidden = false
+            jumps.isHidden = false
         }
         
         /* Display the high score label */
         let displayHighScore = SKAction.run {
-            gameOverMenuHighScoreLabel_1.isHidden = false
+            highScore.isHidden = false
         }
         
         /* Display the new high score label */
         let displayNewHighScoreLabel = SKAction.run {
-            if self.newHighScore {
-                gameOverMenuNewHighScoreLabel.isHidden = false
+            if self.isNewHighScore {
+                newHighScoreLabel.isHidden = false
             }
         }
         
