@@ -266,7 +266,6 @@ class InfiniteGameScene: SKScene, SKPhysicsContactDelegate {
             if score > oldHighScore {
                 isNewHighScore = true
                 GameStats.setStat(statName: GameStats.highScore, value: score)
-                infiniteScoreboard.updateHighScoreLabel(highScore: GameStats.getStat(statName: GameStats.highScore))
             }
             
             infiniteScoreboard.increaseScore(score: score)
@@ -309,7 +308,6 @@ class InfiniteGameScene: SKScene, SKPhysicsContactDelegate {
             if GameStats.getStat(statName: GameStats.musicEnabled) == 1 {
                 Music.playSong(url: URL(fileReferenceLiteralResourceName: "music-wolf.mp3"))
                 Music.bgMusicPlayer.volume = 1.0
-                print("Flag 1")
             } else {
                 Music.playSong(url: URL(fileReferenceLiteralResourceName: "music-wolf.mp3"))
                 Music.bgMusicPlayer.volume = 0.0

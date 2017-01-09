@@ -19,6 +19,7 @@ class GameStats {
     static let gameDiff = "gameDiff"
     static let soundEnabled = "soundEnabled"
     static let musicEnabled = "musicEnabled"
+    static let scoreboardSwitcher = "scoreboardSwitcher"
     
     /* Gets a specific game stat */
     static func getStat(statName: String) -> Int {

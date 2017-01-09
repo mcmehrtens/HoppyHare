@@ -25,10 +25,47 @@ class UIInfiniteScoreboard: UIScoreboard {
         highScoreLabel = referenceNode.childNode(withName: "//" + highScoreLabelName) as! SKLabelNode
         
         updateHighScoreLabel(highScore: GameStats.getStat(statName: GameStats.highScore))
+        
+        setScoreboardSide()
     }
     
     /* Update labels */
     func updateHighScoreLabel(highScore: Int) {
         highScoreLabel.text = String(highScore)
+    }
+    
+    /* Sets the scoreboards side */
+    func setScoreboardSide() {
+        if GameStats.getStat(statName: GameStats.scoreboardSwitcher) == 0 {
+            let score = referenceNode.childNode(withName: ".//score") as! SKLabelNode
+            score.horizontalAlignmentMode = SKLabelHorizontalAlignmentMode.left
+            score.position = CGPoint(x: -109, y: -44.5)
+            
+            let highScoreNode = referenceNode.childNode(withName: ".//highScoreNode")!
+            highScoreNode.position = CGPoint(x: -109, y: -69)
+            
+            let highScoreLabel = referenceNode.childNode(withName: ".//highScoreLabel") as! SKLabelNode
+            highScoreLabel.horizontalAlignmentMode = SKLabelHorizontalAlignmentMode.left
+            highScoreLabel.position = CGPoint(x: 0, y: 0)
+            
+            let highScore = referenceNode.childNode(withName: ".//highScore") as! SKLabelNode
+            highScore.horizontalAlignmentMode = SKLabelHorizontalAlignmentMode.left
+            highScore.position = CGPoint(x: 0, y: -10)
+        } else {
+            let score = referenceNode.childNode(withName: ".//score") as! SKLabelNode
+            score.horizontalAlignmentMode = SKLabelHorizontalAlignmentMode.right
+            score.position = CGPoint(x: 109, y: -44.5)
+            
+            let highScoreNode = referenceNode.childNode(withName: ".//highScoreNode")!
+            highScoreNode.position = CGPoint(x: 109, y: -69)
+            
+            let highScoreLabel = referenceNode.childNode(withName: ".//highScoreLabel") as! SKLabelNode
+            highScoreLabel.horizontalAlignmentMode = SKLabelHorizontalAlignmentMode.right
+            highScoreLabel.position = CGPoint(x: 0, y: 0)
+            
+            let highScore = referenceNode.childNode(withName: ".//highScore") as! SKLabelNode
+            highScore.horizontalAlignmentMode = SKLabelHorizontalAlignmentMode.right
+            highScore.position = CGPoint(x: 0, y: -10)
+        }
     }
 }

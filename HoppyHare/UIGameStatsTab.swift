@@ -88,6 +88,7 @@ class UIGameStats: UIElement {
     /* Override the addElement method and remove the setButtonhandlers function call */
     override func addElement() {
         super.addElement()
+        setButtonHandlers()
         populateLabels()
         updateLabels()
         animate()
@@ -121,5 +122,12 @@ class UIGameStats: UIElement {
         
         /* Animated the referenceNode */
         self.referenceNode.run(SKAction.sequence([wait, SKAction.run { self.labels[0].isHidden = false }, wait, SKAction.run { self.labels[1].isHidden = false }, wait, SKAction.run { self.labels[2].isHidden = false }, wait, SKAction.run { self.labels[3].isHidden = false }, wait, SKAction.run { self.labels[4].isHidden = false }, wait, SKAction.run { self.labels[5].isHidden = false }]))
+    }
+    
+    /* Set the button handlers */
+    override func setButtonHandlers() {
+        let safetyButton = referenceNode.childNode(withName: ".//safetyButton") as! MSButtonNode
+        
+        safetyButton.selectedHandler = {}
     }
 }

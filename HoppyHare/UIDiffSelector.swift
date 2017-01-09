@@ -35,6 +35,10 @@ class UIDiffSelector: UIElement {
     
     /* Set the handlers for all the buttons */
     override func setButtonHandlers() {
+        let safetyButton = referenceNode.childNode(withName: ".//safetyButton") as! MSButtonNode
+        
+        safetyButton.selectedHandler = {}
+        
         (referenceNode.childNode(withName: ".//buttonOne") as! MSButtonNode).selectedHandler = {
             self.removeElement()
             GameStats.setStat(statName: GameStats.gameDiff, value: 1)

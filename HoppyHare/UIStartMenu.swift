@@ -13,6 +13,7 @@ class UIStartMenu: UIElement {
     var diffSelector: UIDiffSelector!
     var gameStats: UIGameStats!
     var soundPanel: UISoundPanel!
+    var scoreboardSwitcher: UIScoreboardSwitcher!
     
     override func addElement() {
         super.addElement()
@@ -25,6 +26,7 @@ class UIStartMenu: UIElement {
         let diffSelectorButton = referenceNode.childNode(withName: ".//diffSelectorButton") as! MSButtonNode
         let gameStatsButton = referenceNode.childNode(withName: ".//gameStatsButton") as! MSButtonNode
         let soundPanelButton = referenceNode.childNode(withName: ".//soundPanelButton") as! MSButtonNode
+        let scoreboardSwitcherButton = referenceNode.childNode(withName: ".//scoreboardSwitcherButton") as! MSButtonNode
         
         let rightChevronNode = referenceNode.childNode(withName: ".//rightChevronNode")!
         let leftChevronNode = referenceNode.childNode(withName: ".//leftChevronNode")!
@@ -52,6 +54,9 @@ class UIStartMenu: UIElement {
                 if let soundPanel = self.soundPanel {
                     soundPanel.removeElement()
                 }
+                if let scoreboardSwitcher = self.scoreboardSwitcher {
+                    scoreboardSwitcher.removeElement()
+                }
             } else {
                 // Slide the menu out
                 self.openSlide()
@@ -73,6 +78,9 @@ class UIStartMenu: UIElement {
                 if let soundPanel = self.soundPanel {
                     soundPanel.removeElement()
                 }
+                if let scoreboardSwitcher = self.scoreboardSwitcher {
+                    scoreboardSwitcher.removeElement()
+                }
             } else {
                 self.diffSelector.removeElement()
             }
@@ -89,6 +97,9 @@ class UIStartMenu: UIElement {
                 if let soundPanel = self.soundPanel {
                     soundPanel.removeElement()
                 }
+                if let scoreboardSwitcher = self.scoreboardSwitcher {
+                    scoreboardSwitcher.removeElement()
+                }
             } else {
                 self.gameStats.removeElement()
             }
@@ -97,7 +108,7 @@ class UIStartMenu: UIElement {
         /* Handler for the soundPanelButton */
         soundPanelButton.selectedHandler = {
             if self.baseScene.childNode(withName: "//soundPanelReferenceNode") == nil {
-                self.soundPanel = UISoundPanel(baseScene: self.baseScene, pos: CGPoint(x: 0, y: 0), zPos: 5, referenceName: "gameStatsReferenceNode", resourcePath: "UISoundPanel", resourceType: "sks")
+                self.soundPanel = UISoundPanel(baseScene: self.baseScene, pos: CGPoint(x: 0, y: 0), zPos: 5, referenceName: "soundPanelReferenceNode", resourcePath: "UISoundPanel", resourceType: "sks")
                 
                 if let diffSelector = self.diffSelector {
                     diffSelector.removeElement()
@@ -105,8 +116,30 @@ class UIStartMenu: UIElement {
                 if let gameStats = self.gameStats {
                     gameStats.removeElement()
                 }
+                if let scoreboardSwitcher = self.scoreboardSwitcher {
+                    scoreboardSwitcher.removeElement()
+                }
             } else {
-                self.gameStats.removeElement()
+                self.soundPanel.removeElement()
+            }
+        }
+        
+        /* Handler for the scoreboardSwitcherButton */
+        scoreboardSwitcherButton.selectedHandler = {
+            if self.baseScene.childNode(withName: "//scoreboardSwitcherReferenceNode") == nil {
+                self.scoreboardSwitcher = UIScoreboardSwitcher(baseScene: self.baseScene, pos: CGPoint(x: 0, y: 0), zPos: 5, referenceName: "scoreboardSwitcherReferenceNode", resourcePath: "UIScoreboardSwitcher", resourceType: "sks")
+                
+                if let diffSelector = self.diffSelector {
+                    diffSelector.removeElement()
+                }
+                if let gameStats = self.gameStats {
+                    gameStats.removeElement()
+                }
+                if let soundPanel = self.soundPanel {
+                    soundPanel.removeElement()
+                }
+            } else {
+                self.scoreboardSwitcher.removeElement()
             }
         }
     }
@@ -141,5 +174,6 @@ class UIStartMenu: UIElement {
         if self.diffSelector != nil { self.diffSelector.removeElement() }
         if self.gameStats != nil { self.gameStats.removeElement() }
         if self.soundPanel != nil { self.soundPanel.removeElement() }
+        if self.scoreboardSwitcher != nil { self.scoreboardSwitcher.removeElement() }
     }
 }

@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		C90669511E23E21C00B74683 /* UIScoreboardSwitcher.swift in Sources */ = {isa = PBXBuildFile; fileRef = C90669501E23E21C00B74683 /* UIScoreboardSwitcher.swift */; };
+		C90669531E23E22E00B74683 /* UIScoreboardSwitcher.sks in Resources */ = {isa = PBXBuildFile; fileRef = C90669521E23E22E00B74683 /* UIScoreboardSwitcher.sks */; };
 		C91E19F81DF7246500D7ABCD /* Obstacle.sks in Resources */ = {isa = PBXBuildFile; fileRef = C91E19F71DF7246500D7ABCD /* Obstacle.sks */; };
 		C91E19FA1DF7246F00D7ABCD /* Hero.sks in Resources */ = {isa = PBXBuildFile; fileRef = C91E19F91DF7246F00D7ABCD /* Hero.sks */; };
 		C91E19FC1DF725FE00D7ABCD /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = C91E19FB1DF725FE00D7ABCD /* Main.storyboard */; };
@@ -49,6 +51,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		C90669501E23E21C00B74683 /* UIScoreboardSwitcher.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIScoreboardSwitcher.swift; sourceTree = "<group>"; };
+		C90669521E23E22E00B74683 /* UIScoreboardSwitcher.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = UIScoreboardSwitcher.sks; sourceTree = "<group>"; };
 		C91E19F71DF7246500D7ABCD /* Obstacle.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = Obstacle.sks; sourceTree = "<group>"; };
 		C91E19F91DF7246F00D7ABCD /* Hero.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = Hero.sks; sourceTree = "<group>"; };
 		C91E19FB1DF725FE00D7ABCD /* Main.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Main.storyboard; sourceTree = "<group>"; };
@@ -103,6 +107,15 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		C906694F1E23D98A00B74683 /* ScoreboardSwitcher */ = {
+			isa = PBXGroup;
+			children = (
+				C90669501E23E21C00B74683 /* UIScoreboardSwitcher.swift */,
+				C90669521E23E22E00B74683 /* UIScoreboardSwitcher.sks */,
+			);
+			name = ScoreboardSwitcher;
+			sourceTree = "<group>";
+		};
 		C93BD5461E23322100FAD917 /* Music */ = {
 			isa = PBXGroup;
 			children = (
@@ -201,6 +214,7 @@
 				C98C0E2F1E1ECC8C000E0989 /* UIStartMenu.sks */,
 				C9765B251E20562400D07DE7 /* DifficultySelector */,
 				C93BD5511E2341DC00FAD917 /* SoundPanel */,
+				C906694F1E23D98A00B74683 /* ScoreboardSwitcher */,
 			);
 			name = StartMenu;
 			sourceTree = "<group>";
@@ -370,6 +384,7 @@
 				C93BD54A1E23342B00FAD917 /* music-neon.mp3 in Resources */,
 				C9FC13921DF716EE00744006 /* InfiniteGameScene.sks in Resources */,
 				C9947A8C1E1B1D7500864E7F /* UIGameOverMenu.sks in Resources */,
+				C90669531E23E22E00B74683 /* UIScoreboardSwitcher.sks in Resources */,
 				C9FE59761E1EBEF4002AAD65 /* UIDiffSelector.sks in Resources */,
 				C93BD5451E23321E00FAD917 /* music-delta.mp3 in Resources */,
 				C93BD5481E23332500FAD917 /* music-intro.mp3 in Resources */,
@@ -400,6 +415,7 @@
 				C9C2CFB01DFF0003001DB1B6 /* CGFloat+Extensions.swift in Sources */,
 				C9765B241E20480700D07DE7 /* UIGameStatsTab.swift in Sources */,
 				C9C2CFB31DFF0003001DB1B6 /* Sounds.swift in Sources */,
+				C90669511E23E21C00B74683 /* UIScoreboardSwitcher.swift in Sources */,
 				C93BD5531E2341FA00FAD917 /* UISoundPanel.swift in Sources */,
 				C93BD5501E23367C00FAD917 /* Music.swift in Sources */,
 				C9FC13901DF716EE00744006 /* AppDelegate.swift in Sources */,
