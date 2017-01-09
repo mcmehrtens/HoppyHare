@@ -270,6 +270,10 @@ class InfiniteGameScene: SKScene, SKPhysicsContactDelegate {
             }
             
             infiniteScoreboard.increaseScore(score: score)
+            
+            if GameStats.getStat(statName: GameStats.soundEnabled) == 1 {
+                Sounds.playSound(soundName: "goal", object: self)
+            }
         }
     }
     
@@ -301,8 +305,18 @@ class InfiniteGameScene: SKScene, SKPhysicsContactDelegate {
             gameState = .Ready
             startLabel.isHidden = false
             
+            /* Play the game theme music */
+            if GameStats.getStat(statName: GameStats.musicEnabled) == 1 {
+                Music.playSong(url: URL(fileReferenceLiteralResourceName: "music-wolf.mp3"))
+                Music.bgMusicPlayer.volume = 1.0
+                print("Flag 1")
+            } else {
+                Music.playSong(url: URL(fileReferenceLiteralResourceName: "music-wolf.mp3"))
+                Music.bgMusicPlayer.volume = 0.0
+            }
+            
             /* Add the startMenu onto the screen */
-            startMenu = UIStartMenu(baseScene: self, pos: CGPoint(x: -270, y: -209.5), zPos: ZPositions.zPosStartMenu, referenceName: "startMenuReferenceNode", resourcePath: "UIStartMenu", resourceType: "sks")
+            startMenu = UIStartMenu(baseScene: self, pos: CGPoint(x: -270, y: -209.5), zPos: 3, referenceName: "startMenuReferenceNode", resourcePath: "UIStartMenu", resourceType: "sks")
             
             /* Slide on the startMenu */
             startMenu.closeSlide()
@@ -315,6 +329,11 @@ class InfiniteGameScene: SKScene, SKPhysicsContactDelegate {
             
             /* When setting the state to .Active, the flashing "start" label needs to go away and the score board text needs to appear. */
         case .Active:
+            /* Play the random game background music */
+            if GameStats.getStat(statName: GameStats.musicEnabled) == 1 {
+                Music.fadeToGameSong(volume: 0.0, fadeDuration: 1.0, scene: self)
+            }
+            
             /* Slide the title off the screen */
             GameAnimations.titleSlideOff(nodes: (titleLabel_0, titleLabel_1))
             
@@ -337,6 +356,11 @@ class InfiniteGameScene: SKScene, SKPhysicsContactDelegate {
             
             /* Lot's of things happening here. #1, stop all angular velocity. #2: Set the angular velocity = 0. #3: Stop the flapping animation. #4: Run the death animation. #5: Shake the screen. #6: Show the restart button.*/
         case .GameOver:
+            /* Kill the music */
+            if GameStats.getStat(statName: GameStats.musicEnabled) == 1 {
+                Music.bgMusicPlayer.setVolume(0.0, fadeDuration: 2.0)
+            }
+            
             /* Set the game stats */
             GameStats.updateStats(score: score, jumps: jumps)
             
@@ -406,7 +430,9 @@ class InfiniteGameScene: SKScene, SKPhysicsContactDelegate {
         hero.physicsBody?.applyImpulse(CGVector(dx: 0, dy: 180))
         
         /* Play SFX */
-        Sounds.playSound(soundName: "flap", object: self)
+        if GameStats.getStat(statName: GameStats.soundEnabled) == 1 {
+            Sounds.playSound(soundName: "jump", object: self)
+        }
         
         /* Apply subtle rotation */
         hero.physicsBody?.applyAngularImpulse(CGFloat(0.1))

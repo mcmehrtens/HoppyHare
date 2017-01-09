@@ -12,6 +12,7 @@ import GameplayKit
 class UIStartMenu: UIElement {
     var diffSelector: UIDiffSelector!
     var gameStats: UIGameStats!
+    var soundPanel: UISoundPanel!
     
     override func addElement() {
         super.addElement()
@@ -23,6 +24,7 @@ class UIStartMenu: UIElement {
         let toggleMenuButton = referenceNode.childNode(withName: ".//toggleMenuButton") as! MSButtonNode
         let diffSelectorButton = referenceNode.childNode(withName: ".//diffSelectorButton") as! MSButtonNode
         let gameStatsButton = referenceNode.childNode(withName: ".//gameStatsButton") as! MSButtonNode
+        let soundPanelButton = referenceNode.childNode(withName: ".//soundPanelButton") as! MSButtonNode
         
         let rightChevronNode = referenceNode.childNode(withName: ".//rightChevronNode")!
         let leftChevronNode = referenceNode.childNode(withName: ".//leftChevronNode")!
@@ -40,12 +42,15 @@ class UIStartMenu: UIElement {
                 rightChevronNode.isHidden = false
                 leftChevronNode.isHidden = true
                 
-                /* Check to see if the diffSelector is visible */
+                /* Check to see if the UI Elements are visible */
                 if let diffSelector = self.diffSelector {
                     diffSelector.removeElement()
                 }
                 if let gameStats = self.gameStats {
                     gameStats.removeElement()
+                }
+                if let soundPanel = self.soundPanel {
+                    soundPanel.removeElement()
                 }
             } else {
                 // Slide the menu out
@@ -65,6 +70,9 @@ class UIStartMenu: UIElement {
                 if let gameStats = self.gameStats {
                     gameStats.removeElement()
                 }
+                if let soundPanel = self.soundPanel {
+                    soundPanel.removeElement()
+                }
             } else {
                 self.diffSelector.removeElement()
             }
@@ -77,6 +85,25 @@ class UIStartMenu: UIElement {
                 
                 if let diffSelector = self.diffSelector {
                     diffSelector.removeElement()
+                }
+                if let soundPanel = self.soundPanel {
+                    soundPanel.removeElement()
+                }
+            } else {
+                self.gameStats.removeElement()
+            }
+        }
+        
+        /* Handler for the soundPanelButton */
+        soundPanelButton.selectedHandler = {
+            if self.baseScene.childNode(withName: "//soundPanelReferenceNode") == nil {
+                self.soundPanel = UISoundPanel(baseScene: self.baseScene, pos: CGPoint(x: 0, y: 0), zPos: 5, referenceName: "gameStatsReferenceNode", resourcePath: "UISoundPanel", resourceType: "sks")
+                
+                if let diffSelector = self.diffSelector {
+                    diffSelector.removeElement()
+                }
+                if let gameStats = self.gameStats {
+                    gameStats.removeElement()
                 }
             } else {
                 self.gameStats.removeElement()
@@ -112,5 +139,7 @@ class UIStartMenu: UIElement {
         
         /* If diffSelector is on the screen, then remove it */
         if self.diffSelector != nil { self.diffSelector.removeElement() }
+        if self.gameStats != nil { self.gameStats.removeElement() }
+        if self.soundPanel != nil { self.soundPanel.removeElement() }
     }
 }
