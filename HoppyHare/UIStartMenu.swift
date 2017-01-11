@@ -20,7 +20,7 @@ class UIStartMenu: UIElement {
         setButtonHandlers()
     }
     
-    override func setButtonHandlers() {
+    func setButtonHandlers() {
         let safetyButton = referenceNode.childNode(withName: ".//safetyButton") as! MSButtonNode
         let toggleMenuButton = referenceNode.childNode(withName: ".//toggleMenuButton") as! MSButtonNode
         let diffSelectorButton = referenceNode.childNode(withName: ".//diffSelectorButton") as! MSButtonNode

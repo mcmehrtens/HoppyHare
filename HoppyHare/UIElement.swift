@@ -10,13 +10,13 @@ import SpriteKit
 import GameplayKit
 
 class UIElement {
-    var baseScene: SKScene!
+    var baseScene: SKScene
     var referenceNode: SKReferenceNode!
-    var pos: CGPoint!
-    var zPos: Int!
-    var referenceName: String!
-    var resourcePath: String!
-    var resourceType: String!
+    var pos: CGPoint
+    var zPos: Int
+    var referenceName: String
+    var resourcePath: String
+    var resourceType: String
     
     init (baseScene: SKScene, pos: CGPoint, zPos: Int, referenceName: String, resourcePath: String, resourceType: String) {
         self.baseScene = baseScene
@@ -28,8 +28,6 @@ class UIElement {
         
         addElement()
     }
-    
-    func setButtonHandlers() {}
     
     func addElement() {
         let resourcePath = Bundle.main.path(forResource: self.resourcePath, ofType: resourceType)

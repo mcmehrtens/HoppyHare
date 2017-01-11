@@ -10,7 +10,7 @@ import SpriteKit
 import GameplayKit
 
 class UIDiffSelector: UIElement {
-    var labels: [SKLabelNode] = []
+    var labels: [SKLabelNode]!
     
     override func addElement() {
         super.addElement()
@@ -34,7 +34,7 @@ class UIDiffSelector: UIElement {
     }
     
     /* Set the handlers for all the buttons */
-    override func setButtonHandlers() {
+    func setButtonHandlers() {
         let safetyButton = referenceNode.childNode(withName: ".//safetyButton") as! MSButtonNode
         
         safetyButton.selectedHandler = {}

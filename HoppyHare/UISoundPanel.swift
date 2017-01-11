@@ -28,7 +28,7 @@ class UISoundPanel: UIElement {
         }
     }
     
-    override func setButtonHandlers() {
+    func setButtonHandlers() {
         let safetyButton = referenceNode.childNode(withName: ".//safetyButton") as! MSButtonNode
         let soundButton = referenceNode.childNode(withName: ".//soundButton") as! MSButtonNode
         let musicButton = referenceNode.childNode(withName: ".//musicButton") as! MSButtonNode

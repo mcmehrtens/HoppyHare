@@ -30,7 +30,7 @@ class UIScoreboardSwitcher: UIElement {
     }
     
     /* Set up button handlers */
-    override func setButtonHandlers() {
+    func setButtonHandlers() {
         let safetyButton = referenceNode.childNode(withName: ".//safetyButton") as! MSButtonNode
         let leftButton = referenceNode.childNode(withName: ".//leftButton") as! MSButtonNode
         let rightButton = referenceNode.childNode(withName: ".//rightButton") as! MSButtonNode

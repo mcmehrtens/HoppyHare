@@ -10,62 +10,72 @@ import SpriteKit
 import GameplayKit
 
 class UIInfiniteScoreboard: UIScoreboard {
-    var highScoreLabelName: String!
+    var highScoreNode: SKNode!
     var highScoreLabel: SKLabelNode!
-    
-    init(baseScene: SKScene, pos: CGPoint, zPos: Int, referenceName: String, resourcePath: String, resourceType: String, scoreLabelName: String, highScoreLabelName: String) {
-        self.highScoreLabelName = highScoreLabelName
-        
-        super.init(baseScene: baseScene, pos: pos, zPos: zPos, referenceName: referenceName, resourcePath: resourcePath, resourceType: resourceType, scoreLabelName: scoreLabelName)
-    }
+    var highScore: SKLabelNode!
     
     /* Add the element to the screen */
     override func addElement() {
         super.addElement()
-        highScoreLabel = referenceNode.childNode(withName: "//" + highScoreLabelName) as! SKLabelNode
+        highScoreNode = referenceNode.childNode(withName: "//highScoreNode")!
+        highScoreLabel = referenceNode.childNode(withName: "//highScoreLabel") as! SKLabelNode
+        highScore = referenceNode.childNode(withName: "//highScore") as! SKLabelNode
         
         updateHighScoreLabel(highScore: GameStats.getStat(statName: GameStats.highScore))
         
         setScoreboardSide()
+        
+        referenceNode.run(SKAction.sequence([SKAction.run { self.slideScoreOn() }, SKAction.wait(forDuration: TimeInterval(0.1)), SKAction.run { self.slideHighScoreOn() }]))
     }
     
     /* Update labels */
     func updateHighScoreLabel(highScore: Int) {
-        highScoreLabel.text = String(highScore)
+        self.highScore.text = String(highScore)
     }
     
     /* Sets the scoreboards side */
     func setScoreboardSide() {
-        if GameStats.getStat(statName: GameStats.scoreboardSwitcher) == 0 {
-            let score = referenceNode.childNode(withName: ".//score") as! SKLabelNode
-            score.horizontalAlignmentMode = SKLabelHorizontalAlignmentMode.left
-            score.position = CGPoint(x: -109, y: -44.5)
-            
-            let highScoreNode = referenceNode.childNode(withName: ".//highScoreNode")!
-            highScoreNode.position = CGPoint(x: -109, y: -69)
-            
-            let highScoreLabel = referenceNode.childNode(withName: ".//highScoreLabel") as! SKLabelNode
-            highScoreLabel.horizontalAlignmentMode = SKLabelHorizontalAlignmentMode.left
-            highScoreLabel.position = CGPoint(x: 0, y: 0)
-            
-            let highScore = referenceNode.childNode(withName: ".//highScore") as! SKLabelNode
-            highScore.horizontalAlignmentMode = SKLabelHorizontalAlignmentMode.left
-            highScore.position = CGPoint(x: 0, y: -10)
-        } else {
-            let score = referenceNode.childNode(withName: ".//score") as! SKLabelNode
+        if GameStats.getStat(statName: GameStats.scoreboardSwitcher) == 1 {
             score.horizontalAlignmentMode = SKLabelHorizontalAlignmentMode.right
-            score.position = CGPoint(x: 109, y: -44.5)
+            score.position = CGPoint(x: 125, y: -44.5)
             
-            let highScoreNode = referenceNode.childNode(withName: ".//highScoreNode")!
-            highScoreNode.position = CGPoint(x: 109, y: -69)
+            highScoreNode.position = CGPoint(x: 125, y: -69)
             
-            let highScoreLabel = referenceNode.childNode(withName: ".//highScoreLabel") as! SKLabelNode
             highScoreLabel.horizontalAlignmentMode = SKLabelHorizontalAlignmentMode.right
             highScoreLabel.position = CGPoint(x: 0, y: 0)
             
-            let highScore = referenceNode.childNode(withName: ".//highScore") as! SKLabelNode
             highScore.horizontalAlignmentMode = SKLabelHorizontalAlignmentMode.right
             highScore.position = CGPoint(x: 0, y: -10)
         }
+    }
+    
+    /* Slide the scoreboard on to the screen */
+    func slideHighScoreOn() {
+        /* Slide the node up */
+        let slideUp = SKAction.move(to: CGPoint(x: highScoreNode.position.x, y: -4.5), duration: 0.35)
+        slideUp.timingMode = SKActionTimingMode.easeOut
+        
+        /* Slide the node down */
+        let slideDown = SKAction.move(to: CGPoint(x: highScoreNode.position.x, y: -9.5), duration: 0.2)
+        slideDown.timingMode = SKActionTimingMode.easeInEaseOut
+        
+        highScoreNode.run(SKAction.sequence([slideUp, slideDown]))
+    }
+    
+    /* Slide the startMenu off the screen */
+    func slideHighScoreOff() {
+        /* Slide the node up */
+        let slideUp = SKAction.move(to: CGPoint(x: highScoreNode.position.x, y: -4.5), duration: 0.2)
+        slideUp.timingMode = SKActionTimingMode.easeOut
+        
+        /* Slide the node down */
+        let slideDown = SKAction.move(to: CGPoint(x: highScoreNode.position.x, y: -69), duration: 0.35)
+        slideDown.timingMode = SKActionTimingMode.easeIn
+        
+        highScoreNode.run(SKAction.sequence([slideUp, slideDown]))
+    }
+    
+    override func removeElement() {
+        referenceNode.run(SKAction.sequence([SKAction.run { self.slideHighScoreOff() }, SKAction.wait(forDuration: TimeInterval(0.1)), SKAction.run { self.slideScoreOff() }, SKAction.wait(forDuration: TimeInterval(0.55)), SKAction.run { super.removeElement() }]))
     }
 }

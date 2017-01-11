@@ -34,7 +34,7 @@ class UIGameOverMenu: UIElement {
     }
     
     /* Set the button handlers for the GameOverMenu */
-    override func setButtonHandlers() {
+    func setButtonHandlers() {
         let gameStatsButton = referenceNode.childNode(withName: "//gameStatsButton") as! MSButtonNode
         let replayButton = referenceNode.childNode(withName: "//replayButton") as! MSButtonNode
         

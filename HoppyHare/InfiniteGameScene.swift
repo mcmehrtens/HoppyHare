@@ -23,8 +23,6 @@ class InfiniteGameScene: SKScene, SKPhysicsContactDelegate {
     var scrollLayers = [SKNode?](repeating: nil, count: 3) // Array contains all the scroll layer nodes
     var scrollLayerSprites = [(SKNode, SKNode)?](repeating: nil, count: 3) // Array contains tuples for the all scroll layer sprites
     var obstacleLayer: SKNode!
-    var hero: SKSpriteNode!
-    var bunnyPosition: CGPoint!
     
     /* Label references */
     var startLabel: SKLabelNode!
@@ -35,29 +33,23 @@ class InfiniteGameScene: SKScene, SKPhysicsContactDelegate {
     var inGameDifficulty: SKLabelNode!
     
     /* UI Elements */
+    
+    /* Entities */
+    var bunny: EntityBunny!
+    
+    /* Menues */
     var startMenu: UIStartMenu!
     var gameOverMenu: UIGameOverMenu!
     var infiniteScoreboard: UIInfiniteScoreboard!
     
     /* Boolean counters */
     var hasJumped = false
-    var hasGeneratedFirstObstacle = false
     var isNewHighScore = false
-    
-    /* Buttons */
-    var gameOverMenuReplayButton_1: MSButtonNode!
-    var gameOverMenuGameStatsButton_1: MSButtonNode!
-    var gameStatsTabBackButton_1: MSButtonNode!
-    var gameStatsTabReplayButton_1: MSButtonNode!
-    var gameStatsTabShareButton_1: MSButtonNode!
 
     /* Counters */
     var score = 0
     var jumps = 0
     var oldHighScore = 0
-    
-    /* Time Variables */
-    let timeBetweenObstacles = 1.5
 
     /* Timers */
     let fixedDelta: TimeInterval = 1.0/60.0 /* 60 FPS */
@@ -75,12 +67,6 @@ class InfiniteGameScene: SKScene, SKPhysicsContactDelegate {
     
     /* Set up your scene here */
     override func didMove(to view: SKView) {
-        /* Recursive node search for 'hero' (child of referenced node) */
-        hero = self.childNode(withName: "//hero") as! SKSpriteNode
-        
-        /* Set reference to the bunny's position */
-        bunnyPosition = hero.position
-        
         /* Set reference to the scroll layers */
         scrollLayers[0] = self.childNode(withName: "groundScrollLayer")!
         scrollLayers[1] = self.childNode(withName: "distantBGScrollLayer")!
@@ -110,31 +96,43 @@ class InfiniteGameScene: SKScene, SKPhysicsContactDelegate {
         
         /* Get the old high score */
         oldHighScore = GameStats.getStat(statName: GameStats.highScore)
+        
+        /* Add the bunny node to the screen */
+        bunny = EntityBunny(baseScene: self, pos: CGPoint(x: 0, y: 0), zPos: 4, referenceName: "bunnyReferenceNode", resourcePath: "EntityBunny", resourceType: "sks")
     }
     
     /* This func is called before each frame is rendered. */
     override func update(_ currentTime: TimeInterval) {
-        /* Check if the game is ready to play. */
-        checkIfGameIsReady()
+        /* Checks if the game is ready to begin */
+        if gameState == .Preparing {
+            if timeSinceStart >= 1.75 {
+                setGameState(state: .Ready)
+            } else {
+                timeSinceStart += fixedDelta
+            }
+        }
         
-        /* If the gameState is .Ready, run the idle actions */
-        gameIdle()
-        
-        /* Check the vertical velocity and cap it */
-        checkVelocityY()
-        
-        /* Apply the rotation on the hero */
-        rotateHero()
+        /* Runs the game idle */
+        if gameState == .Ready {
+            scrollWorld()
+            flashStartGameLabel()
+        }
         
         /* Skip this part of the game update if the game isn't active */
         if gameState == .Active {
-            
             /* Process world scrolling */
             scrollWorld()
             updateObstacles()
             
             /* Check to see if the bunny is out of bounds */
-            checkIfBunnyIsOutOfBounds()
+            bunny.capBunnyY()
+            
+            /* Check the vertical velocity and cap it */
+            bunny.capBunnyVelocityY()
+            
+            /* Rotate the bunny */
+            bunny.rotateHero(sinceTouch: sinceTouchTimer)
+            sinceTouchTimer += fixedDelta
         }
     }
     
@@ -146,10 +144,16 @@ class InfiniteGameScene: SKScene, SKPhysicsContactDelegate {
         }
         
         /* Disable touch if game state is not active */
-        if gameState != .Active { return }
-        
-        /* Jump the hero */
-        jump()
+        if gameState == .Active {
+            /* Jump the hero */
+            bunny.jump()
+            
+            /* Increment the jumps */
+            jumps += 1
+            
+            /* Resets the since touch timer */
+            sinceTouchTimer = 0
+        }
     }
     
     /* This function scrolls a specified sprite infinitely */
@@ -180,9 +184,8 @@ class InfiniteGameScene: SKScene, SKPhysicsContactDelegate {
         }
     }
     
+    /* Update Obstacles */
     func updateObstacles() {
-        /* Update Obstacles */
-        
         /* Scroll the obstacles at the same speed as the ground */
         obstacleLayer.position.x -= scrollSpeedGround * CGFloat(fixedDelta)
         
@@ -201,10 +204,7 @@ class InfiniteGameScene: SKScene, SKPhysicsContactDelegate {
         }
         
         /* Add a new obstacle if the time is greater than or equal to 1.5. Also adds an obstacle right off the bat if the game just started (hasGeneratedFirstObstacle) */
-        if spawnTimer >= timeBetweenObstacles || !hasGeneratedFirstObstacle {
-            /* Set the hasGeneratedFirstObstacle */
-            hasGeneratedFirstObstacle = true
-            
+        if spawnTimer >= 1.5 || obstacleLayer.childNode(withName: ".//goal") == nil {
             /* Generate an obstacle */
             generateObstacle()
             
@@ -343,8 +343,7 @@ class InfiniteGameScene: SKScene, SKPhysicsContactDelegate {
             GameAnimations.inGameDifficultyLabelSlideIn(node: inGameDifficultyLabelNode)
             
             /* Add the infiniteScoreboard :) */
-            infiniteScoreboard = UIInfiniteScoreboard(baseScene: self, pos: CGPoint(x: 0, y: -212.5), zPos: 3, referenceName: "infiniteScoreboardReferenceNode", resourcePath: "UIInfiniteScoreboard", resourceType: "sks", scoreLabelName: "score", highScoreLabelName: "highScore")
-            infiniteScoreboard.onSlide()
+            infiniteScoreboard = UIInfiniteScoreboard(baseScene: self, pos: CGPoint(x: 0, y: -212.5), zPos: 3, referenceName: "infiniteScoreboardReferenceNode", resourcePath: "UIInfiniteScoreboard", resourceType: "sks")
             
             /* Set the final game difficulty */
             GameDifficulty.setDifficulty()
@@ -363,10 +362,13 @@ class InfiniteGameScene: SKScene, SKPhysicsContactDelegate {
             GameStats.updateStats(score: score, jumps: jumps)
             
             /* Run the kill hero animation */
-            killHero()
+            bunny.killHero()
+            
+            /* Shake the screen */
+            shake()
             
             /* Slide the scoreboard off the screen */
-            infiniteScoreboard.offSlide()
+            infiniteScoreboard.removeElement()
             
             /* Set the Game Over Menu to be visible */
             gameOverMenu = UIGameOverMenu(baseScene: self, pos: CGPoint(x: 0, y: 0), zPos: 5, referenceName: "gameOverMenuReferenceNode", resourcePath: "UIGameOverMenu", resourceType: "sks", score: score, jumps: jumps, highScore: GameStats.getStat(statName: GameStats.highScore), isNewHighScore: isNewHighScore)
@@ -375,108 +377,6 @@ class InfiniteGameScene: SKScene, SKPhysicsContactDelegate {
             gameState = .GameOver
         default: break
         }
-    }
-    
-    /* Kill the hero */
-    func killHero() {
-        /* Stop any new angular velocity being applied */
-        hero.physicsBody?.allowsRotation = false
-        
-        /* Reset angular velocity */
-        hero.physicsBody?.angularVelocity = 0
-        
-        /* Stop hero flapping animation */
-        hero.removeAllActions()
-        
-        /* Create our hero death action */
-        let heroDeath = SKAction.run({
-            /* Put our hero face down in the dirt */
-            self.hero.zRotation = CGFloat(-90).degreesToRadians()
-            
-            /* Stop hero from colliding with anything else */
-            self.hero.physicsBody?.collisionBitMask = 0
-        })
-        
-        /* Run action */
-        hero.run(heroDeath)
-        
-        /* Shake the scene  */
-        shake()
-    }
-    
-    /* Checks if the game is ready to play. Once it's ready, it sets the GameState to .Ready. */
-    func checkIfGameIsReady() {
-        /* Only run this block if the GameState is .Preparing and the time since the game was initialized was 1 second. This 1 second timer is currently temporary. Once there's actually things to load, this block will trigger once those are loaded. */
-        if gameState == .Preparing && timeSinceStart >= 1.75 {
-            setGameState(state: .Ready)
-            return
-        }
-        
-        /* Right now there's not much of a use for this variable, but oh well. We'll keep incrementing it. */
-        timeSinceStart += fixedDelta
-    }
-    
-    /* Jumps the hero into the aiiiirrrrrrr!!!! */
-    func jump() {
-        /* Increment the jump counter */
-        jumps += 1
-        
-        /* Reset velocity, helps improve response against cumulative falling velocity */
-        hero.physicsBody?.velocity = CGVector(dx: 0, dy: 0)
-        
-        /* Apply vertical impulse */
-        hero.physicsBody?.applyImpulse(CGVector(dx: 0, dy: 180))
-        
-        /* Play SFX */
-        if GameStats.getStat(statName: GameStats.soundEnabled) == 1 {
-            Sounds.playSound(soundName: "jump", object: self)
-        }
-        
-        /* Apply subtle rotation */
-        hero.physicsBody?.applyAngularImpulse(CGFloat(0.1))
-        
-        /* Reset touch timer */
-        sinceTouchTimer = 0
-    }
-    
-    /* Run this function when the game is idling (.Ready state). */
-    func gameIdle() {
-        /* Only run this idle code if the GameState is .Ready.*/
-        if gameState == .Ready {
-            /* This could makes the bunny hop on the ground as it moves :)*/
-            idleJump()
-            
-            /* Scroll the ground, crystals, and clouds */
-            scrollWorld()
-            
-            /* This variable is used for the first jump in the idle animation. If this variable didn't exist, the bunny would slide across the ground for a little bit on the start of the idle animation.*/
-            if hasJumped == false {
-                hasJumped = true
-            }
-            
-            /* This makes the start the game start label flash. */
-            flashStartGameLabel()
-        }
-    }
-    
-    /* This funcion causes the bunny to hop on the ground without any player touch necessary.*/
-    func idleJump() {
-        if idleJumpTimer >= 0.48  || hasJumped == false {
-            /* Reset velocity, helps improve response against cumulative falling velocity */
-            hero.physicsBody?.velocity = CGVector(dx: 0, dy: 0)
-            
-            /* Apply vertical impulse */
-            hero.physicsBody?.applyImpulse(CGVector(dx: 0, dy: 175))
-            
-            /* Check and cap the Y Velocity*/
-            checkVelocityY()
-            
-            /* Reset the idle jump timer back to 0 */
-            idleJumpTimer = 0
-        }
-        
-        /* Increment the idle jump timer */
-        idleJumpTimer += fixedDelta
     }
     
     /* This function causes the startLabel to flash */
@@ -492,56 +392,6 @@ class InfiniteGameScene: SKScene, SKPhysicsContactDelegate {
         
         /* Increment the timer */
         startLabelTimer += fixedDelta
-    }
-    
-    /* Check if the bunnies vertical velocity is too high */
-    func checkVelocityY() {
-        /* Grab current velocity */
-        let velocityY = hero.physicsBody?.velocity.dy ?? 0
-        
-        /* Check and cap vertical velocity */
-        if velocityY > 350 {
-            hero.physicsBody?.velocity.dy = 350
-        }
-    }
-    
-    /* Rotate the hero after a jump */
-    func rotateHero() {
-        if gameState == .Active {
-            /* Apply falling rotation */
-            if sinceTouchTimer > 0.29 { // Make this number smaller to start the falling rotation sooner
-                let impulse = -20000 * fixedDelta
-                hero.physicsBody?.applyAngularImpulse(CGFloat(impulse))
-            }
-            
-            /* Clamp rotation */
-            hero.zRotation = hero.zRotation.clamped(CGFloat(-10).degreesToRadians(), CGFloat(15).degreesToRadians()) // Negative number is the most it is allowed to turn downwards. Positive number is the max rotation upwards.
-            hero.physicsBody!.angularVelocity = hero.physicsBody!.angularVelocity.clamped(-1, 1) // This clamp makes it so that the velocity never gets to high or low. Adjust these numbers to make the rotation happen faster/slower.
-            
-            /* Update last touch timer */
-            sinceTouchTimer += fixedDelta
-        }
-    }
-    
-    /* This func sets a ceiling to the game; prevents you from going way up into the sky :) */
-    func checkIfBunnyIsOutOfBounds() {
-        /* Grab the bunny reference node's position */
-        let bunnyReferencePos = self.childNode(withName: "bunnyReferenceNode")!.position
-        /* Grab the bunny's position */
-        let bunnyPos = self.childNode(withName: "//hero")!.position
-        
-        /* This is a funky bit of code right here. Essentially, the reference node and the bunny's actual node are two different entities. The reference node in this case is set to like, -118 or something, but the reference node never moves. The hero node on the other hand starts at 0,0 and as it jumps, that value increases. This is kind of frustrating to explain tbh :P So, we simulate the hero's yPos in this case by adding the reference nodes yPos to the hero's yPos. This sets the hero's and the referenceNode's y value to the same spot.
-         
-         For example: Here's the yPosition of the starting nodes.
-         Bunny Node: 0
-         Bunny Reference Node: -100
-         
-         By adding on the bunny reference node's yPos to the bunny node's y value, they match up and now this simulates the bunny's actual position on the screen. I hope this makes sense to me later >.<
-         
-         We set the cap to be the max height of the screen, plus 1/4 bunny. If we set the ceiling to be exactly at the top of the screen, the bunny can go a little bit higher than the screen for just a moment before the game udpates and set it's velocity to 0. This extra 1/4 of the hero allows for a bit of a pillow time so the game can catch up */
-        if (bunnyPos.y + bunnyReferencePos.y) >= (self.size.height / 2) - (hero.size.height * (3/4)) {
-            hero.physicsBody?.velocity.dy = 0
-        }
     }
     
     /* This runs all the scrollWorld functions (except for the obstacles) */

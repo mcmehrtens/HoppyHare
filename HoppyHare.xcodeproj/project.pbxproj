@@ -10,7 +10,7 @@
 		C90669511E23E21C00B74683 /* UIScoreboardSwitcher.swift in Sources */ = {isa = PBXBuildFile; fileRef = C90669501E23E21C00B74683 /* UIScoreboardSwitcher.swift */; };
 		C90669531E23E22E00B74683 /* UIScoreboardSwitcher.sks in Resources */ = {isa = PBXBuildFile; fileRef = C90669521E23E22E00B74683 /* UIScoreboardSwitcher.sks */; };
 		C91E19F81DF7246500D7ABCD /* Obstacle.sks in Resources */ = {isa = PBXBuildFile; fileRef = C91E19F71DF7246500D7ABCD /* Obstacle.sks */; };
-		C91E19FA1DF7246F00D7ABCD /* Hero.sks in Resources */ = {isa = PBXBuildFile; fileRef = C91E19F91DF7246F00D7ABCD /* Hero.sks */; };
+		C91E19FA1DF7246F00D7ABCD /* EntityBunny.sks in Resources */ = {isa = PBXBuildFile; fileRef = C91E19F91DF7246F00D7ABCD /* EntityBunny.sks */; };
 		C91E19FC1DF725FE00D7ABCD /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = C91E19FB1DF725FE00D7ABCD /* Main.storyboard */; };
 		C926F5E11E19AF06007584F7 /* GameAnimations.swift in Sources */ = {isa = PBXBuildFile; fileRef = C926F5E01E19AF06007584F7 /* GameAnimations.swift */; };
 		C926F5E31E19E82C007584F7 /* CustomColors.swift in Sources */ = {isa = PBXBuildFile; fileRef = C926F5E21E19E82C007584F7 /* CustomColors.swift */; };
@@ -28,6 +28,7 @@
 		C9577DDE1E21EDC300B65F40 /* UIScoreboard.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9577DDD1E21EDC300B65F40 /* UIScoreboard.swift */; };
 		C9765B241E20480700D07DE7 /* UIGameStatsTab.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9765B231E20480700D07DE7 /* UIGameStatsTab.swift */; };
 		C9765B2A1E20584500D07DE7 /* UIInfiniteScoreboard.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9765B291E20584500D07DE7 /* UIInfiniteScoreboard.swift */; };
+		C97E51A31E25B61700565835 /* EntityBunny.swift in Sources */ = {isa = PBXBuildFile; fileRef = C97E51A21E25B61700565835 /* EntityBunny.swift */; };
 		C98C0E301E1ECC8C000E0989 /* UIStartMenu.sks in Resources */ = {isa = PBXBuildFile; fileRef = C98C0E2F1E1ECC8C000E0989 /* UIStartMenu.sks */; };
 		C98C0E351E1FE3B0000E0989 /* UIElement.swift in Sources */ = {isa = PBXBuildFile; fileRef = C98C0E341E1FE3B0000E0989 /* UIElement.swift */; };
 		C98C0E391E20168F000E0989 /* UIStartMenu.swift in Sources */ = {isa = PBXBuildFile; fileRef = C98C0E381E20168F000E0989 /* UIStartMenu.swift */; };
@@ -54,7 +55,7 @@
 		C90669501E23E21C00B74683 /* UIScoreboardSwitcher.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIScoreboardSwitcher.swift; sourceTree = "<group>"; };
 		C90669521E23E22E00B74683 /* UIScoreboardSwitcher.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = UIScoreboardSwitcher.sks; sourceTree = "<group>"; };
 		C91E19F71DF7246500D7ABCD /* Obstacle.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = Obstacle.sks; sourceTree = "<group>"; };
-		C91E19F91DF7246F00D7ABCD /* Hero.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = Hero.sks; sourceTree = "<group>"; };
+		C91E19F91DF7246F00D7ABCD /* EntityBunny.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = EntityBunny.sks; sourceTree = "<group>"; };
 		C91E19FB1DF725FE00D7ABCD /* Main.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Main.storyboard; sourceTree = "<group>"; };
 		C926F5E01E19AF06007584F7 /* GameAnimations.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GameAnimations.swift; sourceTree = "<group>"; };
 		C926F5E21E19E82C007584F7 /* CustomColors.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CustomColors.swift; sourceTree = "<group>"; };
@@ -72,6 +73,7 @@
 		C9577DDD1E21EDC300B65F40 /* UIScoreboard.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIScoreboard.swift; sourceTree = "<group>"; };
 		C9765B231E20480700D07DE7 /* UIGameStatsTab.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIGameStatsTab.swift; sourceTree = "<group>"; };
 		C9765B291E20584500D07DE7 /* UIInfiniteScoreboard.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIInfiniteScoreboard.swift; sourceTree = "<group>"; };
+		C97E51A21E25B61700565835 /* EntityBunny.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EntityBunny.swift; sourceTree = "<group>"; };
 		C98C0E2F1E1ECC8C000E0989 /* UIStartMenu.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = UIStartMenu.sks; sourceTree = "<group>"; };
 		C98C0E341E1FE3B0000E0989 /* UIElement.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIElement.swift; sourceTree = "<group>"; };
 		C98C0E381E20168F000E0989 /* UIStartMenu.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIStartMenu.swift; sourceTree = "<group>"; };
@@ -184,10 +186,22 @@
 			name = InfiniteScoreboard;
 			sourceTree = "<group>";
 		};
+		C97E51A61E25BB1200565835 /* Menus */ = {
+			isa = PBXGroup;
+			children = (
+				C9577DDC1E21EDAB00B65F40 /* Scoreboards */,
+				C98C0E3A1E2016DF000E0989 /* StartMenu */,
+				C9765B261E20564300D07DE7 /* GameOverMenu */,
+				C9765B271E20566500D07DE7 /* GameStatsTab */,
+			);
+			name = Menus;
+			sourceTree = "<group>";
+		};
 		C98C0E311E1ECC9D000E0989 /* Entities */ = {
 			isa = PBXGroup;
 			children = (
-				C91E19F91DF7246F00D7ABCD /* Hero.sks */,
+				C97E51A21E25B61700565835 /* EntityBunny.swift */,
+				C91E19F91DF7246F00D7ABCD /* EntityBunny.sks */,
 				C91E19F71DF7246500D7ABCD /* Obstacle.sks */,
 			);
 			name = Entities;
@@ -199,10 +213,8 @@
 				C98C0E341E1FE3B0000E0989 /* UIElement.swift */,
 				C926F5E01E19AF06007584F7 /* GameAnimations.swift */,
 				C926F5E21E19E82C007584F7 /* CustomColors.swift */,
-				C9577DDC1E21EDAB00B65F40 /* Scoreboards */,
-				C98C0E3A1E2016DF000E0989 /* StartMenu */,
-				C9765B261E20564300D07DE7 /* GameOverMenu */,
-				C9765B271E20566500D07DE7 /* GameStatsTab */,
+				C98C0E311E1ECC9D000E0989 /* Entities */,
+				C97E51A61E25BB1200565835 /* Menus */,
 			);
 			name = UserInterface;
 			sourceTree = "<group>";
@@ -307,7 +319,6 @@
 				C9E2FA451E21A91A00EB2139 /* GameStats */,
 				C9E2FA421E21792500EB2139 /* Gamemodes */,
 				C98C0E331E1FE396000E0989 /* UserInterface */,
-				C98C0E311E1ECC9D000E0989 /* Entities */,
 				C9C2CFB41DFF02B2001DB1B6 /* Resources */,
 				C9C2CFB51DFF02D8001DB1B6 /* Sounds */,
 				C9C2CFB61DFF02F3001DB1B6 /* Libs */,
@@ -378,7 +389,7 @@
 			files = (
 				C91E19F81DF7246500D7ABCD /* Obstacle.sks in Resources */,
 				C91E19FC1DF725FE00D7ABCD /* Main.storyboard in Resources */,
-				C91E19FA1DF7246F00D7ABCD /* Hero.sks in Resources */,
+				C91E19FA1DF7246F00D7ABCD /* EntityBunny.sks in Resources */,
 				C93BD54E1E23360400FAD917 /* music-wolf.mp3 in Resources */,
 				C93BD54C1E23353C00FAD917 /* music-syn.mp3 in Resources */,
 				C93BD54A1E23342B00FAD917 /* music-neon.mp3 in Resources */,
@@ -418,6 +429,7 @@
 				C90669511E23E21C00B74683 /* UIScoreboardSwitcher.swift in Sources */,
 				C93BD5531E2341FA00FAD917 /* UISoundPanel.swift in Sources */,
 				C93BD5501E23367C00FAD917 /* Music.swift in Sources */,
+				C97E51A31E25B61700565835 /* EntityBunny.swift in Sources */,
 				C9FC13901DF716EE00744006 /* AppDelegate.swift in Sources */,
 				C9C2CFB11DFF0003001DB1B6 /* MSButtonNode.swift in Sources */,
 				C926F5E31E19E82C007584F7 /* CustomColors.swift in Sources */,

@@ -53,7 +53,7 @@ class UIGameStatsTab: UIElement {
     }
     
     /* Sets the button handlers for the game stats tab*/
-    override func setButtonHandlers() {
+    func setButtonHandlers() {
         /* Set the references to the buttons in the gameStatsTab */
         let backButton = referenceNode.childNode(withName: ".//backButton") as! MSButtonNode
         let replayButton = referenceNode.childNode(withName: ".//replayButton") as! MSButtonNode
@@ -125,7 +125,7 @@ class UIGameStats: UIElement {
     }
     
     /* Set the button handlers */
-    override func setButtonHandlers() {
+    func setButtonHandlers() {
         let safetyButton = referenceNode.childNode(withName: ".//safetyButton") as! MSButtonNode
         
         safetyButton.selectedHandler = {}
