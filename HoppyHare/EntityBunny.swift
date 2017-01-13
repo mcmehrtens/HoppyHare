@@ -27,9 +27,7 @@ class EntityBunny: UIElement {
         bunny.physicsBody?.applyImpulse(CGVector(dx: 0, dy: 180))
         
         /* Play SFX */
-        if GameStats.getStat(statName: GameStats.soundEnabled) == 1 {
-            Sounds.playSound(soundName: "jump", object: self.baseScene)
-        }
+        Sounds.playSound(soundName: "jump", object: self.baseScene)
         
         /* Apply subtle rotation */
         bunny.physicsBody?.applyAngularImpulse(CGFloat(0.1))

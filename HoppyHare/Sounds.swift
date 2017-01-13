@@ -23,20 +23,15 @@ struct Sounds {
             sounds["jump"] = SKAction.playSoundFileNamed("jump", waitForCompletion: false)
             sounds["goal"] = SKAction.playSoundFileNamed("goal", waitForCompletion: false)
             
-            if GameStats.getStat(statName: GameStats.soundEnabled) == 0 {
-                GameStats.setStat(statName: GameStats.soundEnabled, value: 1)
-            }
-            
-            if GameStats.getStat(statName: GameStats.musicEnabled) == 0 {
-                GameStats.setStat(statName: GameStats.musicEnabled, value: 1)
-            }
-            
             Sounds.hasBeenInitialized = true
         }
     }
     
     /* This function plays the sound */
     static func playSound(soundName: String, object: SKScene) {
+        /* Check if the sound has been disabled. If so, immediately return */
+        if GameStats.getStat(statName: GameStats.soundEnabled) == 1 { return }
+        
         /* Check if there's a vlue in the dictionary for the name provided */
         if sounds[soundName] != nil {
             object.run(sounds[soundName]!!)

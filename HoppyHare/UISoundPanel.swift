@@ -16,12 +16,12 @@ class UISoundPanel: UIElement {
     }
     
     func updateButtonColors() {
-        if GameStats.getStat(statName: GameStats.soundEnabled) == 1 {
+        if GameStats.getStat(statName: GameStats.soundEnabled) == 0 {
             (referenceNode.childNode(withName: ".//soundButtonSprite") as! SKSpriteNode).color = CustomColors.colorGold
         } else {
             (referenceNode.childNode(withName: ".//soundButtonSprite") as! SKSpriteNode).color = CustomColors.colorWhite
         }
-        if GameStats.getStat(statName: GameStats.musicEnabled) == 1 {
+        if GameStats.getStat(statName: GameStats.musicEnabled) == 0 {
             (referenceNode.childNode(withName: ".//musicButtonSprite") as! SKSpriteNode).color = CustomColors.colorGold
         } else {
             (referenceNode.childNode(withName: ".//musicButtonSprite") as! SKSpriteNode).color = CustomColors.colorWhite
@@ -36,21 +36,21 @@ class UISoundPanel: UIElement {
         safetyButton.selectedHandler = {}
         
         soundButton.selectedHandler = {
-            if GameStats.getStat(statName: GameStats.soundEnabled) == 1 {
-                GameStats.setStat(statName: GameStats.soundEnabled, value: 2)
-            } else {
+            if GameStats.getStat(statName: GameStats.soundEnabled) == 0 {
                 GameStats.setStat(statName: GameStats.soundEnabled, value: 1)
+            } else {
+                GameStats.setStat(statName: GameStats.soundEnabled, value: 0)
             }
             self.updateButtonColors()
         }
         
         musicButton.selectedHandler = {
-            if GameStats.getStat(statName: GameStats.musicEnabled) == 1 {
-                GameStats.setStat(statName: GameStats.musicEnabled, value: 2)
-                Music.bgMusicPlayer.setVolume(0.0, fadeDuration: TimeInterval(1.0))
-            } else {
+            if GameStats.getStat(statName: GameStats.musicEnabled) == 0 {
                 GameStats.setStat(statName: GameStats.musicEnabled, value: 1)
-                Music.bgMusicPlayer.setVolume(1.0, fadeDuration: TimeInterval(1.0))
+                BGMusic.stopBGMusic(scene: self.baseScene)
+            } else {
+                GameStats.setStat(statName: GameStats.musicEnabled, value: 0)
+                BGMusic.playBGMusic(url: BGMusic.getRandSongURL())
             }
             self.updateButtonColors()
         }

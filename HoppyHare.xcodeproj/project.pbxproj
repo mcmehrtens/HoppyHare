@@ -21,7 +21,7 @@
 		C93BD54A1E23342B00FAD917 /* music-neon.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = C93BD5491E23342B00FAD917 /* music-neon.mp3 */; };
 		C93BD54C1E23353C00FAD917 /* music-syn.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = C93BD54B1E23353C00FAD917 /* music-syn.mp3 */; };
 		C93BD54E1E23360400FAD917 /* music-wolf.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = C93BD54D1E23360400FAD917 /* music-wolf.mp3 */; };
-		C93BD5501E23367C00FAD917 /* Music.swift in Sources */ = {isa = PBXBuildFile; fileRef = C93BD54F1E23367C00FAD917 /* Music.swift */; };
+		C93BD5501E23367C00FAD917 /* BGMusic.swift in Sources */ = {isa = PBXBuildFile; fileRef = C93BD54F1E23367C00FAD917 /* BGMusic.swift */; };
 		C93BD5531E2341FA00FAD917 /* UISoundPanel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C93BD5521E2341FA00FAD917 /* UISoundPanel.swift */; };
 		C93BD5551E23423000FAD917 /* UISoundPanel.sks in Resources */ = {isa = PBXBuildFile; fileRef = C93BD5541E23423000FAD917 /* UISoundPanel.sks */; };
 		C942D4211E1D59EF002FEF73 /* UIGameStatsTab.sks in Resources */ = {isa = PBXBuildFile; fileRef = C942D4201E1D59EF002FEF73 /* UIGameStatsTab.sks */; };
@@ -66,7 +66,7 @@
 		C93BD5491E23342B00FAD917 /* music-neon.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = "music-neon.mp3"; sourceTree = "<group>"; };
 		C93BD54B1E23353C00FAD917 /* music-syn.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = "music-syn.mp3"; sourceTree = "<group>"; };
 		C93BD54D1E23360400FAD917 /* music-wolf.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = "music-wolf.mp3"; sourceTree = "<group>"; };
-		C93BD54F1E23367C00FAD917 /* Music.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Music.swift; sourceTree = "<group>"; };
+		C93BD54F1E23367C00FAD917 /* BGMusic.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BGMusic.swift; sourceTree = "<group>"; };
 		C93BD5521E2341FA00FAD917 /* UISoundPanel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UISoundPanel.swift; sourceTree = "<group>"; };
 		C93BD5541E23423000FAD917 /* UISoundPanel.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = UISoundPanel.sks; sourceTree = "<group>"; };
 		C942D4201E1D59EF002FEF73 /* UIGameStatsTab.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = UIGameStatsTab.sks; sourceTree = "<group>"; };
@@ -121,7 +121,7 @@
 		C93BD5461E23322100FAD917 /* Music */ = {
 			isa = PBXGroup;
 			children = (
-				C93BD54F1E23367C00FAD917 /* Music.swift */,
+				C93BD54F1E23367C00FAD917 /* BGMusic.swift */,
 				C93BD5441E23321E00FAD917 /* music-delta.mp3 */,
 				C93BD5471E23332500FAD917 /* music-intro.mp3 */,
 				C93BD5491E23342B00FAD917 /* music-neon.mp3 */,
@@ -428,7 +428,7 @@
 				C9C2CFB31DFF0003001DB1B6 /* Sounds.swift in Sources */,
 				C90669511E23E21C00B74683 /* UIScoreboardSwitcher.swift in Sources */,
 				C93BD5531E2341FA00FAD917 /* UISoundPanel.swift in Sources */,
-				C93BD5501E23367C00FAD917 /* Music.swift in Sources */,
+				C93BD5501E23367C00FAD917 /* BGMusic.swift in Sources */,
 				C97E51A31E25B61700565835 /* EntityBunny.swift in Sources */,
 				C9FC13901DF716EE00744006 /* AppDelegate.swift in Sources */,
 				C9C2CFB11DFF0003001DB1B6 /* MSButtonNode.swift in Sources */,
