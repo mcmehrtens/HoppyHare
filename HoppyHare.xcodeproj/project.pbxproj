@@ -9,7 +9,7 @@
 /* Begin PBXBuildFile section */
 		C90669511E23E21C00B74683 /* UIScoreboardSwitcher.swift in Sources */ = {isa = PBXBuildFile; fileRef = C90669501E23E21C00B74683 /* UIScoreboardSwitcher.swift */; };
 		C90669531E23E22E00B74683 /* UIScoreboardSwitcher.sks in Resources */ = {isa = PBXBuildFile; fileRef = C90669521E23E22E00B74683 /* UIScoreboardSwitcher.sks */; };
-		C91E19F81DF7246500D7ABCD /* Obstacle.sks in Resources */ = {isa = PBXBuildFile; fileRef = C91E19F71DF7246500D7ABCD /* Obstacle.sks */; };
+		C91E19F81DF7246500D7ABCD /* EntityObstacle.sks in Resources */ = {isa = PBXBuildFile; fileRef = C91E19F71DF7246500D7ABCD /* EntityObstacle.sks */; };
 		C91E19FA1DF7246F00D7ABCD /* EntityBunny.sks in Resources */ = {isa = PBXBuildFile; fileRef = C91E19F91DF7246F00D7ABCD /* EntityBunny.sks */; };
 		C91E19FC1DF725FE00D7ABCD /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = C91E19FB1DF725FE00D7ABCD /* Main.storyboard */; };
 		C926F5E11E19AF06007584F7 /* GameAnimations.swift in Sources */ = {isa = PBXBuildFile; fileRef = C926F5E01E19AF06007584F7 /* GameAnimations.swift */; };
@@ -40,6 +40,8 @@
 		C9C2CFB21DFF0003001DB1B6 /* pixelFont.ttf in Resources */ = {isa = PBXBuildFile; fileRef = C9C2CFAE1DFF0003001DB1B6 /* pixelFont.ttf */; };
 		C9C2CFB31DFF0003001DB1B6 /* Sounds.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9C2CFAF1DFF0003001DB1B6 /* Sounds.swift */; };
 		C9C97FE91DFB61F600627547 /* UIInfiniteScoreboard.sks in Resources */ = {isa = PBXBuildFile; fileRef = C9C97FE81DFB61F600627547 /* UIInfiniteScoreboard.sks */; };
+		C9DACABE1E2B02F800CEDFF0 /* EntityCloud.sks in Resources */ = {isa = PBXBuildFile; fileRef = C9DACABD1E2B02F800CEDFF0 /* EntityCloud.sks */; };
+		C9DACAC11E2B041D00CEDFF0 /* EntityCloud.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9DACAC01E2B041D00CEDFF0 /* EntityCloud.swift */; };
 		C9E2FA441E21794000EB2139 /* GameDifficulty.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9E2FA431E21794000EB2139 /* GameDifficulty.swift */; };
 		C9E2FA471E21A93200EB2139 /* GameStats.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9E2FA461E21A93200EB2139 /* GameStats.swift */; };
 		C9ECB5301E22DCEA00635026 /* UIGameStats.sks in Resources */ = {isa = PBXBuildFile; fileRef = C9ECB52F1E22DCEA00635026 /* UIGameStats.sks */; };
@@ -54,7 +56,7 @@
 /* Begin PBXFileReference section */
 		C90669501E23E21C00B74683 /* UIScoreboardSwitcher.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIScoreboardSwitcher.swift; sourceTree = "<group>"; };
 		C90669521E23E22E00B74683 /* UIScoreboardSwitcher.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = UIScoreboardSwitcher.sks; sourceTree = "<group>"; };
-		C91E19F71DF7246500D7ABCD /* Obstacle.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = Obstacle.sks; sourceTree = "<group>"; };
+		C91E19F71DF7246500D7ABCD /* EntityObstacle.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = EntityObstacle.sks; sourceTree = "<group>"; };
 		C91E19F91DF7246F00D7ABCD /* EntityBunny.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = EntityBunny.sks; sourceTree = "<group>"; };
 		C91E19FB1DF725FE00D7ABCD /* Main.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Main.storyboard; sourceTree = "<group>"; };
 		C926F5E01E19AF06007584F7 /* GameAnimations.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GameAnimations.swift; sourceTree = "<group>"; };
@@ -85,6 +87,8 @@
 		C9C2CFAE1DFF0003001DB1B6 /* pixelFont.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = pixelFont.ttf; sourceTree = "<group>"; };
 		C9C2CFAF1DFF0003001DB1B6 /* Sounds.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Sounds.swift; sourceTree = "<group>"; };
 		C9C97FE81DFB61F600627547 /* UIInfiniteScoreboard.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = UIInfiniteScoreboard.sks; sourceTree = "<group>"; };
+		C9DACABD1E2B02F800CEDFF0 /* EntityCloud.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = EntityCloud.sks; sourceTree = "<group>"; };
+		C9DACAC01E2B041D00CEDFF0 /* EntityCloud.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EntityCloud.swift; sourceTree = "<group>"; };
 		C9E2FA431E21794000EB2139 /* GameDifficulty.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GameDifficulty.swift; sourceTree = "<group>"; };
 		C9E2FA461E21A93200EB2139 /* GameStats.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GameStats.swift; sourceTree = "<group>"; };
 		C9ECB52F1E22DCEA00635026 /* UIGameStats.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = UIGameStats.sks; sourceTree = "<group>"; };
@@ -201,9 +205,9 @@
 		C98C0E311E1ECC9D000E0989 /* Entities */ = {
 			isa = PBXGroup;
 			children = (
-				C97E51A21E25B61700565835 /* EntityBunny.swift */,
-				C91E19F91DF7246F00D7ABCD /* EntityBunny.sks */,
-				C91E19F71DF7246500D7ABCD /* Obstacle.sks */,
+				C91E19F71DF7246500D7ABCD /* EntityObstacle.sks */,
+				C9DACABC1E2B02D900CEDFF0 /* EntityBunny */,
+				C9DACABF1E2B040700CEDFF0 /* EntityCloud */,
 			);
 			name = Entities;
 			sourceTree = "<group>";
@@ -278,6 +282,24 @@
 				C9FC13911DF716EE00744006 /* InfiniteGameScene.sks */,
 			);
 			name = InfGamemode;
+			sourceTree = "<group>";
+		};
+		C9DACABC1E2B02D900CEDFF0 /* EntityBunny */ = {
+			isa = PBXGroup;
+			children = (
+				C97E51A21E25B61700565835 /* EntityBunny.swift */,
+				C91E19F91DF7246F00D7ABCD /* EntityBunny.sks */,
+			);
+			name = EntityBunny;
+			sourceTree = "<group>";
+		};
+		C9DACABF1E2B040700CEDFF0 /* EntityCloud */ = {
+			isa = PBXGroup;
+			children = (
+				C9DACAC01E2B041D00CEDFF0 /* EntityCloud.swift */,
+				C9DACABD1E2B02F800CEDFF0 /* EntityCloud.sks */,
+			);
+			name = EntityCloud;
 			sourceTree = "<group>";
 		};
 		C9E2FA421E21792500EB2139 /* Gamemodes */ = {
@@ -379,12 +401,13 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				C91E19F81DF7246500D7ABCD /* Obstacle.sks in Resources */,
+				C91E19F81DF7246500D7ABCD /* EntityObstacle.sks in Resources */,
 				C91E19FC1DF725FE00D7ABCD /* Main.storyboard in Resources */,
 				C91E19FA1DF7246F00D7ABCD /* EntityBunny.sks in Resources */,
 				C93BD54E1E23360400FAD917 /* music-wolf.mp3 in Resources */,
 				C93BD54C1E23353C00FAD917 /* music-syn.mp3 in Resources */,
 				C93BD54A1E23342B00FAD917 /* music-neon.mp3 in Resources */,
+				C9DACABE1E2B02F800CEDFF0 /* EntityCloud.sks in Resources */,
 				C9FC13921DF716EE00744006 /* InfiniteGameScene.sks in Resources */,
 				C9947A8C1E1B1D7500864E7F /* UIGameOverMenu.sks in Resources */,
 				C90669531E23E22E00B74683 /* UIScoreboardSwitcher.sks in Resources */,
@@ -418,6 +441,7 @@
 				C9C2CFB01DFF0003001DB1B6 /* CGFloat+Extensions.swift in Sources */,
 				C9765B241E20480700D07DE7 /* UIGameStatsTab.swift in Sources */,
 				C9C2CFB31DFF0003001DB1B6 /* Sounds.swift in Sources */,
+				C9DACAC11E2B041D00CEDFF0 /* EntityCloud.swift in Sources */,
 				C90669511E23E21C00B74683 /* UIScoreboardSwitcher.swift in Sources */,
 				C93BD5531E2341FA00FAD917 /* UISoundPanel.swift in Sources */,
 				C93BD5501E23367C00FAD917 /* BGMusic.swift in Sources */,

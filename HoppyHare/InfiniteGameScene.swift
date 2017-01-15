@@ -36,6 +36,7 @@ class InfiniteGameScene: SKScene, SKPhysicsContactDelegate {
     
     /* Entities */
     var bunny: EntityBunny!
+    var cloud: EntityCloud!
     
     /* Menus */
     var startMenu: UIStartMenu!
@@ -43,7 +44,6 @@ class InfiniteGameScene: SKScene, SKPhysicsContactDelegate {
     var infiniteScoreboard: UIInfiniteScoreboard!
     
     /* Boolean counters */
-    var hasIdleJumped = false
     var brokeHighScore = false
 
     /* Counters */
@@ -56,7 +56,6 @@ class InfiniteGameScene: SKScene, SKPhysicsContactDelegate {
     var sinceTouchTimer: TimeInterval = 0
     var spawnTimer: TimeInterval = 0
     var startLabelTimer: TimeInterval = 0
-    var automaticJumpTimer: TimeInterval = 0
     var timeSinceStart: TimeInterval = 0
     
     /* Scroll Speeds*/
@@ -104,9 +103,6 @@ class InfiniteGameScene: SKScene, SKPhysicsContactDelegate {
     override func update(_ currentTime: TimeInterval) {
         /* Checks if the game is ready to begin */
         if gameState == .Preparing {
-            /* Screen jump the bunny */
-            bunny.screenJump()
-            
             if timeSinceStart >= 1.75 {
                 setGameState(state: .Ready)
             } else {
@@ -118,15 +114,6 @@ class InfiniteGameScene: SKScene, SKPhysicsContactDelegate {
         if gameState == .Ready {
             scrollWorld()
             flashStartGameLabel()
-            //bunny.setBunnyX()
-            
-            if automaticJumpTimer >= 0.445 || !hasIdleJumped {
-                bunny.idleJump()
-                automaticJumpTimer = 0
-                hasIdleJumped = true
-            } else {
-                automaticJumpTimer += fixedDelta
-            }
         }
         
         /* Skip this part of the game update if the game isn't active */
@@ -138,13 +125,98 @@ class InfiniteGameScene: SKScene, SKPhysicsContactDelegate {
             /* Check to see if the bunny is out of bounds */
             bunny.capBunnyY()
             
+            /* Check the vertical velocity of the bunny and cap it */
+            bunny.capBunnyVelocityY()
+            
             /* Rotate the bunny */
             bunny.rotateHero(sinceTouch: sinceTouchTimer)
             sinceTouchTimer += fixedDelta
         }
-        
-        /* Check the vertical velocity of the bunny and cap it */
-        bunny.capBunnyVelocityY()
+    }
+    
+    /* This function sets the game state and does all the appropriate steps*/
+    func setGameState(state: GameState) {
+        switch state {
+        case .Preparing:
+            /* Add the startMenu onto the screen */
+            startMenu = UIStartMenu(baseScene: self, pos: CGPoint(x: -270, y: -209.5), zPos: 3, referenceName: "startMenuReferenceNode", resourcePath: "UIStartMenu", resourceType: "sks")
+            
+            /* Initialize the sounds. Check if they've been initialized first. */
+            Sounds.initializeSounds()
+            
+            /* Add the bunny node to the screen */
+            bunny = EntityBunny(baseScene: self, pos: CGPoint(x: 0, y: 0), zPos: 4, referenceName: "bunnyReferenceNode", resourcePath: "EntityBunny", resourceType: "sks")
+            
+            /* Add the cloud node to the screen */
+            cloud = EntityCloud(baseScene: self, pos: CGPoint(x: -200, y: 0), zPos: 3, referenceName: "cloudReferenceNode", resourcePath: "EntityCloud", resourceType: "sks")
+            
+            /* When setting the state to .Ready, the loading label needs to go away. Also starts flashing the start label.*/
+        case .Ready:
+            gameState = .Ready
+            startLabel.isHidden = false
+            
+            /* Play some jams */
+            BGMusic.playBGMusic(url: BGMusic.getRandSongURL())
+            
+            /* Slide on the startMenu */
+            startMenu.closeSlide()
+            
+            /* Slide off the loading label */
+            GameAnimations.loadingLabelSlideOff(node: loadingLabel)
+            
+            /* Slide on the title */
+            GameAnimations.titleSlideIn(nodes: (titleLabel_0, titleLabel_1))
+            
+            /* When setting the state to .Active, the flashing "start" label needs to go away and the score board text needs to appear. */
+        case .Active:
+            /* Get the old high score */
+            oldHighScore = GameStats.defaults.integer(forKey: GameStats.highScore)
+            
+            /* Slide the cloud off the screen */
+            cloud.slideOff()
+            
+            /* Slide the title off the screen */
+            GameAnimations.titleSlideOff(nodes: (titleLabel_0, titleLabel_1))
+            
+            /* Slide off the startMenu and close any visible windows */
+            startMenu.offSlide()
+            
+            /* Set the inGameDifficultyLabel to the proper value and slide it in */
+            inGameDifficulty.text = String(GameStats.defaults.integer(forKey: GameStats.gameDiff))
+            GameAnimations.inGameDifficultyLabelSlideIn(node: inGameDifficultyLabelNode)
+            
+            /* Add the infiniteScoreboard :) */
+            infiniteScoreboard = UIInfiniteScoreboard(baseScene: self, pos: CGPoint(x: 0, y: -212.5), zPos: 3, referenceName: "infiniteScoreboardReferenceNode", resourcePath: "UIInfiniteScoreboard", resourceType: "sks")
+            
+            /* Set the final game difficulty */
+            GameDifficulty.setDifficulty()
+            
+            startLabel.isHidden = true
+            gameState = .Active
+            
+            /* Lot's of things happening here. #1, stop all angular velocity. #2: Set the angular velocity = 0. #3: Stop the flapping animation. #4: Run the death animation. #5: Shake the screen. #6: Show the restart button.*/
+        case .GameOver:
+            /* Kill the music */
+            BGMusic.stopBGMusic(scene: self)
+            
+            /* Run the kill hero animation */
+            bunny.killHero()
+            
+            /* Shake the screen */
+            shake()
+            
+            /* Set the Game Stats */
+            setGameStats()
+            
+            /* Slide the scoreboard off the screen */
+            infiniteScoreboard.removeElement()
+            
+            /* Set the Game Over Menu to be visible */
+            gameOverMenu = UIGameOverMenu(baseScene: self, pos: CGPoint(x: 0, y: 0), zPos: 5, referenceName: "gameOverMenuReferenceNode", resourcePath: "UIGameOverMenu", resourceType: "sks", score: score, jumps: jumps, brokeHighScore: brokeHighScore)
+            
+            /* Set the game state to .GameOver */
+            gameState = .GameOver
+        }
     }
     
     /* Called when someone touches the screen (when they begin touching)*/
@@ -230,7 +302,7 @@ class InfiniteGameScene: SKScene, SKPhysicsContactDelegate {
     /* Generates an obstacle at a random position */
     func generateObstacle() {
         /* Create a new obstacle reference object using our obstacle resource */
-        let resourcePath = Bundle.main.path(forResource: "Obstacle", ofType: "sks")
+        let resourcePath = Bundle.main.path(forResource: "EntityObstacle", ofType: "sks")
         let newObstacle = SKReferenceNode(url: NSURL(fileURLWithPath: resourcePath!) as URL)
         
         /* Get references to the individual sprite nodes within our newObstacle */
@@ -297,85 +369,6 @@ class InfiniteGameScene: SKScene, SKPhysicsContactDelegate {
         if nodeA.name != "goal" && nodeB.name != "goal" {
             /* If the hero touches anything besides the goals, game over */
             setGameState(state: .GameOver)
-        }
-    }
-    
-    /* This function sets the game state and does all the appropriate steps*/
-    func setGameState(state: GameState) {
-        switch state {
-        case .Preparing:
-            /* Add the startMenu onto the screen */
-            startMenu = UIStartMenu(baseScene: self, pos: CGPoint(x: -270, y: -209.5), zPos: 3, referenceName: "startMenuReferenceNode", resourcePath: "UIStartMenu", resourceType: "sks")
-            
-            /* Initialize the sounds. Check if they've been initialized first. */
-            Sounds.initializeSounds()
-            
-            /* Add the bunny node to the screen */
-            bunny = EntityBunny(baseScene: self, pos: CGPoint(x: 0, y: 0), zPos: 4, referenceName: "bunnyReferenceNode", resourcePath: "EntityBunny", resourceType: "sks")
-            
-            /* When setting the state to .Ready, the loading label needs to go away. Also starts flashing the start label.*/
-        case .Ready:
-            gameState = .Ready
-            startLabel.isHidden = false
-            
-            /* Play some jams */
-            BGMusic.playBGMusic(url: BGMusic.getRandSongURL())
-            
-            /* Slide on the startMenu */
-            startMenu.closeSlide()
-            
-            /* Slide off the loading label */
-            GameAnimations.loadingLabelSlideOff(node: loadingLabel)
-            
-            /* Slide on the title */
-            GameAnimations.titleSlideIn(nodes: (titleLabel_0, titleLabel_1))
-            
-            /* When setting the state to .Active, the flashing "start" label needs to go away and the score board text needs to appear. */
-        case .Active:
-            /* Get the old high score */
-            oldHighScore = GameStats.defaults.integer(forKey: GameStats.highScore)
-            
-            /* Slide the title off the screen */
-            GameAnimations.titleSlideOff(nodes: (titleLabel_0, titleLabel_1))
-            
-            /* Slide off the startMenu and close any visible windows */
-            startMenu.offSlide()
-            
-            /* Set the inGameDifficultyLabel to the proper value and slide it in */
-            inGameDifficulty.text = String(GameStats.defaults.integer(forKey: GameStats.gameDiff))
-            GameAnimations.inGameDifficultyLabelSlideIn(node: inGameDifficultyLabelNode)
-            
-            /* Add the infiniteScoreboard :) */
-            infiniteScoreboard = UIInfiniteScoreboard(baseScene: self, pos: CGPoint(x: 0, y: -212.5), zPos: 3, referenceName: "infiniteScoreboardReferenceNode", resourcePath: "UIInfiniteScoreboard", resourceType: "sks")
-            
-            /* Set the final game difficulty */
-            GameDifficulty.setDifficulty()
-            
-            startLabel.isHidden = true
-            gameState = .Active
-            
-            /* Lot's of things happening here. #1, stop all angular velocity. #2: Set the angular velocity = 0. #3: Stop the flapping animation. #4: Run the death animation. #5: Shake the screen. #6: Show the restart button.*/
-        case .GameOver:
-            /* Kill the music */
-            BGMusic.stopBGMusic(scene: self)
-            
-            /* Run the kill hero animation */
-            bunny.killHero()
-            
-            /* Shake the screen */
-            shake()
-            
-            /* Set the Game Stats */
-            setGameStats()
-            
-            /* Slide the scoreboard off the screen */
-            infiniteScoreboard.removeElement()
-            
-            /* Set the Game Over Menu to be visible */
-            gameOverMenu = UIGameOverMenu(baseScene: self, pos: CGPoint(x: 0, y: 0), zPos: 5, referenceName: "gameOverMenuReferenceNode", resourcePath: "UIGameOverMenu", resourceType: "sks", score: score, jumps: jumps, brokeHighScore: brokeHighScore)
-            
-            /* Set the game state to .GameOver */
-            gameState = .GameOver
         }
     }
     

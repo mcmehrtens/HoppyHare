@@ -10,18 +10,23 @@ import GameplayKit
 
 class EntityBunny: UIElement {
     var bunny: SKSpriteNode!
-    var hasScreenJumped = false
     
     /* Adds the bunny onto the screen */
     override func addElement() {
         super.addElement()
         bunny = referenceNode.childNode(withName: "//bunny") as! SKSpriteNode // Assigns the bunny sprite node to the bunny instance
-        //bunny.position = CGPoint(x: -88, y: 375) // Sets the position of the bunny within the referenceNode
-        bunny.position = CGPoint(x: -160, y: 75)
+        bunny.position = CGPoint(x: -200, y: 15) // Set the position of the bunny within the referenceNode
+        bunny.physicsBody?.affectedByGravity = false // Set the bunny to be gravity immune
+        slideIn() // Slide the bunny in atop a cloud of justice
     }
     
     /* Propels the hero into the air */
     func jump() {
+        /* Check if the bunny is affected by gravity */
+        if bunny.physicsBody?.affectedByGravity == false {
+            bunny.physicsBody?.affectedByGravity = true
+        }
+        
         /* Reset velocity, helps improve response against cumulative falling velocity */
         bunny.physicsBody?.velocity = CGVector(dx: 0, dy: 0)
         
@@ -66,20 +71,6 @@ class EntityBunny: UIElement {
         }
     }
     
-    /* Set the bunny's x-coord to where it's supposed to be if it's greater than that position */
-    func capBunnyX() {
-        if bunny.position.x > -88 {
-            bunny.position.x = -88
-        }
-    }
-    
-    /* Sets the bunny's x-coord to where it's supposed to be */
-    func setBunnyX() {
-        if bunny.position.x != -88 {
-            bunny.position.x = -88
-        }
-    }
-    
     /* Kill the hero */
     func killHero() {
         /* Stop any new angular velocity being applied */
@@ -101,33 +92,11 @@ class EntityBunny: UIElement {
             }, SKAction.wait(forDuration: TimeInterval(2.0)), SKAction.run { self.removeElement() }]))
     }
     
-    /* Jump the bunny onto the scene then continue jumping him */
-    func screenJump() {
-        if !hasScreenJumped {
-            /* Reset velocity, helps improve response against cumulative falling velocity */
-            bunny.physicsBody?.velocity = CGVector(dx: 0, dy: 0)
-            
-            /* Apply vertical impulse */
-            bunny.physicsBody?.applyImpulse(CGVector(dx: CGFloat(3.25), dy: CGFloat(30)))
-            
-            hasScreenJumped = true
-        }
+    /* Slide the bunny in on top of the cloud */
+    func slideIn() {
+        let slideIn = SKAction.move(to: CGPoint(x: -88, y: 15), duration: TimeInterval(1))
+        slideIn.timingMode = SKActionTimingMode.easeOut
         
-        if bunny.position.x > -88 {
-            bunny.physicsBody?.velocity.dx = 0
-            bunny.position.x = -88
-        }
-        
-        /* Check the x-coord of the bunny and set it to the proper value over time */
-        capBunnyX()
-    }
-    
-    /* Idly jump the bunny */
-    func idleJump() {
-        /* Reset velocity, helps improve response against cumulative falling velocity */
-        bunny.physicsBody?.velocity = CGVector(dx: 0, dy: 0)
-        
-        /* Apply vertical impulse */
-        bunny.physicsBody?.applyImpulse(CGVector(dx: 0, dy: 180))
+        bunny.run(slideIn)
     }
 }
