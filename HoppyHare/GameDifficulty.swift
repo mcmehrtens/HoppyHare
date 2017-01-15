@@ -15,7 +15,7 @@ struct GameDifficulty {
     static var minHeight: CGFloat!
     
     static func setDifficulty() {
-        switch GameStats.getStat(statName: GameStats.gameDiff) {
+        switch GameStats.defaults.integer(forKey: GameStats.gameDiff) {
         case 1:
             self.goalHeight = 103.5
             self.maxHeight = 161.0

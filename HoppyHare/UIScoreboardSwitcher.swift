@@ -20,7 +20,7 @@ class UIScoreboardSwitcher: UIElement {
         let leftButtonSprite = referenceNode.childNode(withName: ".//leftButtonSprite") as! SKSpriteNode
         let rightButtonSprite = referenceNode.childNode(withName: ".//rightButtonSprite") as! SKSpriteNode
         
-        if GameStats.getStat(statName: GameStats.scoreboardSwitcher) == 0 {
+        if !GameStats.defaults.bool(forKey: GameStats.scoreboardSwitcher) {
             leftButtonSprite.color = CustomColors.colorGold
             rightButtonSprite.color = CustomColors.colorWhite
         } else {
@@ -38,12 +38,12 @@ class UIScoreboardSwitcher: UIElement {
         safetyButton.selectedHandler = {}
         
         leftButton.selectedHandler = {
-            GameStats.setStat(statName: GameStats.scoreboardSwitcher, value: 0)
+            GameStats.defaults.set(false, forKey: GameStats.scoreboardSwitcher)
             self.updateButtonColors()
         }
         
         rightButton.selectedHandler = {
-            GameStats.setStat(statName: GameStats.scoreboardSwitcher, value: 1)
+            GameStats.defaults.set(true, forKey: GameStats.scoreboardSwitcher)
             self.updateButtonColors()
         }
     }

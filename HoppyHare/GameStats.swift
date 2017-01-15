@@ -9,6 +9,9 @@
 import GameplayKit
 
 class GameStats {
+    /* Make the constant defaults variable */
+    static let defaults = UserDefaults.standard
+    
     /* Game statistic default names */
     static let highScore = "highScore"
     static let avgScore = "avgScore"
@@ -20,80 +23,18 @@ class GameStats {
     static let soundEnabled = "soundEnabled"
     static let musicEnabled = "musicEnabled"
     static let scoreboardSwitcher = "scoreboardSwitcher"
-    
-    /* Gets a specific game stat */
-    static func getStat(statName: String) -> Int {
-        let defaults = UserDefaults.standard
-        
-        if statName == GameStats.gameDiff && defaults.integer(forKey: GameStats.gameDiff) == 0 {
-            return 1
-        }
-        
-        return defaults.integer(forKey: statName)
-    }
-    
-    /* Sets a specific game stat */
-    static func setStat(statName: String, value: Int) {
-        let defaults = UserDefaults.standard
-        
-        if statName == GameStats.avgScore {
-            if defaults.array(forKey: "avgScoreArray") == nil {
-                let avgScoreArray: [Int] = [value]
-                
-                defaults.set(avgScoreArray, forKey: "avgScoreArray")
-            } else {
-                var avgScoreArray = defaults.array(forKey: "avgScoreArray") as! [Int]
-                avgScoreArray.append(value)
-                
-                defaults.set(avgScoreArray, forKey: "avgScoreArray")
-            }
-            
-            defaults.set(findAvg(array: defaults.array(forKey: "avgScoreArray") as! [Int]), forKey: "avgScore")
-            return
-        }
-        
-        if statName == GameStats.avgJumps {
-            if defaults.array(forKey: "avgJumpsArray") == nil {
-                let avgJumpsArray: [Int] = [value]
-                
-                defaults.set(avgJumpsArray, forKey: "avgJumpsArray")
-            } else {
-                var avgJumpsArray = defaults.array(forKey: "avgJumpsArray") as! [Int]
-                avgJumpsArray.append(value)
-                
-                defaults.set(avgJumpsArray, forKey: "avgJumpsArray")
-            }
-            
-            defaults.set(findAvg(array: defaults.array(forKey: "avgJumpsArray") as! [Int]), forKey: "avgJumps")
-            return
-        }
-        
-        defaults.set(value, forKey: statName)
-    }
-    
-    /* Updates the game stats */
-    static func updateStats(score: Int, jumps: Int) {
-        GameStats.setStat(statName: GameStats.avgScore, value: score) // Sets the average score stat
-        
-        /* Set the jump record game stat */
-        if jumps > GameStats.getStat(statName: GameStats.jumpRecord) {
-            GameStats.setStat(statName: GameStats.jumpRecord, value: jumps)
-        }
-        
-        GameStats.setStat(statName: GameStats.avgJumps, value: jumps) // Sets the average jumps stat
-        
-        GameStats.setStat(statName: GameStats.totalJumps, value: GameStats.getStat(statName: GameStats.totalJumps) + jumps) // Sets the total jumps stat
-        GameStats.setStat(statName: GameStats.totalGames, value: GameStats.getStat(statName: GameStats.totalGames) + 1) // Sets the total games stat
-    }
+    static let loadedBefore = "loadedBefore"
     
     /* Find the average of an array of integers */
     static func findAvg(array: [Int]) -> Int {
         var total = 0
         
+        /* Adds up all the values in the array */
         for i in array {
             total += i
         }
         
+        /* Find the average by taking the total divided by the number of values in the array */
         return Int(total / array.count)
     }
 }

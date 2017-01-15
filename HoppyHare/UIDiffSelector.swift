@@ -39,51 +39,22 @@ class UIDiffSelector: UIElement {
         
         safetyButton.selectedHandler = {}
         
-        (referenceNode.childNode(withName: ".//buttonOne") as! MSButtonNode).selectedHandler = {
-            self.removeElement()
-            GameStats.setStat(statName: GameStats.gameDiff, value: 1)
-        }
-        (referenceNode.childNode(withName: ".//buttonTwo") as! MSButtonNode).selectedHandler = {
-            self.removeElement()
-            GameStats.setStat(statName: GameStats.gameDiff, value: 2)
-        }
-        (referenceNode.childNode(withName: ".//buttonThree") as! MSButtonNode).selectedHandler = {
-            self.removeElement()
-            GameStats.setStat(statName: GameStats.gameDiff, value: 3)
-        }
-        (referenceNode.childNode(withName: ".//buttonFour") as! MSButtonNode).selectedHandler = {
-            self.removeElement()
-            GameStats.setStat(statName: GameStats.gameDiff, value: 4)
-        }
-        (referenceNode.childNode(withName: ".//buttonFive") as! MSButtonNode).selectedHandler = {
-            self.removeElement()
-            GameStats.setStat(statName: GameStats.gameDiff, value: 5)
-        }
-        (referenceNode.childNode(withName: ".//buttonSix") as! MSButtonNode).selectedHandler = {
-            self.removeElement()
-            GameStats.setStat(statName: GameStats.gameDiff, value: 6)
-        }
-        (referenceNode.childNode(withName: ".//buttonSeven") as! MSButtonNode).selectedHandler = {
-            self.removeElement()
-            GameStats.setStat(statName: GameStats.gameDiff, value: 7)
-        }
-        (referenceNode.childNode(withName: ".//buttonEight") as! MSButtonNode).selectedHandler = {
-            self.removeElement()
-            GameStats.setStat(statName: GameStats.gameDiff, value: 8)
-        }
-        (referenceNode.childNode(withName: ".//buttonNine") as! MSButtonNode).selectedHandler = {
-            self.removeElement()
-            GameStats.setStat(statName: GameStats.gameDiff, value: 9)
-        }
-        (referenceNode.childNode(withName: ".//buttonTen") as! MSButtonNode).selectedHandler = {
-            self.removeElement()
-            GameStats.setStat(statName: GameStats.gameDiff, value: 10)
+        for difficulty in 1...10 {
+            print(difficulty)
+            (referenceNode.childNode(withName: ".//button" + String(difficulty)) as! MSButtonNode).selectedHandler = {
+                GameStats.defaults.set(difficulty, forKey: GameStats.gameDiff)
+                self.setGameDifficultyLabels()
+            }
         }
     }
     
     /* Set the Game Difficulty Selector Label Nodes */
     func setGameDifficultyLabels() {
-        let selectedLabel = labels[GameStats.getStat(statName: GameStats.gameDiff) - 1]
+        let gameDiff = GameStats.defaults.integer(forKey: GameStats.gameDiff)
+        
+        if gameDiff == 0 { GameStats.defaults.set(1, forKey: GameStats.gameDiff) }
+        
+        let selectedLabel = labels[GameStats.defaults.integer(forKey: GameStats.gameDiff) - 1]
         
         for label in labels {
             if label == selectedLabel {

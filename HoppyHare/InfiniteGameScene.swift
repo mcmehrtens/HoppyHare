@@ -37,14 +37,14 @@ class InfiniteGameScene: SKScene, SKPhysicsContactDelegate {
     /* Entities */
     var bunny: EntityBunny!
     
-    /* Menues */
+    /* Menus */
     var startMenu: UIStartMenu!
     var gameOverMenu: UIGameOverMenu!
     var infiniteScoreboard: UIInfiniteScoreboard!
     
     /* Boolean counters */
-    var hasJumped = false
-    var isNewHighScore = false
+    var hasIdleJumped = false
+    var brokeHighScore = false
 
     /* Counters */
     var score = 0
@@ -56,7 +56,6 @@ class InfiniteGameScene: SKScene, SKPhysicsContactDelegate {
     var sinceTouchTimer: TimeInterval = 0
     var spawnTimer: TimeInterval = 0
     var startLabelTimer: TimeInterval = 0
-    var idleJumpTimer: TimeInterval = 0
     var automaticJumpTimer: TimeInterval = 0
     var timeSinceStart: TimeInterval = 0
     
@@ -91,20 +90,23 @@ class InfiniteGameScene: SKScene, SKPhysicsContactDelegate {
         /* Set physics contact delegate */
         physicsWorld.contactDelegate = self
         
-        /* Initialize the sounds. Check if they've been initialized first. */
-        Sounds.initializeSounds()
+        /* If it's the first time loading, enable the sound/music */
+        if !GameStats.defaults.bool(forKey: GameStats.loadedBefore) {
+            GameStats.defaults.set(true, forKey: GameStats.soundEnabled)
+            GameStats.defaults.set(true, forKey: GameStats.musicEnabled)
+            GameStats.defaults.set(true, forKey: GameStats.loadedBefore)
+        }
         
-        /* Get the old high score */
-        oldHighScore = GameStats.getStat(statName: GameStats.highScore)
-        
-        /* Add the bunny node to the screen */
-        bunny = EntityBunny(baseScene: self, pos: CGPoint(x: 0, y: 0), zPos: 4, referenceName: "bunnyReferenceNode", resourcePath: "EntityBunny", resourceType: "sks")
+        setGameState(state: .Preparing)
     }
     
     /* This func is called before each frame is rendered. */
     override func update(_ currentTime: TimeInterval) {
         /* Checks if the game is ready to begin */
         if gameState == .Preparing {
+            /* Screen jump the bunny */
+            bunny.screenJump()
+            
             if timeSinceStart >= 1.75 {
                 setGameState(state: .Ready)
             } else {
@@ -116,6 +118,15 @@ class InfiniteGameScene: SKScene, SKPhysicsContactDelegate {
         if gameState == .Ready {
             scrollWorld()
             flashStartGameLabel()
+            //bunny.setBunnyX()
+            
+            if automaticJumpTimer >= 0.445 || !hasIdleJumped {
+                bunny.idleJump()
+                automaticJumpTimer = 0
+                hasIdleJumped = true
+            } else {
+                automaticJumpTimer += fixedDelta
+            }
         }
         
         /* Skip this part of the game update if the game isn't active */
@@ -127,13 +138,13 @@ class InfiniteGameScene: SKScene, SKPhysicsContactDelegate {
             /* Check to see if the bunny is out of bounds */
             bunny.capBunnyY()
             
-            /* Check the vertical velocity and cap it */
-            bunny.capBunnyVelocityY()
-            
             /* Rotate the bunny */
             bunny.rotateHero(sinceTouch: sinceTouchTimer)
             sinceTouchTimer += fixedDelta
         }
+        
+        /* Check the vertical velocity of the bunny and cap it */
+        bunny.capBunnyVelocityY()
     }
     
     /* Called when someone touches the screen (when they begin touching)*/
@@ -263,11 +274,6 @@ class InfiniteGameScene: SKScene, SKPhysicsContactDelegate {
             /* Run the code to increase the score by 1 */
             score += 1
             
-            if score > oldHighScore {
-                isNewHighScore = true
-                GameStats.setStat(statName: GameStats.highScore, value: score)
-            }
-            
             infiniteScoreboard.increaseScore(score: score)
             
             Sounds.playSound(soundName: "goal", object: self)
@@ -297,6 +303,16 @@ class InfiniteGameScene: SKScene, SKPhysicsContactDelegate {
     /* This function sets the game state and does all the appropriate steps*/
     func setGameState(state: GameState) {
         switch state {
+        case .Preparing:
+            /* Add the startMenu onto the screen */
+            startMenu = UIStartMenu(baseScene: self, pos: CGPoint(x: -270, y: -209.5), zPos: 3, referenceName: "startMenuReferenceNode", resourcePath: "UIStartMenu", resourceType: "sks")
+            
+            /* Initialize the sounds. Check if they've been initialized first. */
+            Sounds.initializeSounds()
+            
+            /* Add the bunny node to the screen */
+            bunny = EntityBunny(baseScene: self, pos: CGPoint(x: 0, y: 0), zPos: 4, referenceName: "bunnyReferenceNode", resourcePath: "EntityBunny", resourceType: "sks")
+            
             /* When setting the state to .Ready, the loading label needs to go away. Also starts flashing the start label.*/
         case .Ready:
             gameState = .Ready
@@ -304,9 +320,6 @@ class InfiniteGameScene: SKScene, SKPhysicsContactDelegate {
             
             /* Play some jams */
             BGMusic.playBGMusic(url: BGMusic.getRandSongURL())
-            
-            /* Add the startMenu onto the screen */
-            startMenu = UIStartMenu(baseScene: self, pos: CGPoint(x: -270, y: -209.5), zPos: 3, referenceName: "startMenuReferenceNode", resourcePath: "UIStartMenu", resourceType: "sks")
             
             /* Slide on the startMenu */
             startMenu.closeSlide()
@@ -319,6 +332,9 @@ class InfiniteGameScene: SKScene, SKPhysicsContactDelegate {
             
             /* When setting the state to .Active, the flashing "start" label needs to go away and the score board text needs to appear. */
         case .Active:
+            /* Get the old high score */
+            oldHighScore = GameStats.defaults.integer(forKey: GameStats.highScore)
+            
             /* Slide the title off the screen */
             GameAnimations.titleSlideOff(nodes: (titleLabel_0, titleLabel_1))
             
@@ -326,7 +342,7 @@ class InfiniteGameScene: SKScene, SKPhysicsContactDelegate {
             startMenu.offSlide()
             
             /* Set the inGameDifficultyLabel to the proper value and slide it in */
-            inGameDifficulty.text = String(GameStats.getStat(statName: GameStats.gameDiff))
+            inGameDifficulty.text = String(GameStats.defaults.integer(forKey: GameStats.gameDiff))
             GameAnimations.inGameDifficultyLabelSlideIn(node: inGameDifficultyLabelNode)
             
             /* Add the infiniteScoreboard :) */
@@ -343,24 +359,23 @@ class InfiniteGameScene: SKScene, SKPhysicsContactDelegate {
             /* Kill the music */
             BGMusic.stopBGMusic(scene: self)
             
-            /* Set the game stats */
-            GameStats.updateStats(score: score, jumps: jumps)
-            
             /* Run the kill hero animation */
             bunny.killHero()
             
             /* Shake the screen */
             shake()
             
+            /* Set the Game Stats */
+            setGameStats()
+            
             /* Slide the scoreboard off the screen */
             infiniteScoreboard.removeElement()
             
             /* Set the Game Over Menu to be visible */
-            gameOverMenu = UIGameOverMenu(baseScene: self, pos: CGPoint(x: 0, y: 0), zPos: 5, referenceName: "gameOverMenuReferenceNode", resourcePath: "UIGameOverMenu", resourceType: "sks", score: score, jumps: jumps, highScore: GameStats.getStat(statName: GameStats.highScore), isNewHighScore: isNewHighScore)
+            gameOverMenu = UIGameOverMenu(baseScene: self, pos: CGPoint(x: 0, y: 0), zPos: 5, referenceName: "gameOverMenuReferenceNode", resourcePath: "UIGameOverMenu", resourceType: "sks", score: score, jumps: jumps, brokeHighScore: brokeHighScore)
             
             /* Set the game state to .GameOver */
             gameState = .GameOver
-        default: break
         }
     }
     
@@ -404,5 +419,43 @@ class InfiniteGameScene: SKScene, SKPhysicsContactDelegate {
         for obj in self.children {
             obj.run(shake)
         }
+    }
+    
+    /* Set the game stats at the end of the game */
+    func setGameStats() {
+        /* Set the new high score */
+        if score > oldHighScore {
+            brokeHighScore = true
+            GameStats.defaults.set(score, forKey: GameStats.highScore)
+        }
+        
+        /* Set the average score */
+        if GameStats.defaults.array(forKey: GameStats.avgScore) == nil {
+            GameStats.defaults.set([score], forKey: GameStats.avgScore)
+        } else {
+            var avgScoreArray = GameStats.defaults.array(forKey: GameStats.avgScore) as! [Int]
+            avgScoreArray.append(score)
+            GameStats.defaults.set(avgScoreArray, forKey: GameStats.avgScore)
+        }
+        
+        /* Set the total jumps */
+        GameStats.defaults.set(GameStats.defaults.integer(forKey: GameStats.totalJumps) + jumps, forKey: GameStats.totalJumps)
+        
+        /* Set the average jumps */
+        if GameStats.defaults.array(forKey: GameStats.avgJumps) == nil {
+            GameStats.defaults.set([jumps], forKey: GameStats.avgJumps)
+        } else {
+            var avgJumpsArray = GameStats.defaults.array(forKey: GameStats.avgJumps) as! [Int]
+            avgJumpsArray.append(jumps)
+            GameStats.defaults.set(avgJumpsArray, forKey: GameStats.avgJumps)
+        }
+        
+        /* Set the jump record */
+        if jumps > GameStats.defaults.integer(forKey: GameStats.jumpRecord) {
+            GameStats.defaults.set(jumps, forKey: GameStats.jumpRecord)
+        }
+        
+        /* Increase the total games */
+        GameStats.defaults.set(GameStats.defaults.integer(forKey: GameStats.totalGames) + 1, forKey: GameStats.totalGames)
     }
 }

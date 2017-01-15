@@ -21,7 +21,7 @@ class UIInfiniteScoreboard: UIScoreboard {
         highScoreLabel = referenceNode.childNode(withName: "//highScoreLabel") as! SKLabelNode
         highScore = referenceNode.childNode(withName: "//highScore") as! SKLabelNode
         
-        updateHighScoreLabel(highScore: GameStats.getStat(statName: GameStats.highScore))
+        updateHighScoreLabel()
         
         setScoreboardSide()
         
@@ -29,13 +29,13 @@ class UIInfiniteScoreboard: UIScoreboard {
     }
     
     /* Update labels */
-    func updateHighScoreLabel(highScore: Int) {
-        self.highScore.text = String(highScore)
+    func updateHighScoreLabel() {
+        self.highScore.text = String(GameStats.defaults.integer(forKey: GameStats.highScore))
     }
     
     /* Sets the scoreboards side */
     func setScoreboardSide() {
-        if GameStats.getStat(statName: GameStats.scoreboardSwitcher) == 1 {
+        if GameStats.defaults.bool(forKey: GameStats.scoreboardSwitcher) {
             score.horizontalAlignmentMode = SKLabelHorizontalAlignmentMode.right
             score.position = CGPoint(x: 125, y: -44.5)
             

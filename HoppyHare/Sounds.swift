@@ -30,7 +30,7 @@ struct Sounds {
     /* This function plays the sound */
     static func playSound(soundName: String, object: SKScene) {
         /* Check if the sound has been disabled. If so, immediately return */
-        if GameStats.getStat(statName: GameStats.soundEnabled) == 1 { return }
+        if !GameStats.defaults.bool(forKey: GameStats.soundEnabled) { return }
         
         /* Check if there's a vlue in the dictionary for the name provided */
         if sounds[soundName] != nil {

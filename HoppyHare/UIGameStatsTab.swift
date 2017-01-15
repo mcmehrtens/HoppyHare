@@ -35,12 +35,13 @@ class UIGameStatsTab: UIElement {
     /* Updates the values of the labels in the gameStatsTab */
     func updateLabels() {
         /* Make the text of all the stat labels = to what they actually are in the defaults */
-        labels[0].text = String(GameStats.getStat(statName: GameStats.highScore))
-        labels[1].text = String(GameStats.getStat(statName: GameStats.avgScore))
-        labels[2].text = String(GameStats.getStat(statName: GameStats.jumpRecord))
-        labels[3].text = String(GameStats.getStat(statName: GameStats.avgJumps))
-        labels[4].text = String(GameStats.getStat(statName: GameStats.totalJumps))
-        labels[5].text = String(GameStats.getStat(statName: GameStats.totalGames))
+        labels[0].text = String(GameStats.defaults.integer(forKey: GameStats.highScore))
+        labels[1].text = String(GameStats.findAvg(array: GameStats.defaults.array(forKey: GameStats.avgScore) as! [Int]))
+        labels[2].text = String(GameStats.defaults.integer(forKey: GameStats.jumpRecord))
+        labels[3].text = String(GameStats.defaults.integer(forKey: GameStats.avgJumps))
+        labels[3].text = String(GameStats.findAvg(array: GameStats.defaults.array(forKey: GameStats.avgJumps) as! [Int]))
+        labels[4].text = String(GameStats.defaults.integer(forKey: GameStats.totalJumps))
+        labels[5].text = String(GameStats.defaults.integer(forKey: GameStats.totalGames))
     }
     
     /* Animates the gameStatsTab */
@@ -107,12 +108,12 @@ class UIGameStats: UIElement {
     /* Updates the values of the labels in the gameStatsTab */
     func updateLabels() {
         /* Make the text of all the stat labels = to what they actually are in the defaults */
-        labels[0].text = String(GameStats.getStat(statName: GameStats.highScore))
-        labels[1].text = String(GameStats.getStat(statName: GameStats.avgScore))
-        labels[2].text = String(GameStats.getStat(statName: GameStats.jumpRecord))
-        labels[3].text = String(GameStats.getStat(statName: GameStats.avgJumps))
-        labels[4].text = String(GameStats.getStat(statName: GameStats.totalJumps))
-        labels[5].text = String(GameStats.getStat(statName: GameStats.totalGames))
+        labels[0].text = String(GameStats.defaults.integer(forKey: GameStats.highScore))
+        labels[1].text = String(GameStats.findAvg(array: GameStats.defaults.array(forKey: GameStats.avgScore) as! [Int]))
+        labels[2].text = String(GameStats.defaults.integer(forKey: GameStats.jumpRecord))
+        labels[3].text = String(GameStats.findAvg(array: GameStats.defaults.array(forKey: GameStats.avgJumps) as! [Int]))
+        labels[4].text = String(GameStats.defaults.integer(forKey: GameStats.totalJumps))
+        labels[5].text = String(GameStats.defaults.integer(forKey: GameStats.totalGames))
     }
     
     /* Animates the gameStatsTab */

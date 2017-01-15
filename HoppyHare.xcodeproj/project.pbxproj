@@ -167,14 +167,15 @@
 			name = GameOverMenu;
 			sourceTree = "<group>";
 		};
-		C9765B271E20566500D07DE7 /* GameStatsTab */ = {
+		C9765B271E20566500D07DE7 /* GameStats */ = {
 			isa = PBXGroup;
 			children = (
+				C9E2FA461E21A93200EB2139 /* GameStats.swift */,
 				C9765B231E20480700D07DE7 /* UIGameStatsTab.swift */,
 				C942D4201E1D59EF002FEF73 /* UIGameStatsTab.sks */,
 				C9ECB52F1E22DCEA00635026 /* UIGameStats.sks */,
 			);
-			name = GameStatsTab;
+			name = GameStats;
 			sourceTree = "<group>";
 		};
 		C9765B281E20582600D07DE7 /* InfiniteScoreboard */ = {
@@ -192,7 +193,7 @@
 				C9577DDC1E21EDAB00B65F40 /* Scoreboards */,
 				C98C0E3A1E2016DF000E0989 /* StartMenu */,
 				C9765B261E20564300D07DE7 /* GameOverMenu */,
-				C9765B271E20566500D07DE7 /* GameStatsTab */,
+				C9765B271E20566500D07DE7 /* GameStats */,
 			);
 			name = Menus;
 			sourceTree = "<group>";
@@ -288,14 +289,6 @@
 			name = Gamemodes;
 			sourceTree = "<group>";
 		};
-		C9E2FA451E21A91A00EB2139 /* GameStats */ = {
-			isa = PBXGroup;
-			children = (
-				C9E2FA461E21A93200EB2139 /* GameStats.swift */,
-			);
-			name = GameStats;
-			sourceTree = "<group>";
-		};
 		C9FC13831DF716EE00744006 = {
 			isa = PBXGroup;
 			children = (
@@ -316,7 +309,6 @@
 			isa = PBXGroup;
 			children = (
 				C9C2CFB71DFF0316001DB1B6 /* App Files */,
-				C9E2FA451E21A91A00EB2139 /* GameStats */,
 				C9E2FA421E21792500EB2139 /* Gamemodes */,
 				C98C0E331E1FE396000E0989 /* UserInterface */,
 				C9C2CFB41DFF02B2001DB1B6 /* Resources */,

@@ -12,11 +12,11 @@ class GameAnimations: SKScene {
     /* This animation slides the title onto the screen horizontally. The parameters: nodes.0 is the first title label. nodes.1 is the second title label. This will have be adjusted later when I get a proper textured title (maybe)*/
     static func titleSlideIn(nodes: (SKNode, SKNode)) {
         /* Slides the first title label in */
-        let labelOneSlideIn = SKAction.move(by: CGVector(dx: 235, dy: 0), duration: 0.75)
+        let labelOneSlideIn = SKAction.move(by: CGVector(dx: 235, dy: 0), duration: 0.5)
         labelOneSlideIn.timingMode = SKActionTimingMode.easeOut
         
         /* Slides the second title label in */
-        let labelTwoSlideIn = SKAction.move(by: CGVector(dx: -200, dy: 0), duration: 0.75)
+        let labelTwoSlideIn = SKAction.move(by: CGVector(dx: -200, dy: 0), duration: 0.5)
         labelTwoSlideIn.timingMode = SKActionTimingMode.easeOut
         
         /* Slide the labels on */
@@ -27,11 +27,11 @@ class GameAnimations: SKScene {
     /* This animation slides the title off the screen in the same direction they slid on. The parameters: nodes.0 = first title label. noddes.1 = second title label */
     static func titleSlideOff(nodes: (SKNode, SKNode)) {
         /* Slides the first title label off in the same direction. The x value is the distance to travel until the anchor point is off the screen + the width of the label */
-        let labelOneSlideOff = SKAction.move(by: CGVector(dx: CGFloat(85) + (nodes.0.frame.width), dy: 0), duration: 0.75)
+        let labelOneSlideOff = SKAction.move(by: CGVector(dx: CGFloat(85) + (nodes.0.frame.width), dy: 0), duration: 0.5)
         labelOneSlideOff.timingMode = SKActionTimingMode.easeIn
         
         /* Slides the second title label off in the same direction. The x value is the distance to travel until the anchor point is off the screen - the width of the label */
-        let labelTwoSlideOff = SKAction.move(by: CGVector(dx: (CGFloat(-120) - (nodes.1.frame.width)), dy: 0), duration: 0.75)
+        let labelTwoSlideOff = SKAction.move(by: CGVector(dx: (CGFloat(-120) - (nodes.1.frame.width)), dy: 0), duration: 0.5)
         labelTwoSlideOff.timingMode = SKActionTimingMode.easeIn
         
         /* Slide the labels off */

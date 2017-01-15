@@ -36,7 +36,7 @@ class BGMusic {
     
     /* Play the bgMusicPlayer with the selected song */
     static func playBGMusic(url: URL) {
-        if GameStats.getStat(statName: GameStats.musicEnabled) == 1 { return }
+        if !GameStats.defaults.bool(forKey: GameStats.musicEnabled) { return }
         
         /* Try and assign the bgMusicPlayer to the desired URL */
         do {
@@ -54,8 +54,8 @@ class BGMusic {
     /* Stop the bgMusicPlayer */
     static func stopBGMusic(scene: SKScene) {
         scene.run(SKAction.sequence([SKAction.run {
-            BGMusic.bgMusicPlayer.setVolume(0.0, fadeDuration: TimeInterval(0.25))
-            }, SKAction.wait(forDuration: TimeInterval(0.25)), SKAction.run {
+            BGMusic.bgMusicPlayer.setVolume(0.0, fadeDuration: TimeInterval(0.5))
+            }, SKAction.wait(forDuration: TimeInterval(0.5)), SKAction.run {
                 BGMusic.bgMusicPlayer.stop()
             }]))
     }

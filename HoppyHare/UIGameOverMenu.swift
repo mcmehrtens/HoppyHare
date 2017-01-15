@@ -12,16 +12,14 @@ import GameplayKit
 class UIGameOverMenu: UIElement {
     var score: Int!
     var jumps: Int!
-    var highScore: Int!
-    var isNewHighScore: Bool = false
+    var brokeHighScore: Bool = false
     
     var gameStatsTab: UIGameStatsTab!
     
-    init(baseScene: SKScene, pos: CGPoint, zPos: Int, referenceName: String, resourcePath: String, resourceType: String, score: Int, jumps: Int, highScore: Int, isNewHighScore: Bool) {
+    init(baseScene: SKScene, pos: CGPoint, zPos: Int, referenceName: String, resourcePath: String, resourceType: String, score: Int, jumps: Int, brokeHighScore: Bool) {
         self.score = score
         self.jumps = jumps
-        self.highScore = highScore
-        self.isNewHighScore = isNewHighScore
+        self.brokeHighScore = brokeHighScore
         
         super.init(baseScene: baseScene, pos: pos, zPos: zPos, referenceName: referenceName, resourcePath: resourcePath, resourceType: resourceType)
     }
@@ -68,7 +66,7 @@ class UIGameOverMenu: UIElement {
         
         score.text = String(self.score)
         jumps.text = String(self.jumps)
-        highScore.text = String(self.highScore)
+        highScore.text = String(GameStats.defaults.integer(forKey: GameStats.highScore))
     }
     
     /* Animate the gameOverMenu */
@@ -96,7 +94,7 @@ class UIGameOverMenu: UIElement {
         
         /* Display the new high score label */
         let displayNewHighScoreLabel = SKAction.run {
-            if self.isNewHighScore {
+            if self.brokeHighScore {
                 newHighScoreLabel.isHidden = false
             }
         }
