@@ -16,6 +16,9 @@ struct GameDifficulty {
     
     static func setDifficulty() {
         switch GameStats.defaults.integer(forKey: GameStats.gameDiff) {
+        case 0:
+            GameStats.defaults.set(1, forKey: GameStats.gameDiff)
+            GameDifficulty.setDifficulty()
         case 1:
             self.goalHeight = 103.5
             self.maxHeight = 161.0

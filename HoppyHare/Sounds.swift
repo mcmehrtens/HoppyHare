@@ -17,7 +17,7 @@ struct Sounds {
     /* Declare a dictionary to hold the sounds */
     static var sounds: [String: SKAction?] = [:]
     
-    /* This function initializes all the sounds being used in the game */
+    /* This function initializes all the sounds being used in the game. This prevents a bug that would cause visual and audio lag the first time a sound was run.  */
     static func initializeSounds() {
         if !Sounds.hasBeenInitialized {
             sounds["jump"] = SKAction.playSoundFileNamed("jump", waitForCompletion: false)
@@ -32,9 +32,9 @@ struct Sounds {
         /* Check if the sound has been disabled. If so, immediately return */
         if !GameStats.defaults.bool(forKey: GameStats.soundEnabled) { return }
         
-        /* Check if there's a vlue in the dictionary for the name provided */
-        if sounds[soundName] != nil {
-            object.run(sounds[soundName]!!)
+        /* Check if there's a value in the dictionary for the name provided */
+        if let sound = sounds[soundName] {
+            object.run(sound!)
         } else {
             print("[ERROR] Sound with the name \(soundName) doesn't exist.")
         }

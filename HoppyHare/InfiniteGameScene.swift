@@ -129,7 +129,7 @@ class InfiniteGameScene: SKScene, SKPhysicsContactDelegate {
             bunny.capBunnyVelocityY()
             
             /* Rotate the bunny */
-            bunny.rotateHero(sinceTouch: sinceTouchTimer)
+            bunny.rotateBunny(sinceTouch: sinceTouchTimer)
             sinceTouchTimer += fixedDelta
         }
     }
@@ -197,10 +197,10 @@ class InfiniteGameScene: SKScene, SKPhysicsContactDelegate {
             /* Lot's of things happening here. #1, stop all angular velocity. #2: Set the angular velocity = 0. #3: Stop the flapping animation. #4: Run the death animation. #5: Shake the screen. #6: Show the restart button.*/
         case .GameOver:
             /* Kill the music */
-            BGMusic.stopBGMusic(scene: self)
+            if GameStats.defaults.bool(forKey: GameStats.musicEnabled) { BGMusic.stopBGMusic(scene: self) }
             
             /* Run the kill hero animation */
-            bunny.killHero()
+            bunny.killBunny()
             
             /* Shake the screen */
             shake()
@@ -346,7 +346,7 @@ class InfiniteGameScene: SKScene, SKPhysicsContactDelegate {
             /* Run the code to increase the score by 1 */
             score += 1
             
-            infiniteScoreboard.increaseScore(score: score)
+            infiniteScoreboard.setScore(score: score)
             
             Sounds.playSound(soundName: "goal", object: self)
         }

@@ -10,150 +10,140 @@ import SpriteKit
 import GameplayKit
 
 class UIStartMenu: UIElement {
-    var diffSelector: UIDiffSelector!
-    var gameStats: UIGameStats!
-    var soundPanel: UISoundPanel!
-    var scoreboardSwitcher: UIScoreboardSwitcher!
+    var diffSelector: UIDiffSelector! // Reference to the diff selector menu
+    var gameStats: UIGameStats! // Reference to the game stats menu
+    var soundPanel: UISoundPanel! // Reference to the sound panel menu
+    var scoreboardSwitcher: UIScoreboardSwitcher! // Reference to the scoreboard switcher menu
+    var currentMenu: UIElement? // This variable keeps track of what menu is open
     
+    /* Add the element onto the screen and then set up the button handlers */
     override func addElement() {
         super.addElement()
         setButtonHandlers()
     }
     
+    /* Set all the handlers for the buttons in the start menu */
     func setButtonHandlers() {
-        let safetyButton = referenceNode.childNode(withName: ".//safetyButton") as! MSButtonNode
-        let toggleMenuButton = referenceNode.childNode(withName: ".//toggleMenuButton") as! MSButtonNode
-        let diffSelectorButton = referenceNode.childNode(withName: ".//diffSelectorButton") as! MSButtonNode
-        let gameStatsButton = referenceNode.childNode(withName: ".//gameStatsButton") as! MSButtonNode
-        let soundPanelButton = referenceNode.childNode(withName: ".//soundPanelButton") as! MSButtonNode
-        let scoreboardSwitcherButton = referenceNode.childNode(withName: ".//scoreboardSwitcherButton") as! MSButtonNode
+        let safetyButton = referenceNode.childNode(withName: ".//safetyButton") as! MSButtonNode // Safety button reference
+        let toggleMenuButton = referenceNode.childNode(withName: ".//toggleMenuButton") as! MSButtonNode // Start menu toggle button reference
+        let diffSelectorButton = referenceNode.childNode(withName: ".//diffSelectorButton") as! MSButtonNode // Diff selector button reference
+        let gameStatsButton = referenceNode.childNode(withName: ".//gameStatsButton") as! MSButtonNode // Game stats button reference
+        let soundPanelButton = referenceNode.childNode(withName: ".//soundPanelButton") as! MSButtonNode // Sound panel button reference
+        let scoreboardSwitcherButton = referenceNode.childNode(withName: ".//scoreboardSwitcherButton") as! MSButtonNode // Scoreboard switcher button reference
         
-        let rightChevronNode = referenceNode.childNode(withName: ".//rightChevronNode")!
-        let leftChevronNode = referenceNode.childNode(withName: ".//leftChevronNode")!
+        let rightChevronNode = referenceNode.childNode(withName: ".//rightChevronNode")! // rightChevronNode reference
+        let leftChevronNode = referenceNode.childNode(withName: ".//leftChevronNode")! // leftChevronNode reference
         
-        /* Set the handler for the safety button */
+        /* Empty handler for the safetyButton - This ensures the game doesn't start when pressing blank space on the menu! */
         safetyButton.selectedHandler = {}
         
-        /* Handler for the startMenuButton_1. This slides the thing in or out */
+        /* Set the handler for the toggleMenuButton
+         - Slides the menu in and out depending on which chevron is visible
+         - If the menu is closing, exit all the menus
+         */
         toggleMenuButton.selectedHandler = {
-            if rightChevronNode.isHidden {
+            if rightChevronNode.isHidden { // If the right chevron is hidden, the the left chevron is displayed meaning, the user wants to CLOSE the startMenu
                 // Slide the menu in
                 self.closeSlide()
                 
-                /* Change the arrow to the RIGHT direction */
+                /* Change the arrow to point RIGHT */
                 rightChevronNode.isHidden = false
                 leftChevronNode.isHidden = true
                 
-                /* Check to see if the UI Elements are visible */
-                if let diffSelector = self.diffSelector {
-                    diffSelector.removeElement()
-                }
-                if let gameStats = self.gameStats {
-                    gameStats.removeElement()
-                }
-                if let soundPanel = self.soundPanel {
-                    soundPanel.removeElement()
-                }
-                if let scoreboardSwitcher = self.scoreboardSwitcher {
-                    scoreboardSwitcher.removeElement()
-                }
+                /* Close the current menu */
+                self.closeCurrentMenu()
             } else {
                 // Slide the menu out
                 self.openSlide()
                 
-                /* Change the arrow to the LEFT direction */
+                /* Change the arrow to point LEFT */
                 rightChevronNode.isHidden = true
                 leftChevronNode.isHidden = false
             }
         }
         
-        /* Handler for the diffSelectorButton */
+        /* Set the handler for the diffSelectorButton */
         diffSelectorButton.selectedHandler = {
-            if self.baseScene.childNode(withName: "//diffSelectorReferenceNode") == nil {
-                self.diffSelector = UIDiffSelector(baseScene: self.baseScene, pos: CGPoint(x: 0, y: 0), zPos: 5, referenceName: "diffSelectorReferenceNode", resourcePath: "UIDiffSelector", resourceType: "sks")
+            if self.diffSelector == nil {
+                self.diffSelector = UIDiffSelector(baseScene: self.baseScene, pos: CGPoint(x: 0, y: 0), zPos: 5, referenceName: "diffSelectorReferenceNode", resourcePath: "UIDiffSelector", resourceType: "sks") // Create the diffSelector menu
                 
-                if let gameStats = self.gameStats {
-                    gameStats.removeElement()
-                }
-                if let soundPanel = self.soundPanel {
-                    soundPanel.removeElement()
-                }
-                if let scoreboardSwitcher = self.scoreboardSwitcher {
-                    scoreboardSwitcher.removeElement()
-                }
+                /* Close the current menu */
+                self.closeCurrentMenu()
+                
+                /* Set the current menu */
+                self.currentMenu = self.diffSelector
             } else {
-                self.diffSelector.removeElement()
+                self.closeCurrentMenu()
+                self.diffSelector = nil
             }
         }
         
-        /* Handler for the gameStatsButton */
+        /* Set the handler for the gameStatsButton */
         gameStatsButton.selectedHandler = {
             if self.baseScene.childNode(withName: "//gameStatsReferenceNode") == nil {
-                self.gameStats = UIGameStats(baseScene: self.baseScene, pos: CGPoint(x: 0, y: 0), zPos: 5, referenceName: "gameStatsReferenceNode", resourcePath: "UIGameStats", resourceType: "sks")
+                self.gameStats = UIGameStats(baseScene: self.baseScene, pos: CGPoint(x: 0, y: 0), zPos: 5, referenceName: "gameStatsReferenceNode", resourcePath: "UIGameStats", resourceType: "sks") // Create the gameStats menu
                 
-                if let diffSelector = self.diffSelector {
-                    diffSelector.removeElement()
-                }
-                if let soundPanel = self.soundPanel {
-                    soundPanel.removeElement()
-                }
-                if let scoreboardSwitcher = self.scoreboardSwitcher {
-                    scoreboardSwitcher.removeElement()
-                }
+                /* Close the current menu */
+                self.closeCurrentMenu()
+                
+                /* Set the current menu */
+                self.currentMenu = self.gameStats
             } else {
-                self.gameStats.removeElement()
+                self.closeCurrentMenu()
+                self.gameStats = nil
             }
         }
         
-        /* Handler for the soundPanelButton */
+        /* Set the handler for the soundPanelButton */
         soundPanelButton.selectedHandler = {
             if self.baseScene.childNode(withName: "//soundPanelReferenceNode") == nil {
-                self.soundPanel = UISoundPanel(baseScene: self.baseScene, pos: CGPoint(x: 0, y: 0), zPos: 5, referenceName: "soundPanelReferenceNode", resourcePath: "UISoundPanel", resourceType: "sks")
+                self.soundPanel = UISoundPanel(baseScene: self.baseScene, pos: CGPoint(x: 0, y: 0), zPos: 5, referenceName: "soundPanelReferenceNode", resourcePath: "UISoundPanel", resourceType: "sks") // Create the soundPanel menu
                 
-                if let diffSelector = self.diffSelector {
-                    diffSelector.removeElement()
-                }
-                if let gameStats = self.gameStats {
-                    gameStats.removeElement()
-                }
-                if let scoreboardSwitcher = self.scoreboardSwitcher {
-                    scoreboardSwitcher.removeElement()
-                }
+                /* Close the current menu */
+                self.closeCurrentMenu()
+                
+                /* Set the current menu */
+                self.currentMenu = self.soundPanel
             } else {
-                self.soundPanel.removeElement()
+                self.closeCurrentMenu()
+                self.soundPanel = nil
             }
         }
         
-        /* Handler for the scoreboardSwitcherButton */
+        /* Set the handler for the scoreboardSwitcherButton */
         scoreboardSwitcherButton.selectedHandler = {
             if self.baseScene.childNode(withName: "//scoreboardSwitcherReferenceNode") == nil {
-                self.scoreboardSwitcher = UIScoreboardSwitcher(baseScene: self.baseScene, pos: CGPoint(x: 0, y: 0), zPos: 5, referenceName: "scoreboardSwitcherReferenceNode", resourcePath: "UIScoreboardSwitcher", resourceType: "sks")
+                self.scoreboardSwitcher = UIScoreboardSwitcher(baseScene: self.baseScene, pos: CGPoint(x: 0, y: 0), zPos: 5, referenceName: "scoreboardSwitcherReferenceNode", resourcePath: "UIScoreboardSwitcher", resourceType: "sks") // Create the scoreboardSwitcher menu
                 
-                if let diffSelector = self.diffSelector {
-                    diffSelector.removeElement()
-                }
-                if let gameStats = self.gameStats {
-                    gameStats.removeElement()
-                }
-                if let soundPanel = self.soundPanel {
-                    soundPanel.removeElement()
-                }
+                /* Close the current menu */
+                self.closeCurrentMenu()
+                
+                /* Set the current menu */
+                self.currentMenu = self.scoreboardSwitcher
             } else {
-                self.scoreboardSwitcher.removeElement()
+                self.closeCurrentMenu()
+                self.scoreboardSwitcher = nil
             }
         }
     }
     
-    /* This animation slides the startMenu closed */
+    /* Closes the current menu if there is one */
+    func closeCurrentMenu() {
+        if let menu = currentMenu {
+            menu.removeElement()
+            currentMenu = nil
+        }
+    }
+    
+    /* This animation slides the startMenu to a closed position */
     func closeSlide() {
         let closeSlide = SKAction.move(to: CGPoint(x: -230, y: -209.5), duration: 0.5)
         closeSlide.timingMode = SKActionTimingMode.easeOut
         
-        /* DO IT */
         referenceNode.run(closeSlide)
     }
     
-    /* This animation slides the startMenu open */
+    /* This animation slides the startMenu to an open position */
     func openSlide() {
         let openSlide = SKAction.move(to: CGPoint(x: 0, y: -209.5), duration: 0.5)
         openSlide.timingMode = SKActionTimingMode.easeOut
@@ -162,18 +152,15 @@ class UIStartMenu: UIElement {
         referenceNode.run(openSlide)
     }
     
-    /* This animation slides the startMenu off */
+    /* This animation slides the startMenu to an off-screen position - Also removes the menu node */
     func offSlide() {
         let offSlide = SKAction.move(to: CGPoint(x: -270, y: -209.5), duration: 0.5)
         offSlide.timingMode = SKActionTimingMode.easeOut
         
-        /* Slide the start menu off, then remove the startMenuReferenceNode, then remove the difficultySelectorReferenceNode*/
+        /* Slide the start menu off, then remove the startMenuReferenceNode */
         referenceNode.run(SKAction.sequence([offSlide, SKAction.run { self.removeElement() }]))
         
-        /* If diffSelector is on the screen, then remove it */
-        if self.diffSelector != nil { self.diffSelector.removeElement() }
-        if self.gameStats != nil { self.gameStats.removeElement() }
-        if self.soundPanel != nil { self.soundPanel.removeElement() }
-        if self.scoreboardSwitcher != nil { self.scoreboardSwitcher.removeElement() }
+        /* If a menu is open, close it */
+        closeCurrentMenu()
     }
 }

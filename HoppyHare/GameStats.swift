@@ -19,10 +19,14 @@ class GameStats {
     static let avgJumps = "avgJumps"
     static let jumpRecord = "jumpRecord"
     static let totalGames = "totalGames"
+    
     static let gameDiff = "gameDiff"
+    
     static let soundEnabled = "soundEnabled"
     static let musicEnabled = "musicEnabled"
-    static let scoreboardSwitcher = "scoreboardSwitcher"
+    
+    static let scoreboardSide = "scoreboardSide"
+    
     static let loadedBefore = "loadedBefore"
     
     /* Find the average of an array of integers */

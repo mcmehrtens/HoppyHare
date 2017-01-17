@@ -16,7 +16,7 @@ class BGMusic {
     
     /* Return a random song URL */
     static func getRandSongURL() -> URL  {
-        let songNumber = arc4random_uniform(5)
+        let songNumber = arc4random_uniform(5) // Selects a random number between 0 and 5
         
         switch songNumber {
         case 0:
@@ -53,6 +53,11 @@ class BGMusic {
     
     /* Stop the bgMusicPlayer */
     static func stopBGMusic(scene: SKScene) {
+        /* 
+         1. Fade out the music over 0.5 seconds
+         2. Wait 0.5 seconds (until the fading stops)
+         3. Stop the music player
+         */
         scene.run(SKAction.sequence([SKAction.run {
             BGMusic.bgMusicPlayer.setVolume(0.0, fadeDuration: TimeInterval(0.5))
             }, SKAction.wait(forDuration: TimeInterval(0.5)), SKAction.run {

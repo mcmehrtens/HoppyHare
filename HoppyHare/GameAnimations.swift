@@ -66,21 +66,3 @@ class GameAnimations: SKScene {
         node.run(inGameDifficultyLabelSlideDown)
     }
 }
-
-/* DEPRECATED CODE */
-
-/* This code block animated the title off the screen in the opposite direction that they came on */
-
-//    /* This animation slides the title off the screen. The parameters: nodes.0 = first title label. noddes.1 = second title label */
-//    static func titleSlideOff(nodes: (SKNode, SKNode)) {
-//        /* Slides the first title label off */
-//        let labelOneSlideOff = SKAction.move(by: CGVector(dx: -235, dy: 0), duration: 0.5)
-//        labelOneSlideOff.timingMode = SKActionTimingMode.easeIn
-//
-//        /* Slides the second title label off*/
-//        let labelTwoSlideOff = SKAction.move(by: CGVector(dx: 200, dy: 0), duration: 0.5)
-//        labelTwoSlideOff.timingMode = SKActionTimingMode.easeIn
-//
-//        nodes.0.run(labelOneSlideOff)
-//        nodes.1.run(labelTwoSlideOff)
-//    }

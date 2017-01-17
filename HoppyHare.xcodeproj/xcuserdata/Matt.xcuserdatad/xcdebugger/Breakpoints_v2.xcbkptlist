@@ -10,11 +10,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "HoppyHare/GameStats.swift"
-            timestampString = "506125095.28691"
+            timestampString = "506318086.845284"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "96"
-            endingLineNumber = "96">
+            startingLineNumber = "100"
+            endingLineNumber = "100">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -70,12 +70,12 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "HoppyHare/EntityBunny.swift"
-            timestampString = "506137662.984601"
+            timestampString = "506305823.985864"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "84"
-            endingLineNumber = "84"
-            landmarkName = "killHero()"
+            startingLineNumber = "80"
+            endingLineNumber = "80"
+            landmarkName = "killBunny()"
             landmarkType = "7">
             <Locations>
                <Location
@@ -134,13 +134,29 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "HoppyHare/UIScoreboardSwitcher.swift"
-            timestampString = "506118196.192143"
+            timestampString = "506316792.38996"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "41"
-            endingLineNumber = "41"
+            startingLineNumber = "36"
+            endingLineNumber = "36"
             landmarkName = "setButtonHandlers()"
             landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "HoppyHare/UISoundPanel.swift"
+            timestampString = "506315439.787532"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "12"
+            endingLineNumber = "12"
+            landmarkName = "UISoundPanel"
+            landmarkType = "3">
          </BreakpointContent>
       </BreakpointProxy>
    </Breakpoints>

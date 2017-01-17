@@ -9,6 +9,7 @@
 import GameplayKit
 
 class EntityCloud: UIElement {
+    /* Add the element onto the screen and then slide in the cloud */
     override func addElement() {
         super.addElement()
         slideIn()

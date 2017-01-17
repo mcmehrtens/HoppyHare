@@ -25,7 +25,6 @@
 		C93BD5531E2341FA00FAD917 /* UISoundPanel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C93BD5521E2341FA00FAD917 /* UISoundPanel.swift */; };
 		C93BD5551E23423000FAD917 /* UISoundPanel.sks in Resources */ = {isa = PBXBuildFile; fileRef = C93BD5541E23423000FAD917 /* UISoundPanel.sks */; };
 		C942D4211E1D59EF002FEF73 /* UIGameStatsTab.sks in Resources */ = {isa = PBXBuildFile; fileRef = C942D4201E1D59EF002FEF73 /* UIGameStatsTab.sks */; };
-		C9577DDE1E21EDC300B65F40 /* UIScoreboard.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9577DDD1E21EDC300B65F40 /* UIScoreboard.swift */; };
 		C9765B241E20480700D07DE7 /* UIGameStatsTab.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9765B231E20480700D07DE7 /* UIGameStatsTab.swift */; };
 		C9765B2A1E20584500D07DE7 /* UIInfiniteScoreboard.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9765B291E20584500D07DE7 /* UIInfiniteScoreboard.swift */; };
 		C97E51A31E25B61700565835 /* EntityBunny.swift in Sources */ = {isa = PBXBuildFile; fileRef = C97E51A21E25B61700565835 /* EntityBunny.swift */; };
@@ -72,7 +71,6 @@
 		C93BD5521E2341FA00FAD917 /* UISoundPanel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UISoundPanel.swift; sourceTree = "<group>"; };
 		C93BD5541E23423000FAD917 /* UISoundPanel.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = UISoundPanel.sks; sourceTree = "<group>"; };
 		C942D4201E1D59EF002FEF73 /* UIGameStatsTab.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = UIGameStatsTab.sks; sourceTree = "<group>"; };
-		C9577DDD1E21EDC300B65F40 /* UIScoreboard.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIScoreboard.swift; sourceTree = "<group>"; };
 		C9765B231E20480700D07DE7 /* UIGameStatsTab.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIGameStatsTab.swift; sourceTree = "<group>"; };
 		C9765B291E20584500D07DE7 /* UIInfiniteScoreboard.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIInfiniteScoreboard.swift; sourceTree = "<group>"; };
 		C97E51A21E25B61700565835 /* EntityBunny.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EntityBunny.swift; sourceTree = "<group>"; };
@@ -147,7 +145,6 @@
 		C9577DDC1E21EDAB00B65F40 /* Scoreboards */ = {
 			isa = PBXGroup;
 			children = (
-				C9577DDD1E21EDC300B65F40 /* UIScoreboard.swift */,
 				C9765B281E20582600D07DE7 /* InfiniteScoreboard */,
 			);
 			name = Scoreboards;
@@ -454,7 +451,6 @@
 				C9765B2A1E20584500D07DE7 /* UIInfiniteScoreboard.swift in Sources */,
 				C98C0E391E20168F000E0989 /* UIStartMenu.swift in Sources */,
 				C98C0E3E1E202B25000E0989 /* UIGameOverMenu.swift in Sources */,
-				C9577DDE1E21EDC300B65F40 /* UIScoreboard.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
