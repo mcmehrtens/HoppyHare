@@ -12,8 +12,10 @@
 		C91E19F81DF7246500D7ABCD /* EntityObstacle.sks in Resources */ = {isa = PBXBuildFile; fileRef = C91E19F71DF7246500D7ABCD /* EntityObstacle.sks */; };
 		C91E19FA1DF7246F00D7ABCD /* EntityBunny.sks in Resources */ = {isa = PBXBuildFile; fileRef = C91E19F91DF7246F00D7ABCD /* EntityBunny.sks */; };
 		C91E19FC1DF725FE00D7ABCD /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = C91E19FB1DF725FE00D7ABCD /* Main.storyboard */; };
+		C926C6AA1E341036001DFAAB /* EntityScrollLayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = C926C6A91E341036001DFAAB /* EntityScrollLayer.swift */; };
 		C926F5E11E19AF06007584F7 /* GameAnimations.swift in Sources */ = {isa = PBXBuildFile; fileRef = C926F5E01E19AF06007584F7 /* GameAnimations.swift */; };
 		C926F5E31E19E82C007584F7 /* CustomColors.swift in Sources */ = {isa = PBXBuildFile; fileRef = C926F5E21E19E82C007584F7 /* CustomColors.swift */; };
+		C9376AD01E36ECBF0086ADD8 /* EntityGround.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9376ACF1E36ECBF0086ADD8 /* EntityGround.swift */; };
 		C93BD53F1E231DA100FAD917 /* jump.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = C93BD53E1E231DA100FAD917 /* jump.mp3 */; };
 		C93BD5411E23210500FAD917 /* goal.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = C93BD5401E23210500FAD917 /* goal.mp3 */; };
 		C93BD5451E23321E00FAD917 /* music-delta.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = C93BD5441E23321E00FAD917 /* music-delta.mp3 */; };
@@ -58,8 +60,10 @@
 		C91E19F71DF7246500D7ABCD /* EntityObstacle.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = EntityObstacle.sks; sourceTree = "<group>"; };
 		C91E19F91DF7246F00D7ABCD /* EntityBunny.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = EntityBunny.sks; sourceTree = "<group>"; };
 		C91E19FB1DF725FE00D7ABCD /* Main.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Main.storyboard; sourceTree = "<group>"; };
+		C926C6A91E341036001DFAAB /* EntityScrollLayer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EntityScrollLayer.swift; sourceTree = "<group>"; };
 		C926F5E01E19AF06007584F7 /* GameAnimations.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GameAnimations.swift; sourceTree = "<group>"; };
 		C926F5E21E19E82C007584F7 /* CustomColors.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CustomColors.swift; sourceTree = "<group>"; };
+		C9376ACF1E36ECBF0086ADD8 /* EntityGround.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EntityGround.swift; sourceTree = "<group>"; };
 		C93BD53E1E231DA100FAD917 /* jump.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = jump.mp3; sourceTree = "<group>"; };
 		C93BD5401E23210500FAD917 /* goal.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = goal.mp3; sourceTree = "<group>"; };
 		C93BD5441E23321E00FAD917 /* music-delta.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = "music-delta.mp3"; sourceTree = "<group>"; };
@@ -202,6 +206,8 @@
 		C98C0E311E1ECC9D000E0989 /* Entities */ = {
 			isa = PBXGroup;
 			children = (
+				C926C6A91E341036001DFAAB /* EntityScrollLayer.swift */,
+				C9376ACF1E36ECBF0086ADD8 /* EntityGround.swift */,
 				C91E19F71DF7246500D7ABCD /* EntityObstacle.sks */,
 				C9DACABC1E2B02D900CEDFF0 /* EntityBunny */,
 				C9DACABF1E2B040700CEDFF0 /* EntityCloud */,
@@ -447,10 +453,12 @@
 				C9C2CFB11DFF0003001DB1B6 /* MSButtonNode.swift in Sources */,
 				C926F5E31E19E82C007584F7 /* CustomColors.swift in Sources */,
 				C926F5E11E19AF06007584F7 /* GameAnimations.swift in Sources */,
+				C9376AD01E36ECBF0086ADD8 /* EntityGround.swift in Sources */,
 				C9E2FA441E21794000EB2139 /* GameDifficulty.swift in Sources */,
 				C9765B2A1E20584500D07DE7 /* UIInfiniteScoreboard.swift in Sources */,
 				C98C0E391E20168F000E0989 /* UIStartMenu.swift in Sources */,
 				C98C0E3E1E202B25000E0989 /* UIGameOverMenu.swift in Sources */,
+				C926C6AA1E341036001DFAAB /* EntityScrollLayer.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

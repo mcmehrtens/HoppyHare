@@ -23,6 +23,7 @@ class InfiniteGameScene: SKScene, SKPhysicsContactDelegate {
     var scrollLayers = [SKNode?](repeating: nil, count: 3) // Array contains all the scroll layer nodes
     var scrollLayerSprites = [(SKNode, SKNode)?](repeating: nil, count: 3) // Array contains tuples for the all scroll layer sprites
     var obstacleLayer: SKNode!
+    var groundEntity: EntityGround! // Invisible ground node
     
     /* Label references */
     var startLabel: SKLabelNode!
@@ -33,6 +34,11 @@ class InfiniteGameScene: SKScene, SKPhysicsContactDelegate {
     var inGameDifficulty: SKLabelNode!
     
     /* UI Elements */
+    
+    /* Scroll Layers */
+    var groundScrollLayer: EntityScrollLayer!
+    var distantBGScrollLayer: EntityScrollLayer!
+    var skyScrollLayer: EntityScrollLayer!
     
     /* Entities */
     var bunny: EntityBunny!
@@ -58,22 +64,15 @@ class InfiniteGameScene: SKScene, SKPhysicsContactDelegate {
     var startLabelTimer: TimeInterval = 0
     var timeSinceStart: TimeInterval = 0
     
-    /* Scroll Speeds*/
-    let scrollSpeedGround: CGFloat = 110
-    let scrollSpeedDistantBG: CGFloat = 8
-    let scrollSpeedSky: CGFloat = 35
-    
     /* Set up your scene here */
     override func didMove(to view: SKView) {
         /* Set reference to the scroll layers */
-        scrollLayers[0] = self.childNode(withName: "groundScrollLayer")!
-        scrollLayers[1] = self.childNode(withName: "distantBGScrollLayer")!
-        scrollLayers[2] = self.childNode(withName: "skyScrollLayer")!
+        groundScrollLayer = EntityScrollLayer(baseScene: self, pos: CGPoint(x: -160, y: -150), zPos: 2, referenceName: "groundScrollLayerReferenceNode", scrollSpeed: CGFloat(110), spriteName: "ground")
+        distantBGScrollLayer = EntityScrollLayer(baseScene: self, pos: CGPoint(x: -160, y: -88), zPos: 0, referenceName: "distantBGScrollLayerReferenceNode", scrollSpeed: CGFloat(8), spriteName: "crystals")
+        skyScrollLayer = EntityScrollLayer(baseScene: self, pos: CGPoint(x: -160, y: 229.5), zPos: 0, referenceName: "skyScrollLayerReferenceNode", scrollSpeed: CGFloat(35), spriteName: "clouds")
         
-        /* Set reference to the scroll layer sprites */
-        scrollLayerSprites[0] = (self.childNode(withName: "//groundSpriteNode_0")!, self.childNode(withName: "//groundSpriteNode_1")!)
-        scrollLayerSprites[1] = (self.childNode(withName: "//distantBGSpriteNode_0")!, self.childNode(withName: "//distantBGSpriteNode_1")!)
-        scrollLayerSprites[2] = (self.childNode(withName: "//skySpriteNode_0")!, self.childNode(withName: "//skySpriteNode_1")!)
+        /* Create a small rectangle that acts as the "ground" for the bunny. This square is actually invisible */
+        groundEntity = EntityGround(baseScene: self, pos: CGPoint(x: -88, y: -155), size: CGSize(width: 50, height: 10))
         
         /* Set reference to obstacle layer node */
         obstacleLayer = self.childNode(withName: "obstacleLayer")
@@ -270,7 +269,7 @@ class InfiniteGameScene: SKScene, SKPhysicsContactDelegate {
     /* Update Obstacles */
     func updateObstacles() {
         /* Scroll the obstacles at the same speed as the ground */
-        obstacleLayer.position.x -= scrollSpeedGround * CGFloat(fixedDelta)
+        obstacleLayer.position.x -= groundScrollLayer.scrollSpeed * CGFloat(fixedDelta)
         
         /* Loop through obstacle layer nodes */
         for obstacle in obstacleLayer.children as! [SKReferenceNode] {
@@ -389,9 +388,9 @@ class InfiniteGameScene: SKScene, SKPhysicsContactDelegate {
     
     /* This runs all the scrollWorld functions (except for the obstacles) */
     func scrollWorld() {
-        scrollSprite(nodes: scrollLayerSprites[0]!, scrollLayer: scrollLayers[0]!, scrollSpeed: scrollSpeedGround)
-        scrollSprite(nodes: scrollLayerSprites[1]!, scrollLayer: scrollLayers[1]!, scrollSpeed: scrollSpeedDistantBG)
-        scrollSprite(nodes: scrollLayerSprites[2]!, scrollLayer: scrollLayers[2]!, scrollSpeed: scrollSpeedSky)
+        groundScrollLayer.scrollSprites()
+        distantBGScrollLayer.scrollSprites()
+        skyScrollLayer.scrollSprites()
     }
     
     /* This animation shakes the screen when the hero dies */
