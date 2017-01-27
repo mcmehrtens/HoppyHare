@@ -19,12 +19,6 @@ class InfiniteGameScene: SKScene, SKPhysicsContactDelegate {
     /* Game management */
     var gameState: GameState = .Preparing
     
-    /* Reference Nodes */
-    var scrollLayers = [SKNode?](repeating: nil, count: 3) // Array contains all the scroll layer nodes
-    var scrollLayerSprites = [(SKNode, SKNode)?](repeating: nil, count: 3) // Array contains tuples for the all scroll layer sprites
-    var obstacleLayer: SKNode!
-    var groundEntity: EntityGround! // Invisible ground node
-    
     /* Label references */
     var startLabel: SKLabelNode!
     var loadingLabel: SKLabelNode!
@@ -39,10 +33,12 @@ class InfiniteGameScene: SKScene, SKPhysicsContactDelegate {
     var groundScrollLayer: EntityScrollLayer!
     var distantBGScrollLayer: EntityScrollLayer!
     var skyScrollLayer: EntityScrollLayer!
+    var obstacleScrollLayer: EntityObstacleScrollLayer!
     
     /* Entities */
     var bunny: EntityBunny!
     var cloud: EntityCloud!
+    var groundEntity: EntityGround! // Invisible ground node
     
     /* Menus */
     var startMenu: UIStartMenu!
@@ -70,12 +66,10 @@ class InfiniteGameScene: SKScene, SKPhysicsContactDelegate {
         groundScrollLayer = EntityScrollLayer(baseScene: self, pos: CGPoint(x: -160, y: -150), zPos: 2, referenceName: "groundScrollLayerReferenceNode", scrollSpeed: CGFloat(110), spriteName: "ground")
         distantBGScrollLayer = EntityScrollLayer(baseScene: self, pos: CGPoint(x: -160, y: -88), zPos: 0, referenceName: "distantBGScrollLayerReferenceNode", scrollSpeed: CGFloat(8), spriteName: "crystals")
         skyScrollLayer = EntityScrollLayer(baseScene: self, pos: CGPoint(x: -160, y: 229.5), zPos: 0, referenceName: "skyScrollLayerReferenceNode", scrollSpeed: CGFloat(35), spriteName: "clouds")
+        obstacleScrollLayer = EntityObstacleScrollLayer(baseScene: self, pos: CGPoint(x: 0, y: 0), zPos: 1, referenceName: "obstacleScrollLayerReferenceNode", scrollSpeed: CGFloat(110), spriteName: "carrot")
         
         /* Create a small rectangle that acts as the "ground" for the bunny. This square is actually invisible */
         groundEntity = EntityGround(baseScene: self, pos: CGPoint(x: -88, y: -155), size: CGSize(width: 50, height: 10))
-        
-        /* Set reference to obstacle layer node */
-        obstacleLayer = self.childNode(withName: "obstacleLayer")
         
         /* Set label references */
         startLabel = self.childNode(withName: "startLabel") as! SKLabelNode
@@ -238,93 +232,21 @@ class InfiniteGameScene: SKScene, SKPhysicsContactDelegate {
         }
     }
     
-    /* This function scrolls a specified sprite infinitely */
-    func scrollSprite(nodes: (SKNode, SKNode), scrollLayer: SKNode, scrollSpeed: CGFloat) {
-        /* Scroll the scroll layers */
-        scrollLayer.position.x -= scrollSpeed * CGFloat(fixedDelta)
-        
-        /* Get the SPRITE NODES. THIS IS USED TO FIND SIZE NOT POSITION! */
-        let spriteNodes = (nodes.0 as! SKSpriteNode, nodes.1 as! SKSpriteNode)
-        
-        /* Get the position of the two sprites and convert them to the GameScene. */
-        let spritePositions = (scrollLayer.convert(nodes.0.position, to: self), scrollLayer.convert(nodes.1.position, to: self))
-        
-        /* If the first sprite is outisde the left boundary of the screen, do this: */
-        if spritePositions.0.x <= (-(self.size.width / 2) - (spriteNodes.0.size.width / 2)) {
-            /* This defines a new position that is to the right of the second sprite based on the relative position of the second sprite, rather than basing this new position on the screen. By making this position relative to the second sprite, we fix two problems. #1: With the previous system, you could only make the sprites the size of the screen else it wouldn't work properly. #2: With this system, it elimantes a slight gap that would appear with the previous system. I assume this came from a slight delay on the system or a slight inacurracy in the numbers.*/
-            let newPos = CGPoint(x: (spritePositions.1.x + spriteNodes.0.size.width), y: nodes.0.position.y)
-            
-            /* Convert the positions back to the scrollLayer */
-            nodes.0.position = self.convert(newPos, to: scrollLayer)
-            nodes.1.position = self.convert(spritePositions.1, to: scrollLayer)
-        } else if spritePositions.1.x <= (-(self.size.width / 2) - (spriteNodes.1.size.width / 2)) {
-            /* SAME CODE AS ABOVE! ( just flip flopped :] )*/
-            let newPos = CGPoint(x: (spritePositions.0.x + spriteNodes.1.size.width), y: nodes.1.position.y)
-            
-            nodes.1.position = self.convert(newPos, to: scrollLayer)
-            nodes.0.position = self.convert(spritePositions.0, to: scrollLayer)
-        }
-    }
-    
     /* Update Obstacles */
     func updateObstacles() {
         /* Scroll the obstacles at the same speed as the ground */
-        obstacleLayer.position.x -= groundScrollLayer.scrollSpeed * CGFloat(fixedDelta)
-        
-        /* Loop through obstacle layer nodes */
-        for obstacle in obstacleLayer.children as! [SKReferenceNode] {
-            
-            /* Get obstacle node position, convert node position to scene space */
-            let obstaclePosition = obstacleLayer.convert(obstacle.position, to: self)
-            
-            /* Check if obstacle has left the screen */
-            if obstaclePosition.x <= -(self.size.width / 2) {
-                
-                /* Remove obstacle node from obstacle layer */
-                obstacle.removeFromParent()
-            }
-        }
+        obstacleScrollLayer.scrollObstacles()
         
         /* Add a new obstacle if the time is greater than or equal to 1.5. Also adds an obstacle right off the bat if the game just started (hasGeneratedFirstObstacle) */
-        if spawnTimer >= 1.5 || obstacleLayer.childNode(withName: ".//goal") == nil {
-            /* Generate an obstacle */
-            generateObstacle()
+        if spawnTimer >= 1.5 || obstacleScrollLayer.referenceNode.children.count == 0 {
+            obstacleScrollLayer.addObstacle() // Create a new obstacle on the obstacle layer
             
-            /* Reset spawn timer */
-            spawnTimer = 0
+            spawnTimer = 0 // Reset the timer
         }
         
         /* Increment the obstacle spawn timer */
         spawnTimer += fixedDelta
     }
-    
-    /* Generates an obstacle at a random position */
-    func generateObstacle() {
-        /* Create a new obstacle reference object using our obstacle resource */
-        let resourcePath = Bundle.main.path(forResource: "EntityObstacle", ofType: "sks")
-        let newObstacle = SKReferenceNode(url: NSURL(fileURLWithPath: resourcePath!) as URL)
-        
-        /* Get references to the individual sprite nodes within our newObstacle */
-        let goal = newObstacle.childNode(withName: "//goal") as! SKSpriteNode
-        let obstacleTop = newObstacle.childNode(withName: "//obstacleTop") as! SKSpriteNode
-        let obstacleBottom = newObstacle.childNode(withName: "//obstacleBottom") as! SKSpriteNode
-        
-        /* Set the proper y-values and heights for the sprites in the newObstacle */
-        goal.size.height = GameDifficulty.goalHeight
-        goal.position.y = CGFloat(0)
-        obstacleTop.position = CGPoint(x: 0, y: (GameDifficulty.goalHeight / 2) + (obstacleTop.size.height / 2))
-        obstacleBottom.position = CGPoint(x: 0, y: -(GameDifficulty.goalHeight / 2) - (obstacleBottom.size.height / 2))
-        
-        /* Add the obstacle to the obstacleLayer */
-        obstacleLayer.addChild(newObstacle)
-        
-        /* Generate new obstacle position, start just outside screen and with a random y value */
-        let randomPosition = CGPoint(x: ((self.size.width / 2) + ((obstacleLayer.childNode(withName: "/SKNode") as! SKSpriteNode).size.width / 2)), y: CGFloat.random(min: GameDifficulty.minHeight, max: GameDifficulty.maxHeight))
-        
-        /* Convert new node position back to obstacle layer space */
-        newObstacle.position = self.convert(randomPosition, to: obstacleLayer)
-    }
-    
     
     /* Increment the score when the hero stops making contact with the goal entity */
     func didEnd(_ contact: SKPhysicsContact) {

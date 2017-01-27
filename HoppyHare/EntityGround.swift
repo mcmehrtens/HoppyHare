@@ -23,8 +23,6 @@ class EntityGround {
         physicsBody.isDynamic = false
         physicsBody.allowsRotation = false
         physicsBody.affectedByGravity = false
-        physicsBody.friction = 0
-        physicsBody.restitution = 0
         physicsBody.categoryBitMask = 4
         physicsBody.contactTestBitMask = 1
         
