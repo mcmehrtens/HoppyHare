@@ -55,10 +55,12 @@ class InfiniteGameScene: SKScene, SKPhysicsContactDelegate {
 
     /* Timers */
     let fixedDelta: TimeInterval = 1.0/60.0 /* 60 FPS */
-    var sinceTouchTimer: TimeInterval = 0
-    var spawnTimer: TimeInterval = 0
+    var gameTimer: TimeInterval = 0
+    
+    var lastTouchTimer: TimeInterval = 0
+    var lastObstacleSpawnTimer: TimeInterval = 0
+    
     var startLabelTimer: TimeInterval = 0
-    var timeSinceStart: TimeInterval = 0
     
     /* Set up your scene here */
     override func didMove(to view: SKView) {
@@ -79,6 +81,8 @@ class InfiniteGameScene: SKScene, SKPhysicsContactDelegate {
         inGameDifficultyLabelNode = self.childNode(withName: "inGameDifficultyLabelNode")!
         inGameDifficulty = self.childNode(withName: "//inGameDifficulty") as! SKLabelNode
         
+        print(startLabel.fontName!)
+        
         /* Set physics contact delegate */
         physicsWorld.contactDelegate = self
         
@@ -96,10 +100,8 @@ class InfiniteGameScene: SKScene, SKPhysicsContactDelegate {
     override func update(_ currentTime: TimeInterval) {
         /* Checks if the game is ready to begin */
         if gameState == .Preparing {
-            if timeSinceStart >= 1.75 {
+            if gameTimer >= 1.75 {
                 setGameState(state: .Ready)
-            } else {
-                timeSinceStart += fixedDelta
             }
         }
         
@@ -122,9 +124,10 @@ class InfiniteGameScene: SKScene, SKPhysicsContactDelegate {
             bunny.capBunnyVelocityY()
             
             /* Rotate the bunny */
-            bunny.rotateBunny(sinceTouch: sinceTouchTimer)
-            sinceTouchTimer += fixedDelta
+            bunny.rotateBunny(sinceTouch: gameTimer - lastTouchTimer)
         }
+        
+        gameTimer += fixedDelta
     }
     
     /* This function sets the game state and does all the appropriate steps*/
@@ -228,7 +231,7 @@ class InfiniteGameScene: SKScene, SKPhysicsContactDelegate {
             jumps += 1
             
             /* Resets the since touch timer */
-            sinceTouchTimer = 0
+            lastTouchTimer = gameTimer
         }
     }
     
@@ -238,14 +241,11 @@ class InfiniteGameScene: SKScene, SKPhysicsContactDelegate {
         obstacleScrollLayer.scrollObstacles()
         
         /* Add a new obstacle if the time is greater than or equal to 1.5. Also adds an obstacle right off the bat if the game just started (hasGeneratedFirstObstacle) */
-        if spawnTimer >= 1.5 || obstacleScrollLayer.referenceNode.children.count == 0 {
+        if gameTimer - lastObstacleSpawnTimer >= 1.5 || obstacleScrollLayer.referenceNode.children.count == 0 {
             obstacleScrollLayer.addObstacle() // Create a new obstacle on the obstacle layer
             
-            spawnTimer = 0 // Reset the timer
+            lastObstacleSpawnTimer = gameTimer // Reset the timer
         }
-        
-        /* Increment the obstacle spawn timer */
-        spawnTimer += fixedDelta
     }
     
     /* Increment the score when the hero stops making contact with the goal entity */
@@ -296,16 +296,13 @@ class InfiniteGameScene: SKScene, SKPhysicsContactDelegate {
     /* This function causes the startLabel to flash */
     func flashStartGameLabel() {
         /* By adding the && operator, we were able to reuse the same timer variable for optimzation purposes. We run the first block of code if it's been 0.75 time since the label appeared. We run the second block of code if it's been 0.5 time since the label had been hidden.*/
-        if startLabelTimer >= 0.75 && startLabel.isHidden == false {
+        if gameTimer - startLabelTimer >= 0.75 && startLabel.isHidden == false {
             startLabel.isHidden = true
-            startLabelTimer = 0
-        } else if startLabelTimer >= 0.5 && startLabel.isHidden == true {
+            startLabelTimer = gameTimer
+        } else if gameTimer - startLabelTimer >= 0.5 && startLabel.isHidden == true {
             startLabel.isHidden = false
-            startLabelTimer = 0
+            startLabelTimer = gameTimer
         }
-        
-        /* Increment the timer */
-        startLabelTimer += fixedDelta
     }
     
     /* This runs all the scrollWorld functions (except for the obstacles) */

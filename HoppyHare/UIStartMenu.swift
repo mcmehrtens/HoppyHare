@@ -16,6 +16,13 @@ class UIStartMenu: UIElement {
     var scoreboardSwitcher: UIScoreboardSwitcher! // Reference to the scoreboard switcher menu
     var currentMenu: UIElement? // This variable keeps track of what menu is open
     
+    /* Buttons */
+    var toggleMenuButton: MSButtonNode!
+    var diffSelectorButton: MSButtonNode!
+    var gameStatsButton: MSButtonNode!
+    var soundPanelButton: MSButtonNode!
+    var scoreboardSwitcherButton: MSButtonNode!
+    
     /* Add the element onto the screen and then set up the button handlers */
     override func addElement() {
         super.addElement()
@@ -25,11 +32,11 @@ class UIStartMenu: UIElement {
     /* Set all the handlers for the buttons in the start menu */
     func setButtonHandlers() {
         let safetyButton = referenceNode.childNode(withName: ".//safetyButton") as! MSButtonNode // Safety button reference
-        let toggleMenuButton = referenceNode.childNode(withName: ".//toggleMenuButton") as! MSButtonNode // Start menu toggle button reference
-        let diffSelectorButton = referenceNode.childNode(withName: ".//diffSelectorButton") as! MSButtonNode // Diff selector button reference
-        let gameStatsButton = referenceNode.childNode(withName: ".//gameStatsButton") as! MSButtonNode // Game stats button reference
-        let soundPanelButton = referenceNode.childNode(withName: ".//soundPanelButton") as! MSButtonNode // Sound panel button reference
-        let scoreboardSwitcherButton = referenceNode.childNode(withName: ".//scoreboardSwitcherButton") as! MSButtonNode // Scoreboard switcher button reference
+        toggleMenuButton = referenceNode.childNode(withName: ".//toggleMenuButton") as! MSButtonNode // Start menu toggle button reference
+        diffSelectorButton = referenceNode.childNode(withName: ".//diffSelectorButton") as! MSButtonNode // Diff selector button reference
+        gameStatsButton = referenceNode.childNode(withName: ".//gameStatsButton") as! MSButtonNode // Game stats button reference
+        soundPanelButton = referenceNode.childNode(withName: ".//soundPanelButton") as! MSButtonNode // Sound panel button reference
+        scoreboardSwitcherButton = referenceNode.childNode(withName: ".//scoreboardSwitcherButton") as! MSButtonNode // Scoreboard switcher button reference
         
         let rightChevronNode = referenceNode.childNode(withName: ".//rightChevronNode")! // rightChevronNode reference
         let leftChevronNode = referenceNode.childNode(withName: ".//leftChevronNode")! // leftChevronNode reference
@@ -154,6 +161,13 @@ class UIStartMenu: UIElement {
     
     /* This animation slides the startMenu to an off-screen position - Also removes the menu node */
     func offSlide() {
+        /* First things first, we disable all the buttons so that the user can't press the button while the menu is closing. */
+        toggleMenuButton.removeFromParent()
+        diffSelectorButton.removeFromParent()
+        gameStatsButton.removeFromParent()
+        soundPanelButton.removeFromParent()
+        scoreboardSwitcherButton.removeFromParent()
+        
         let offSlide = SKAction.move(to: CGPoint(x: -270, y: -209.5), duration: 0.5)
         offSlide.timingMode = SKActionTimingMode.easeOut
         
