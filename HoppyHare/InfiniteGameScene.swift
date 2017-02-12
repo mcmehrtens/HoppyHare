@@ -19,15 +19,10 @@ class InfiniteGameScene: SKScene, SKPhysicsContactDelegate {
     /* Game management */
     var gameState: GameState = .Preparing
     
-    /* Label references */
-    var startLabel: SKLabelNode!
-    var loadingLabel: SKLabelNode!
-    var titleLabel_0: SKLabelNode!
-    var titleLabel_1: SKLabelNode!
-    var inGameDifficultyLabelNode: SKNode!
-    var inGameDifficulty: SKLabelNode!
-    
     /* UI Elements */
+    
+    /* Create a dictionary for all of the labels */
+    var labels: [String: SKLabelNode] = [:]
     
     /* Scroll Layers */
     var groundScrollLayer: EntityScrollLayer!
@@ -64,6 +59,17 @@ class InfiniteGameScene: SKScene, SKPhysicsContactDelegate {
     
     /* Set up your scene here */
     override func didMove(to view: SKView) {
+        /* Set the scene name */
+        self.name = "InfiniteGameScene"
+        
+        /* Set the size of our scene */
+        self.size = CGSize(width: CGFloat(320.0), height: CGFloat(480.0))
+        
+        self.anchorPoint = CGPoint(x: 0.5, y: 0.5)
+        
+        /* Set the background color to be blue */
+        self.backgroundColor = CustomColors.colorTurquoise
+        
         /* Set reference to the scroll layers */
         groundScrollLayer = EntityScrollLayer(baseScene: self, pos: CGPoint(x: -160, y: -150), zPos: 2, referenceName: "groundScrollLayerReferenceNode", scrollSpeed: CGFloat(110), spriteName: "ground")
         distantBGScrollLayer = EntityScrollLayer(baseScene: self, pos: CGPoint(x: -160, y: -88), zPos: 0, referenceName: "distantBGScrollLayerReferenceNode", scrollSpeed: CGFloat(8), spriteName: "crystals")
@@ -73,15 +79,25 @@ class InfiniteGameScene: SKScene, SKPhysicsContactDelegate {
         /* Create a small rectangle that acts as the "ground" for the bunny. This square is actually invisible */
         groundEntity = EntityGround(baseScene: self, pos: CGPoint(x: -88, y: -155), size: CGSize(width: 50, height: 10))
         
-        /* Set label references */
-        startLabel = self.childNode(withName: "startLabel") as! SKLabelNode
-        loadingLabel = self.childNode(withName: "loadingLabel") as! SKLabelNode
-        titleLabel_0 = self.childNode(withName: "titleLabel_0") as! SKLabelNode
-        titleLabel_1 = self.childNode(withName: "titleLabel_1") as! SKLabelNode
-        inGameDifficultyLabelNode = self.childNode(withName: "inGameDifficultyLabelNode")!
-        inGameDifficulty = self.childNode(withName: "//inGameDifficulty") as! SKLabelNode
+        /* Create the loading label */
+        labels["loadingLabel"] = Label.createLabel(name: "loadingLabel", text: "Loading game...", fontName: "VCROSDMono", fontSize: CGFloat(16.0), fontColor: CustomColors.colorWhite, zPosition: CGFloat(3.0), horizontalAlign: SKLabelHorizontalAlignmentMode.center, verticalAlign: SKLabelVerticalAlignmentMode.baseline)
+        self.addChild(labels["loadingLabel"]!)
+        labels["loadingLabel"]!.position = CGPoint(x: -38, y: -215)
         
-        print(startLabel.fontName!)
+        /* Create the start game label */
+        labels["startLabel"] = Label.createLabel(name: "startLabel", text: "Touch Anywhere To Take Off", fontName: "VCROSDMono", fontSize: CGFloat(14.0), fontColor: CustomColors.colorWhite, zPosition: CGFloat(0.0), horizontalAlign: SKLabelHorizontalAlignmentMode.center, verticalAlign: SKLabelVerticalAlignmentMode.baseline)
+        self.addChild(labels["startLabel"]!)
+        labels["startLabel"]!.position = CGPoint(x: 0, y: 69)
+        labels["startLabel"]!.isHidden = true
+        
+        /* Create the two title labels */
+        labels["titleLabel_0"] = Label.createLabel(name: "titleLabel_0", text: "Hoppy", fontName: "VCROSDMono", fontSize: CGFloat(64.0), fontColor: CustomColors.colorGray, zPosition: CGFloat(1.0), horizontalAlign: SKLabelHorizontalAlignmentMode.right, verticalAlign: SKLabelVerticalAlignmentMode.baseline)
+        self.addChild(labels["titleLabel_0"]!)
+        labels["titleLabel_0"]!.position = CGPoint(x: -(self.size.width / 2) - labels["titleLabel_0"]!.frame.width, y: 165)
+        
+        labels["titleLabel_1"] = Label.createLabel(name: "titleLabel_1", text: "Hare", fontName: "VCROSDMono", fontSize: CGFloat(64.0), fontColor: CustomColors.colorGray, zPosition: CGFloat(1.0), horizontalAlign: SKLabelHorizontalAlignmentMode.left, verticalAlign: SKLabelVerticalAlignmentMode.baseline)
+        self.addChild(labels["titleLabel_1"]!)
+        labels["titleLabel_1"]!.position = CGPoint(x: (self.size.width / 2) + labels["titleLabel_1"]!.frame.width, y: 100)
         
         /* Set physics contact delegate */
         physicsWorld.contactDelegate = self
@@ -93,6 +109,7 @@ class InfiniteGameScene: SKScene, SKPhysicsContactDelegate {
             GameStats.defaults.set(true, forKey: GameStats.loadedBefore)
         }
         
+        /* Set the game state to preparing */
         setGameState(state: .Preparing)
     }
     
@@ -146,10 +163,10 @@ class InfiniteGameScene: SKScene, SKPhysicsContactDelegate {
             /* Add the cloud node to the screen */
             cloud = EntityCloud(baseScene: self, pos: CGPoint(x: -200, y: 0), zPos: 3, referenceName: "cloudReferenceNode", resourcePath: "EntityCloud", resourceType: "sks")
             
-            /* When setting the state to .Ready, the loading label needs to go away. Also starts flashing the start label.*/
+            /* When setting the state to .Ready, the loading label needs to go away. Also starts flashing the start label. */
         case .Ready:
             gameState = .Ready
-            startLabel.isHidden = false
+            labels["startLabel"]!.isHidden = false
             
             /* Play some jams */
             BGMusic.playBGMusic(url: BGMusic.getRandSongURL())
@@ -157,11 +174,24 @@ class InfiniteGameScene: SKScene, SKPhysicsContactDelegate {
             /* Slide on the startMenu */
             startMenu.closeSlide()
             
-            /* Slide off the loading label */
-            GameAnimations.loadingLabelSlideOff(node: loadingLabel)
+            /* 
+             Slides the loading label off the screen:
+             
+             1. Slide up by 15 pixels (0.2s)
+             2. Slide down to the bottom of the screen minus the height of the text (0.3s)
+             3. Remove the SKLabelNode from the scene
+             4. Set the dictionary entry to be nil
+             */
+            labels["loadingLabel"]!.run(SKAction.sequence([
+                LabelAnimations.slideByAnimation(vector: CGVector(dx: 0, dy: 15), duration: TimeInterval(0.2), timingMode: SKActionTimingMode.easeOut),
+                LabelAnimations.slideToAnimation(position: CGPoint(x: labels["loadingLabel"]!.position.x, y: -(self.size.height / 2) - labels["loadingLabel"]!.frame.height), duration: TimeInterval(0.3), timingMode: SKActionTimingMode.easeInEaseOut),
+                SKAction.run { self.labels["loadingLabel"]!.removeFromParent() },
+                SKAction.run { self.labels["loadingLabel"] = nil }]))
             
-            /* Slide on the title */
-            GameAnimations.titleSlideIn(nodes: (titleLabel_0, titleLabel_1))
+            /* Slide on the title labels */
+            labels["titleLabel_0"]!.run(LabelAnimations.slideToAnimation(position: CGPoint(x: 75, y: labels["titleLabel_0"]!.position.y), duration: TimeInterval(0.5), timingMode: SKActionTimingMode.easeOut))
+            
+            labels["titleLabel_1"]!.run(LabelAnimations.slideToAnimation(position: CGPoint(x: -40, y: labels["titleLabel_1"]!.position.y), duration: TimeInterval(0.5), timingMode: SKActionTimingMode.easeOut))
             
             /* When setting the state to .Active, the flashing "start" label needs to go away and the score board text needs to appear. */
         case .Active:
@@ -172,14 +202,18 @@ class InfiniteGameScene: SKScene, SKPhysicsContactDelegate {
             cloud.slideOff()
             
             /* Slide the title off the screen */
-            GameAnimations.titleSlideOff(nodes: (titleLabel_0, titleLabel_1))
+            labels["titleLabel_0"]!.run(SKAction.sequence([
+                LabelAnimations.slideToAnimation(position: CGPoint(x: (self.size.width / 2) + labels["titleLabel_0"]!.frame.width, y: labels["titleLabel_0"]!.position.y), duration: TimeInterval(0.5), timingMode: SKActionTimingMode.easeIn),
+                SKAction.run { self.labels["titleLabel_0"]!.removeFromParent() },
+                SKAction.run { self.labels["titleLabel_0"] = nil }]))
+            
+            labels["titleLabel_1"]!.run(SKAction.sequence([
+                LabelAnimations.slideToAnimation(position: CGPoint(x: -(self.size.width / 2) - labels["titleLabel_1"]!.frame.width, y: labels["titleLabel_1"]!.position.y), duration: TimeInterval(0.5), timingMode: SKActionTimingMode.easeIn),
+                SKAction.run { self.labels["titleLabel_1"]!.removeFromParent() },
+                SKAction.run { self.labels["titleLabel_1"] = nil }]))
             
             /* Slide off the startMenu and close any visible windows */
             startMenu.offSlide()
-            
-            /* Set the inGameDifficultyLabel to the proper value and slide it in */
-            inGameDifficulty.text = String(GameStats.defaults.integer(forKey: GameStats.gameDiff))
-            GameAnimations.inGameDifficultyLabelSlideIn(node: inGameDifficultyLabelNode)
             
             /* Add the infiniteScoreboard :) */
             infiniteScoreboard = UIInfiniteScoreboard(baseScene: self, pos: CGPoint(x: 0, y: -212.5), zPos: 3, referenceName: "infiniteScoreboardReferenceNode", resourcePath: "UIInfiniteScoreboard", resourceType: "sks")
@@ -187,7 +221,8 @@ class InfiniteGameScene: SKScene, SKPhysicsContactDelegate {
             /* Set the final game difficulty */
             GameDifficulty.setDifficulty()
             
-            startLabel.isHidden = true
+            labels["startLabel"]!.removeFromParent()
+            labels["startLabel"] = nil
             gameState = .Active
             
             /* Lot's of things happening here. #1, stop all angular velocity. #2: Set the angular velocity = 0. #3: Stop the flapping animation. #4: Run the death animation. #5: Shake the screen. #6: Show the restart button.*/
@@ -296,11 +331,11 @@ class InfiniteGameScene: SKScene, SKPhysicsContactDelegate {
     /* This function causes the startLabel to flash */
     func flashStartGameLabel() {
         /* By adding the && operator, we were able to reuse the same timer variable for optimzation purposes. We run the first block of code if it's been 0.75 time since the label appeared. We run the second block of code if it's been 0.5 time since the label had been hidden.*/
-        if gameTimer - startLabelTimer >= 0.75 && startLabel.isHidden == false {
-            startLabel.isHidden = true
+        if gameTimer - startLabelTimer >= 0.75 && labels["startLabel"]!.isHidden == false {
+            labels["startLabel"]!.isHidden = true
             startLabelTimer = gameTimer
-        } else if gameTimer - startLabelTimer >= 0.5 && startLabel.isHidden == true {
-            startLabel.isHidden = false
+        } else if gameTimer - startLabelTimer >= 0.5 && labels["startLabel"]!.isHidden == true {
+            labels["startLabel"]!.isHidden = false
             startLabelTimer = gameTimer
         }
     }

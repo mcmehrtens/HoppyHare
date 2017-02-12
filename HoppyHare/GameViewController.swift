@@ -18,18 +18,13 @@ class GameViewController: UIViewController {
         super.viewDidLoad()
         
         if let view = self.view as! SKView? {
-            // Load the SKScene from 'GameScene.sks'
-            if let scene = SKScene(fileNamed: "InfiniteGameScene") {
-                // Set the scale mode to scale to fit the window
-                scene.scaleMode = .aspectFill
-                
-                // Present the scene
-                view.presentScene(scene)
-            }
+            let startScene = InfiniteGameScene()
+            startScene.scaleMode = .aspectFill
+            view.presentScene(startScene)
             
             view.ignoresSiblingOrder = true
             
-            view.showsFPS = false
+            view.showsFPS = true
             view.showsNodeCount = false
         }
     }

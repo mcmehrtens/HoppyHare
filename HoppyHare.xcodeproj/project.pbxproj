@@ -11,8 +11,8 @@
 		C90669531E23E22E00B74683 /* UIScoreboardSwitcher.sks in Resources */ = {isa = PBXBuildFile; fileRef = C90669521E23E22E00B74683 /* UIScoreboardSwitcher.sks */; };
 		C91E19FA1DF7246F00D7ABCD /* EntityBunny.sks in Resources */ = {isa = PBXBuildFile; fileRef = C91E19F91DF7246F00D7ABCD /* EntityBunny.sks */; };
 		C91E19FC1DF725FE00D7ABCD /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = C91E19FB1DF725FE00D7ABCD /* Main.storyboard */; };
+		C91FBC001E4E81C900FF3238 /* Label.swift in Sources */ = {isa = PBXBuildFile; fileRef = C91FBBFF1E4E81C900FF3238 /* Label.swift */; };
 		C926C6AA1E341036001DFAAB /* EntityScrollLayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = C926C6A91E341036001DFAAB /* EntityScrollLayer.swift */; };
-		C926F5E11E19AF06007584F7 /* GameAnimations.swift in Sources */ = {isa = PBXBuildFile; fileRef = C926F5E01E19AF06007584F7 /* GameAnimations.swift */; };
 		C926F5E31E19E82C007584F7 /* CustomColors.swift in Sources */ = {isa = PBXBuildFile; fileRef = C926F5E21E19E82C007584F7 /* CustomColors.swift */; };
 		C9376AD01E36ECBF0086ADD8 /* EntityGround.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9376ACF1E36ECBF0086ADD8 /* EntityGround.swift */; };
 		C93BD53F1E231DA100FAD917 /* jump.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = C93BD53E1E231DA100FAD917 /* jump.mp3 */; };
@@ -48,7 +48,6 @@
 		C9E2FA471E21A93200EB2139 /* GameStats.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9E2FA461E21A93200EB2139 /* GameStats.swift */; };
 		C9ECB5301E22DCEA00635026 /* UIGameStats.sks in Resources */ = {isa = PBXBuildFile; fileRef = C9ECB52F1E22DCEA00635026 /* UIGameStats.sks */; };
 		C9FC13901DF716EE00744006 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9FC138F1DF716EE00744006 /* AppDelegate.swift */; };
-		C9FC13921DF716EE00744006 /* InfiniteGameScene.sks in Resources */ = {isa = PBXBuildFile; fileRef = C9FC13911DF716EE00744006 /* InfiniteGameScene.sks */; };
 		C9FC13961DF716EE00744006 /* InfiniteGameScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9FC13951DF716EE00744006 /* InfiniteGameScene.swift */; };
 		C9FC13981DF716EE00744006 /* GameViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9FC13971DF716EE00744006 /* GameViewController.swift */; };
 		C9FC139D1DF716EE00744006 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = C9FC139C1DF716EE00744006 /* Assets.xcassets */; };
@@ -60,8 +59,8 @@
 		C90669521E23E22E00B74683 /* UIScoreboardSwitcher.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = UIScoreboardSwitcher.sks; sourceTree = "<group>"; };
 		C91E19F91DF7246F00D7ABCD /* EntityBunny.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = EntityBunny.sks; sourceTree = "<group>"; };
 		C91E19FB1DF725FE00D7ABCD /* Main.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Main.storyboard; sourceTree = "<group>"; };
+		C91FBBFF1E4E81C900FF3238 /* Label.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Label.swift; sourceTree = "<group>"; };
 		C926C6A91E341036001DFAAB /* EntityScrollLayer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EntityScrollLayer.swift; sourceTree = "<group>"; };
-		C926F5E01E19AF06007584F7 /* GameAnimations.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GameAnimations.swift; sourceTree = "<group>"; };
 		C926F5E21E19E82C007584F7 /* CustomColors.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CustomColors.swift; sourceTree = "<group>"; };
 		C9376ACF1E36ECBF0086ADD8 /* EntityGround.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EntityGround.swift; sourceTree = "<group>"; };
 		C93BD53E1E231DA100FAD917 /* jump.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = jump.mp3; sourceTree = "<group>"; };
@@ -98,7 +97,6 @@
 		C9ECB52F1E22DCEA00635026 /* UIGameStats.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = UIGameStats.sks; sourceTree = "<group>"; };
 		C9FC138C1DF716EE00744006 /* HoppyHare.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = HoppyHare.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		C9FC138F1DF716EE00744006 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		C9FC13911DF716EE00744006 /* InfiniteGameScene.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = InfiniteGameScene.sks; sourceTree = "<group>"; };
 		C9FC13951DF716EE00744006 /* InfiniteGameScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InfiniteGameScene.swift; sourceTree = "<group>"; };
 		C9FC13971DF716EE00744006 /* GameViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameViewController.swift; sourceTree = "<group>"; };
 		C9FC139C1DF716EE00744006 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -221,7 +219,7 @@
 			isa = PBXGroup;
 			children = (
 				C98C0E341E1FE3B0000E0989 /* UIElement.swift */,
-				C926F5E01E19AF06007584F7 /* GameAnimations.swift */,
+				C91FBBFF1E4E81C900FF3238 /* Label.swift */,
 				C926F5E21E19E82C007584F7 /* CustomColors.swift */,
 				C98C0E311E1ECC9D000E0989 /* Entities */,
 				C97E51A61E25BB1200565835 /* Menus */,
@@ -284,7 +282,6 @@
 			isa = PBXGroup;
 			children = (
 				C9FC13951DF716EE00744006 /* InfiniteGameScene.swift */,
-				C9FC13911DF716EE00744006 /* InfiniteGameScene.sks */,
 			);
 			name = InfGamemode;
 			sourceTree = "<group>";
@@ -421,7 +418,6 @@
 				C93BD54C1E23353C00FAD917 /* music-syn.mp3 in Resources */,
 				C93BD54A1E23342B00FAD917 /* music-neon.mp3 in Resources */,
 				C9DACABE1E2B02F800CEDFF0 /* EntityCloud.sks in Resources */,
-				C9FC13921DF716EE00744006 /* InfiniteGameScene.sks in Resources */,
 				C9947A8C1E1B1D7500864E7F /* UIGameOverMenu.sks in Resources */,
 				C90669531E23E22E00B74683 /* UIScoreboardSwitcher.sks in Resources */,
 				C9FE59761E1EBEF4002AAD65 /* UIDiffSelector.sks in Resources */,
@@ -464,7 +460,7 @@
 				C9FC13901DF716EE00744006 /* AppDelegate.swift in Sources */,
 				C9C2CFB11DFF0003001DB1B6 /* MSButtonNode.swift in Sources */,
 				C926F5E31E19E82C007584F7 /* CustomColors.swift in Sources */,
-				C926F5E11E19AF06007584F7 /* GameAnimations.swift in Sources */,
+				C91FBC001E4E81C900FF3238 /* Label.swift in Sources */,
 				C9376AD01E36ECBF0086ADD8 /* EntityGround.swift in Sources */,
 				C9E2FA441E21794000EB2139 /* GameDifficulty.swift in Sources */,
 				C9765B2A1E20584500D07DE7 /* UIInfiniteScoreboard.swift in Sources */,

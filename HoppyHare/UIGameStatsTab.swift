@@ -84,10 +84,10 @@ class UIGameStatsTab: UIElement {
             let skView = self.baseScene.view as SKView!
             
             /* Load Game scene */
-            let scene = InfiniteGameScene(fileNamed: "InfiniteGameScene") as InfiniteGameScene!
+            let scene = InfiniteGameScene()
             
             /* Ensure correct aspect mode */
-            scene!.scaleMode = .aspectFill
+            scene.scaleMode = .aspectFill
             
             /* Restart game scene */
             skView!.presentScene(scene)
